@@ -1,7 +1,6 @@
 package Intro_fracciones;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,18 +17,15 @@ response.setContentType("text/html;charset=UTF-8");
         String Password=request.getParameter("Pass");
         HttpSession session=request.getSession();
         session.setAttribute("userName",Usuario);
-        LoginBean lb = new LoginBean(request.getRealPath("/")+"\\xml\\Usuarios.xml");
-        
-      
-        // Comprueba si el password o el usuario son correctos
-        if(lb.validateUser(Usuario,Password)){
-            LectorXML tipo_usuario=new LectorXML(request.getRealPath("/")+"\\xml\\Usuarios.xml");
-            String tipo[]=tipo_usuario.datosUsuario("tipo");
-            String nombre[]=tipo_usuario.datosUsuario("nombre");
-            String pass[]=tipo_usuario.datosUsuario("pass");
+
+            LectorXML usuario=new LectorXML(request.getRealPath("/")+"\\xml\\Usuarios.xml");
+            String tipo[]=usuario.datosUsuario("tipo");
+            String nombre[]=usuario.datosUsuario("nombre");
+            String pass[]=usuario.datosUsuario("pass");
             //Buscamos el tipo a partir del usuario y la contraseña
+            
             for(int i=0;i<tipo.length;i++){
-               if(nombre[i].equals(Usuario) &&pass[i].equals(Password)){
+               if(nombre[i].equals(Usuario) && pass[i].equals(Password)){ // Comprueba si el password o el usuario son correctos
                    switch(tipo[i]){
                        case "Administrador":
                            response.sendRedirect("Administrador");
@@ -42,11 +38,9 @@ response.setContentType("text/html;charset=UTF-8");
                        break;
                    }
                }
-            }  
-            
-        }
-        else{// username/password not validated
-            response.sendRedirect("fail");
-        }
+               else{
+                   response.sendRedirect("fail");
+               }
+            }     
     }
  }
