@@ -25,6 +25,7 @@ public class fail extends HttpServlet {
             out.println("<body>");
             out.println("Fail:"+userName);
             out.println("Prueba del push github");
+	    out.println("Actualizado desde el navegador");
             out.println("<a href='login.html' >Return</a>");            
             out.println("</body>");
             out.println("</html>");
