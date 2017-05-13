@@ -17,15 +17,15 @@ response.setContentType("text/html;charset=UTF-8");
         String Password=request.getParameter("Pass");
         HttpSession session=request.getSession();
         session.setAttribute("userName",Usuario);
-
+        LoginBean lb = new LoginBean(request.getRealPath("/")+"\\xml\\Usuarios.xml");
+        
+        if(lb.validateUser(Usuario, Password)){
             LectorXML usuario=new LectorXML(request.getRealPath("/")+"\\xml\\Usuarios.xml");
-            String tipo[]=usuario.datosUsuario("tipo");
             String nombre[]=usuario.datosUsuario("nombre");
-            String pass[]=usuario.datosUsuario("pass");
-            //Buscamos el tipo a partir del usuario y la contraseña
+            String tipo[]=usuario.datosUsuario("tipo");
             
-            for(int i=0;i<tipo.length;i++){
-               if(nombre[i].equals(Usuario) && pass[i].equals(Password)){ // Comprueba si el password o el usuario son correctos
+            for(int i=0;i<nombre.length;i++){
+               if(nombre[i].equals(Usuario)){ //Con el nombre de usuario obtenemos el tipo
                    switch(tipo[i]){
                        case "Administrador":
                            response.sendRedirect("Administrador");
@@ -37,10 +37,11 @@ response.setContentType("text/html;charset=UTF-8");
                            response.sendRedirect("Alumno");
                        break;
                    }
-               }
-               else{
-                   response.sendRedirect("fail");
-               }
-            }     
+               }  
+            } 
+        }
+        else{
+            response.sendRedirect("fail");
+        }
     }
  }
