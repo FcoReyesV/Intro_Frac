@@ -104,7 +104,7 @@ public class Administrador extends HttpServlet {
             }
             out.println("</table>");
             out.println("<input type='button' id='btn' value='Nuevo Usuario'/>");
-            out.println("<script src='jss\\Redireccionar.js'></script>");
+            out.println("<script src='js\\Redireccionar.js'></script>");
             out.println("</body>");
             out.println("</html>");
     }

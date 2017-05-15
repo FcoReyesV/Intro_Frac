@@ -56,7 +56,7 @@ public class Modificar extends HttpServlet {
             out.println("<input type='submit' value='Regresar' id='enviar'/>");
             out.println("</form>");
             /*Con el siguiente script haremos las validaciones necesarias*/
-            out.println("<script src='jss\\modificarUsuario.js'></script>");
+            out.println("<script src='js\\validarUsuario.js'></script>");
             out.println("</body>");
             out.println("</html>");
     }

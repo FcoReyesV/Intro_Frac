@@ -23,7 +23,7 @@ public class GuardarUsuario extends HttpServlet {
             out.println("<title>Servlet Servlet1</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("Bienvenido profesor:"+userName);
+            out.println("<h1>Guardar Usuario Creado</h1>");
             out.println("</body>");
             out.println("</html>");
     }

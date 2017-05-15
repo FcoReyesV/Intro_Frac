@@ -1,4 +1,3 @@
-   //Ahora si viene lo shido
    var guardar,enviar,nombre,tipo,pass,confirmar_pass,cambio_input=false;
     function incializaVariables(){
         /*A cada variable se le asocia un elemento del formulario*/
