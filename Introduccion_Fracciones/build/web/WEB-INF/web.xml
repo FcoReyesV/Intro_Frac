@@ -24,6 +24,26 @@
         <servlet-name>Alumno</servlet-name>
         <servlet-class>Intro_fracciones.Alumno</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Modificar</servlet-name>
+        <servlet-class>Intro_fracciones.Modificar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GuardarCambios</servlet-name>
+        <servlet-class>Intro_fracciones.GuardarCambios</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EliminarUsuario</servlet-name>
+        <servlet-class>Intro_fracciones.EliminarUsuario</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CrearUsuario</servlet-name>
+        <servlet-class>Intro_fracciones.CrearUsuario</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GuardarUsuario</servlet-name>
+        <servlet-class>Intro_fracciones.GuardarUsuario</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -47,6 +67,26 @@
     <servlet-mapping>
         <servlet-name>Alumno</servlet-name>
         <url-pattern>/Alumno</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Modificar</servlet-name>
+        <url-pattern>/Modificar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GuardarCambios</servlet-name>
+        <url-pattern>/GuardarCambios</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarUsuario</servlet-name>
+        <url-pattern>/EliminarUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CrearUsuario</servlet-name>
+        <url-pattern>/CrearUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GuardarUsuario</servlet-name>
+        <url-pattern>/GuardarUsuario</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class fail extends HttpServlet {
+public class GuardarUsuario extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
         response.setContentType("text/html;charset=UTF-8");
@@ -23,8 +23,7 @@ public class fail extends HttpServlet {
             out.println("<title>Servlet Servlet1</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("Fail:"+userName);
-            out.println("<a href='login.html' >Return</a>");            
+            out.println("Bienvenido profesor:"+userName);
             out.println("</body>");
             out.println("</html>");
     }

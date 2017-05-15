@@ -17,15 +17,19 @@ response.setContentType("text/html;charset=UTF-8");
         String Password=request.getParameter("Pass");
         HttpSession session=request.getSession();
         session.setAttribute("userName",Usuario);
+        session.setAttribute("userPassword",Password);
         LoginBean lb = new LoginBean(request.getRealPath("/")+"\\xml\\Usuarios.xml");
         
-        if(lb.validateUser(Usuario, Password)){
-            LectorXML usuario=new LectorXML(request.getRealPath("/")+"\\xml\\Usuarios.xml");
-            String nombre[]=usuario.datosUsuario("nombre");
-            String tipo[]=usuario.datosUsuario("tipo");
-            
-            for(int i=0;i<nombre.length;i++){
-               if(nombre[i].equals(Usuario)){ //Con el nombre de usuario obtenemos el tipo
+      
+        // Comprueba si el password o el usuario son correctos
+        if(lb.validateUser(Usuario,Password)){
+            LectorXML tipo_usuario=new LectorXML(request.getRealPath("/")+"\\xml\\Usuarios.xml");
+            String tipo[]=tipo_usuario.datosUsuario("tipo");
+            String nombre[]=tipo_usuario.datosUsuario("nombre");
+            String pass[]=tipo_usuario.datosUsuario("pass");
+            //Buscamos el tipo a partir del usuario y la contraseña
+            for(int i=0;i<tipo.length;i++){
+               if(nombre[i].equals(Usuario) &&pass[i].equals(Password)){
                    switch(tipo[i]){
                        case "Administrador":
                            response.sendRedirect("Administrador");
@@ -37,10 +41,11 @@ response.setContentType("text/html;charset=UTF-8");
                            response.sendRedirect("Alumno");
                        break;
                    }
-               }  
-            } 
+               }
+            }  
+            
         }
-        else{
+        else{// username/password not validated
             response.sendRedirect("fail");
         }
     }
