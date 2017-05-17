@@ -1,21 +1,18 @@
 package Intro_fracciones;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import org.jdom.Document;         
 import org.jdom.Element;          
 import org.jdom.JDOMException;    
 import org.jdom.input.SAXBuilder; 
-import org.jdom.output.XMLOutputter;
 public class LectorXML{
    
     private List lista_usuarios;
-    private String direccion_archivo;
     
     public LectorXML(String nombre_archivo){
-        direccion_archivo=nombre_archivo;
+        
         //Se crea un SAXBuilder para poder parsear el archivo
         SAXBuilder builder = new SAXBuilder();
         

@@ -17,20 +17,20 @@ public class CrearUsuario extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Servlet1</title>");            
+            out.println("<title>Nuevo Usuario</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Crear usuario</h1>");
             out.println("<form action='GuardarUsuario' method='post'>");
-            out.println("Nombre usuario: <input type='text' placeholder='Nombre' name='nombre' id='nombre' onchange='cambio();'/>");
-            out.println("Tipo: <input type='text' placeholder='Tipo' name='tipo' id='tipo' onchange='cambio();'/>");
-            out.println("Password: <input type='password' placeholder='Password' name='pass' id='pass' onchange='cambio();'/>");
-            out.println("Confirmar Password: <input type='password' placeholder='Confirmar Password' name='confirmar_pass' id='confirmar_pass' onchange='cambio();'/>");
-            out.println("<input type='button' value='Crear Usuario' id='guardar'/>");
-            out.println("<input type='submit' value='Regresar' id='enviar'/>");
+            out.println("Nombre usuario: <input type='text' placeholder='Nombre' name='nombre' id='nombre' oninvalid=\"setCustomValidity('Escribe un usuario')\"  oninput=\"setCustomValidity('')\" required/>");
+            out.println("Tipo: <select name='tipo'>");
+                out.println("<option value='Administrador'>Administrador</option>");
+                out.println("<option value='Profesor'>Profesor</option>");
+                out.println("<option value='Alumno'>Alumno</option>");
+            out.println("</select>");
+            out.println("Password: <input type='password' placeholder='Password' name='pass' id='pass' oninvalid=\"setCustomValidity('Escribe un contraseña')\"  oninput=\"setCustomValidity('')\" required/>");
+            out.println("<button id='guardar'>Guardar Usuario</button>");
             out.println("</form>");
-            /*Con el siguiente script haremos las validaciones necesarias*/
-            out.println("<script src='js\\validarUsuario.js'></script>");
             out.println("</body>");
             out.println("</html>");
     }

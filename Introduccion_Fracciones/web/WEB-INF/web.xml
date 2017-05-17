@@ -44,6 +44,10 @@
         <servlet-name>GuardarUsuario</servlet-name>
         <servlet-class>Intro_fracciones.GuardarUsuario</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletXML1</servlet-name>
+        <servlet-class>Intro_fracciones.ServletXML1</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>GuardarUsuario</servlet-name>
         <url-pattern>/GuardarUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletXML1</servlet-name>
+        <url-pattern>/ServletXML1</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
