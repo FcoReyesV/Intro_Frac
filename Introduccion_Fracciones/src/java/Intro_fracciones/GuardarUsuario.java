@@ -23,8 +23,7 @@ import org.w3c.dom.Element;
 public class GuardarUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
        String []datos=new String[3];
        
        datos[0]=request.getParameter("nombre");
