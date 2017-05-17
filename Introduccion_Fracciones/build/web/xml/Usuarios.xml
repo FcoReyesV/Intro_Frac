@@ -12,4 +12,4 @@
 		</usuario>
                 
 	
-	</login>
+	<usuario><nombre>nuevo</nombre><pass>n</pass><tipo>Administrador</tipo></usuario></login>
