@@ -56,7 +56,6 @@ public class EliminarUsuario extends HttpServlet {
         
         // Resultado, el cual almacena en el archivo indicado
         StreamResult result = new StreamResult(archivo);
-        System.out.println(result.getSystemId());
 // Transformamos de la fuente DOM a el resultado, lo que almacena todo en el archivo
         transformer.transform(source, result);
     }

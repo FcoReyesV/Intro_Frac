@@ -83,6 +83,7 @@ public class Administrador extends HttpServlet {
                         /*Creamos un formulario que sera el encargado de enviar el nombre del usuario a modificar
                         al servlet 'Modificar'*/
                             out.println("<form action='Modificar' method='post'>");
+                            out.println("<input type='hidden' value='"+i+"' name='nodo'/>");
                             out.println("<input type='hidden' value='"+nombre[i]+"' name='userNombre'/>");
                             out.println("<input type='hidden' value='"+tipo[i]+"' name='userTipo'/>");
                             out.println("<input type='hidden' value='"+pass[i]+"' name='userPass'/>");
@@ -93,6 +94,7 @@ public class Administrador extends HttpServlet {
                         /*Creamos un formulario que sera el encargado de enviar el nombre del usuario a eliminar
                         al servlet 'EliminarUsuario'*/
                             out.println("<form action='EliminarUsuario' method='post'>");
+                            out.println("<input type='hidden' value='"+i+"' name='nodo'/>");
                             out.println("<input type='hidden' value='"+nombre[i]+"' name='userNombre'/>");
                             out.println("<input type='hidden' value='"+tipo[i]+"' name='userTipo'/>");
                             out.println("<input type='hidden' value='"+pass[i]+"' name='userPass'/>");

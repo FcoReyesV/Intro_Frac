@@ -32,10 +32,7 @@ public class Modificar extends HttpServlet {
             }       
         }
         
-        //Subimos a session el nombre,tipo y pass, ya que posteriormente los utiizaremos
-        session.setAttribute("nombreModificar", nombre);
-        session.setAttribute("tipoModificar", tipo);
-        session.setAttribute("passModificar", pass);
+        int nodo=Integer.parseInt(request.getParameter("nodo"));
         
         switch(tipo){
             case "Administrador":
@@ -69,6 +66,7 @@ public class Modificar extends HttpServlet {
             de nombre, tipo y pass del usuario que modificaremos */
             out.println("<form action='GuardarCambios' method='post'>");
             out.println("Nombre usuario: <input type='text' placeholder='Nombre' name='nombre' id='nombre' oninvalid=\"setCustomValidity('Escribe un usuario')\"  oninput=\"setCustomValidity('')\" value='"+nombre+"' required/>");
+            out.println("<input type='hidden' value='"+i+"' name='nodo'/>");
             out.println("Tipo: <select name='tipo'>");
                 out.println("<option value='"+select[0]+"'>"+select[0]+"</option>");
                 out.println("<option value='"+select[1]+"'>"+select[1]+"</option>");

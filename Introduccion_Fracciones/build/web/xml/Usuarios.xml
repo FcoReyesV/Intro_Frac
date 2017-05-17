@@ -4,7 +4,11 @@
 			<pass>admin</pass>
 			<tipo>Administrador</tipo>
 		</usuario>
-		
+		<usuario>
+			<nombre>a</nombre>
+			<pass>a</pass>
+			<tipo>Alumno</tipo>
+		</usuario>
                 <usuario>
 			<nombre>admin2</nombre>
 			<pass>admin</pass>
@@ -12,4 +16,4 @@
 		</usuario>
                 
 	
-	<usuario><nombre>nuevo</nombre><pass>n</pass><tipo>Administrador</tipo></usuario></login>
+	<usuario><nombre>KevOut</nombre><pass>k</pass><tipo>Profesor</tipo></usuario><usuario><nombre>b</nombre><pass>b</pass><tipo>Alumno</tipo></usuario></login>
