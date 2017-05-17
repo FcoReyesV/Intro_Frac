@@ -3,10 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+            <file>file:/C:/Users/Francisco/Documents/-%20TW/PROYECTO_WEB/Introduccion_Fracciones/Introduccion_Fracciones/web/login.html</file>
+=======
             <file>file:/C:/Users/KevOut/Desktop/Introduccion_Fracciones_Webay/Introduccion_Fracciones/src/java/Intro_fracciones/Login.java</file>
             <file>file:/C:/Users/KevOut/Desktop/Introduccion_Fracciones_Webay/Introduccion_Fracciones/src/java/Intro_fracciones/GuardarUsuario.java</file>
             <file>file:/C:/Users/KevOut/Desktop/Introduccion_Fracciones_Webay/Introduccion_Fracciones/src/java/Intro_fracciones/LectorXML.java</file>
             <file>file:/C:/Users/KevOut/Desktop/Introduccion_Fracciones_Webay/Introduccion_Fracciones/src/java/Intro_fracciones/CrearUsuario.java</file>
+>>>>>>> 32abd86f9df1d842863c6d2c2bcac2a22c9c9a5f
         </group>
     </open-files>
 </project-private>
