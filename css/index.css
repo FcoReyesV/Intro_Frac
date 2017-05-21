@@ -40,9 +40,9 @@ nav.navegacion>ul{
 }
 nav.navegacion>ul li{
   display: table-cell;
-
+  align-items: center;
 }
-nav.navegacion>ul li a{
+nav.navegacion>ul li a,#Cerrar-sesion{
   color: white;
   display: block;
   padding: 15px;
@@ -50,7 +50,7 @@ nav.navegacion>ul li a{
   text-decoration: none;
   font-size: 20px;
 }
-nav.navegacion>ul li a:hover{
+nav.navegacion>ul li a:hover,#Cerrar-sesion:hover,#cerrar-s:hover{
   background-color: #C39F58;
   border-radius: 8px;
   -moz-border-radius:8px;
@@ -138,4 +138,13 @@ nav.navegacion>ul li a:hover{
 .usuario-bloque{
   margin-left: 60px;  
   font-size: 20px;
+}
+
+
+#Cerrar-sesion{
+  width: 100%;
+  background:none; 
+  border:none;
+  outline:0;
+
 }

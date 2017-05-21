@@ -4,16 +4,12 @@
 			<pass>admin</pass>
 			<tipo>Administrador</tipo>
 		</usuario>
-		<usuario>
-			<nombre>a</nombre>
-			<pass>a</pass>
-			<tipo>Alumno</tipo>
-		</usuario>
+		<usuario><nombre>aa</nombre><pass>aa</pass><tipo>Alumno</tipo></usuario>
                 <usuario>
 			<nombre>admin2</nombre>
 			<pass>admin</pass>
 			<tipo>Administrador</tipo>
 		</usuario>
-                <usuario><nombre>julio</nombre><pass>profe</pass><tipo>Profesor</tipo></usuario>
+                
 	
-	</login>
+	<usuario><nombre>admin1</nombre><pass>a</pass><tipo>Administrador</tipo></usuario></login>

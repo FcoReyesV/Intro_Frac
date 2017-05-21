@@ -12,18 +12,27 @@ public class Alumno extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
-    {
+    {   
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession();
         String userName=(String)session.getAttribute("userName");
+        response.setHeader("Cache-Control", "no-cache");
+        //Fuerza a la caché para obtener una nueva copia de la página desde el servidor de origen
+        response.setHeader("Cache-Control", "no-store");
+        //Dirige a la caché a no almacenar la página bajo ninguna circunstancia
+        response.setDateHeader("Expires", 0);
+        //Provoca que la caché de proxy vea la página como "obsoleta"
+        response.setHeader("Pragma", "no-cache");
+        if(userName==null) //Verifica si está logeado algun usuario
+            response.sendRedirect("login.html");
 	PrintWriter out=response.getWriter();
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<meta charset='UTF-8'>" +  
             "<title>Introducción - Introducción a las fracciones</title>" +
-            "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">" +
-            "<link rel=\"stylesheet\" href=\"css/index.css\">");            
+            "<link rel='stylesheet' href='css/bootstrap.min.css'>" +
+            "<link rel='stylesheet' href='css/index.css'>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<header>" +
@@ -34,7 +43,11 @@ public class Alumno extends HttpServlet {
 "					<li><a href=\"#\">Crear una Fracción</a></li>" +
 "					<li><a href=\"#\">Laboratorio de Igualdad</a></li>" +
 "					<li><a href=\"#\">Ayuda</a></li>" +
-"					<li><a href=\"#\">Cerrar Sesión</a></li>" +
+"					<li>" +
+"						<form id='cerrar-s' action='CerrarSesion'>" +
+"							<input id='Cerrar-sesion' type='submit' value='Cerrar Sesión'/>\n" +
+"						</form>" +
+"					</li>" +
 "				</ul>" +
 "			</nav>" +
 "		</header>");

@@ -17,7 +17,9 @@ public class Administrador extends HttpServlet {
         HttpSession session=request.getSession();
         String userName=(String)session.getAttribute("userName");//Obtenemos nombre del administrador
         String userPassword=(String)session.getAttribute("userPassword");//Obtenemos password del administrador
-	PrintWriter out=response.getWriter();
+	if(userName==null)
+            response.sendRedirect("login.html");
+        PrintWriter out=response.getWriter();
         //Creamos un objeto de tipo LectorXML para manipular el archivo 'Usuarios.xml'
         LectorXML total_usuarios=new LectorXML(request.getRealPath("/")+"\\xml\\Usuarios.xml");
         
