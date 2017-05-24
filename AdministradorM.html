@@ -5,8 +5,9 @@
 		<title>Administrador - Introducción a las fracciones</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/admin.css">
+		<link rel="stylesheet" href="css/index.css">
 	</head>
-	<body>
+	<body id="body-admin">
 
 	<div class="container">
 		
@@ -39,7 +40,7 @@
 			        <th>Tipo</th>
 			        <th></th>
 			        <th>
-			        	<button title="Agregar nuevo usuario" class="btn-add" type="button" id="btn"> <span class="table-add glyphicon glyphicon-plus"></span>
+			        	<button title="Agregar nuevo usuario" class="btn-add" type="button" id="agregar_usuario"> <span class="table-add glyphicon glyphicon-plus"></span>
 			</button>
 
 			        </th>
@@ -66,9 +67,6 @@
 		          	
 					<form action="Modificar" method="post">
 							<input type="hidden" value="1" name="nodo">
-							<input type="hidden" value="admin2" name="userNombre">
-							<input type="hidden" value="Administrador" name="userTipo">
-							<input type="hidden" value="admin" name="userPass">
 							<button title="Actualizar datos" class="update" type="submit">
 							<span class="table-up glyphicon glyphicon-arrow-up"></span>
 		          	<span class="table-down glyphicon glyphicon-arrow-down"></span></button> 
@@ -79,7 +77,34 @@
 		      </tr>
 		    </table>
 	  	</div>
+
+			<div class="agregar-usuario">
+				<div class="form">
+					<div class="cerrar-addUser">
+					    <span id="close_add_users" title="Cerrar formulario" class="close-agregar-usuario glyphicon glyphicon-remove"></span>
+					</div>
+				    <form class="login-form" method="post" action="Login">
+				    	<input oninvalid="setCustomValidity('Escribe un usuario')"  oninput="setCustomValidity('')"
+				    	type="text" placeholder="Nombre de usuario" name="nombre" required/>
+				     	<select name='tipo' class="select-tipo form-control" title="Tipo de usuario">
+		              		<option value='Administrador'>Administrador</option>
+		               		<option value='Profesor'>Profesor</option>
+		               		<option value='Alumno'>Alumno</option>
+                		</select>
+				    	<input oninvalid="setCustomValidity('Escribe una contraseña')"  oninput="setCustomValidity('')"
+				    	type="password" placeholder="Contraseña" name="pass" required/>
+				     	<input oninvalid="setCustomValidity('Escribe una contraseña')"  oninput="setCustomValidity('')"
+				    	type="password" placeholder="Confirmar contraseña" name="pass" required/>
+				    	<button class="btn btn-success">Agregar usuario</button>
+			    </form>
+			  </div>
+			</div>
+		</div>
+
 	</div>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/script.js"></script>
 		<script src="./AdministradorM_files/Redireccionar.js.descarga"></script>
+
 	</body>
 </html>

@@ -42,12 +42,13 @@ public class Administrador extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<meta charset=\"UTF-8\">" +
-"		<title>Administrador - Introducción a las fracciones</title>" +
-"		<link rel='stylesheet' href='css/bootstrap.min.css'>" +
-"		<link rel='stylesheet' href='css/admin.css'>");            
+            out.println("<meta charset=\"UTF-8\">\n" +
+"		<title>Administrador - Introducción a las fracciones</title>\n" +
+"		<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">\n" +
+"		<link rel=\"stylesheet\" href=\"css/admin.css\">\n" +
+"		<link rel=\"stylesheet\" href=\"css/index.css\">");            
             out.println("</head>");
-            out.println("<body>");
+            out.println("<body id='body-admin'>");
             out.println("<div class=\"container\">"); //div container
             out.println("<div class=\"row\">" +
 "			<div id=\"logo-gris\" class=\"col-md-1\"></div>" +
@@ -70,8 +71,8 @@ public class Administrador extends HttpServlet {
 "			        <th>Tipo</th>" +
 "			        <th></th>" +
 "			        <th>\n" +
-"			        	<button title=\"Agregar nuevo usuario\" class=\"btn-add\" type=\"button\" id=\"btn\"> <span class=\"table-add glyphicon glyphicon-plus\"></span>" +
-"			</button>" +
+"			        	<button title=\"Agregar nuevo usuario\" class=\"btn-add\" type=\"button\" id=\"agregar_usuario\"> <span class=\"table-add glyphicon glyphicon-plus\"></span>\n" +
+"			</button>"+
 "			        </th>" +
 "		      	</thead>" +
 "		      </tr>");
@@ -145,7 +146,31 @@ public class Administrador extends HttpServlet {
             }
             out.println("</table>");
             out.println("</div>"); //div .table-editable
+            
+            out.println("<div class='agregar-usuario'>" +
+"				<div class='form'>'" +
+"					<div class='cerrar-addUser'>" +
+"					    <span id='close_add_users' title='Cerrar formulario' class='close-agregar-usuario glyphicon glyphicon-remove'></span>" +
+"					</div>\n" +
+"				    <form class='login-form' method='post' action='GuardarUsuario'>" +
+"				    	<input oninvalid='setCustomValidity('Escribe un usuario')'  oninput='setCustomValidity('')'" +
+"				    	type='text' placeholder=\"Nombre de usuario\" name=\"nombre\" required/>\n" +
+"				     	<select name='tipo' class=\"select-tipo form-control\" title=\"Tipo de usuario\">\n" +
+"		              		<option value='Administrador'>Administrador</option>\n" +
+"		               		<option value='Profesor'>Profesor</option>\n" +
+"		               		<option value='Alumno'>Alumno</option>\n" +
+"                		</select>\n" +
+"				    	<input oninvalid=\"setCustomValidity('Escribe una contraseña')\"  oninput=\"setCustomValidity('')\"\n" +
+"				    	type=\"password\" placeholder=\"Contraseña\" name=\"pass\" required/>\n" +
+"				     	<input oninvalid=\"setCustomValidity('Escribe una contraseña')\"  oninput=\"setCustomValidity('')\"\n" +
+"				    	type=\"password\" placeholder=\"Confirmar contraseña\" name=\"Pass\" required/>\n" +
+"				    	<button class=\"btn btn-success\">Agregar usuario</button>\n" +
+"			    </form>" +
+"			  </div>'" +
+"			</div>"); //div agregar usuario
             out.println("</div>"); //div containter
+            out.println("<script type=\"text/javascript\" src=\"js/jquery-3.2.1.min.js\"></script>\n" +
+"		<script type=\"text/javascript\" src=\"js/script.js\"></script>");
             out.println("<script src='js\\Redireccionar.js'></script>");
             out.println("</body>");
             out.println("</html>");

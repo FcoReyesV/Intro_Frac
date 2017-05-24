@@ -32,15 +32,15 @@ public class EliminarUsuario extends HttpServlet {
         response.sendRedirect("Administrador");
     }
     public static void EliminarNodo(String archivo_direccion,int nodo) throws Exception {
-    String xmlFile=archivo_direccion;
-    File file = new File(xmlFile);
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder builder = factory.newDocumentBuilder();
-    Document doc = (Document)builder.parse(xmlFile);
-    Element element = (Element)doc.getElementsByTagName("usuario").item(nodo);
-    //  Remove the node
-        element.getParentNode().removeChild(element);
-        escribirArchivo(doc,archivo_direccion);
+        String xmlFile=archivo_direccion;
+        File file = new File(xmlFile);
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = (Document)builder.parse(xmlFile);
+        Element element = (Element)doc.getElementsByTagName("usuario").item(nodo);
+        //  Remove the node
+            element.getParentNode().removeChild(element);
+            escribirArchivo(doc,archivo_direccion);
     }
     public static void escribirArchivo(Document documento,String direccion) throws TransformerConfigurationException, TransformerException {
         // Creamos el objecto transformador
