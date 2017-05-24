@@ -16,6 +16,7 @@ public class fail extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession();
         String userName=(String)session.getAttribute("userName");
+        String pass=(String)session.getAttribute("userPassword");
 	PrintWriter out=response.getWriter();
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -23,7 +24,8 @@ public class fail extends HttpServlet {
             out.println("<title>Servlet Servlet1</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("Fail:"+userName);
+            out.println("Fail:"+userName+"Pass: "+pass);
+            
             out.println("<a href='login.html' >Return</a>");            
             out.println("</body>");
             out.println("</html>");

@@ -1,0 +1,95 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background: rgb(241,241,241); 
+  font-family: "Arial", sans-serif;  
+}
+
+table,th{
+  text-align: center !important;
+   padding: 2px !important;
+}
+
+th{
+  font-size: 16px;
+  padding: 8px 4px!important;
+}
+
+.admin{
+	position: relative;
+  	background: #FFFFFF;
+  	max-width: 360px;
+  	margin: 30px auto 100px;
+  	padding: 30px;
+  	text-align: center;
+  	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.nombre{
+  margin-top: 30px;
+}
+
+.table-editable {
+  position: relative;
+  background-color: white; 
+  margin-top: 40px;
+
+}
+
+.glyphicon {
+    font-size: 20px;
+  }
+
+  .table-remove {
+  color: rgb(185,0,0);
+  cursor: pointer;
+}
+.table-remove:hover{
+  color:rgb(128,0,0);
+}
+
+.table-up, .table-down {
+  color: rgb(64,64,255);
+  cursor: pointer;
+}
+
+
+.table-add{
+  color: rgb(92,184,92);
+}
+
+.table-add:hover{
+  color:rgb(64,147,64);
+}
+
+.btn-cerrars{
+  margin-left: 76%;
+  margin-top: 30px;
+}
+
+.update, .btn-add{
+  background:none; 
+  border:none;
+  outline:0;
+}
+
+#logo-gris{
+  width: 30px;
+  height: 50px;
+  background: url(../images/logo-gris.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  top: 14px;
+  left:8px;
+}
+
+#logo-gris:hover{
+   -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    -webkit-transition: 0.2s;   
+    transition: 0.2s;
+}

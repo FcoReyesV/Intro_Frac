@@ -12,11 +12,20 @@ public class Profesor extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
-    {
+    {   
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession();
         String userName=(String)session.getAttribute("userName");
-        if(userName==null)
+
+        
+        response.setHeader("Cache-Control", "no-cache");
+        //Fuerza a la caché para obtener una nueva copia de la página desde el servidor de origen
+        response.setHeader("Cache-Control", "no-store");
+        //Dirige a la caché a no almacenar la página bajo ninguna circunstancia
+        response.setDateHeader("Expires", 0);
+        //Provoca que la caché de proxy vea la página como "obsoleta"
+        response.setHeader("Pragma", "no-cache");
+        if(userName==null) //Verifica si está logeado algun usuario
             response.sendRedirect("login.html");
 	PrintWriter out=response.getWriter();
             out.println("<!DOCTYPE html>");
@@ -24,8 +33,8 @@ public class Profesor extends HttpServlet {
             out.println("<head>");
             out.println("<meta charset='UTF-8'>" +  
             "<title>Introducción - Introducción a las fracciones</title>" +
-            "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">" +
-            "<link rel=\"stylesheet\" href=\"css/index.css\">");            
+            "<link rel='stylesheet' href='css/bootstrap.min.css'>" +
+            "<link rel='stylesheet' href='css/index.css'>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<header>" +
@@ -36,7 +45,11 @@ public class Profesor extends HttpServlet {
 "					<li><a href=\"#\">Crear una Fracción</a></li>" +
 "					<li><a href=\"#\">Laboratorio de Igualdad</a></li>" +
 "					<li><a href=\"#\">Ayuda</a></li>" +
-"					<li><a href=\"#\">Cerrar Sesión</a></li>" +
+"					<li>" +
+"						<form id='cerrar-s' action='CerrarSesion'>" +
+"							<input id='Cerrar-sesion' type='submit' value='Cerrar Sesión'/>\n" +
+"						</form>" +
+"					</li>" +
 "				</ul>" +
 "			</nav>" +
 "		</header>");
@@ -46,7 +59,7 @@ public class Profesor extends HttpServlet {
             out.println("<div class=\"row\">");
             out.println("<aside class=\"barra-lateral col-md-2\">");
             out.println("<div class=\"usuario-bloque\">\n" +
-"					<p>Profesor "+userName+"</p>" +
+"					<p>"+userName+"</p>" +
 "				</div>	");
             out.println("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident ipsam quis eos magni aliquam error, doloremque sapiente expedita dolore saepe eius, iste ea necessitatibus id deserunt maiores, tempora repellendus rerum.");
             out.println("</aside>");
@@ -59,3 +72,4 @@ public class Profesor extends HttpServlet {
             out.println("</html>");
     }
 }
+

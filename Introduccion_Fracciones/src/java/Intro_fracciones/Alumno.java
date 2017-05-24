@@ -16,6 +16,8 @@ public class Alumno extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession();
         String userName=(String)session.getAttribute("userName");
+
+        
         response.setHeader("Cache-Control", "no-cache");
         //Fuerza a la caché para obtener una nueva copia de la página desde el servidor de origen
         response.setHeader("Cache-Control", "no-store");

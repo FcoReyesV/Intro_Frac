@@ -12,7 +12,7 @@ public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 response.setContentType("text/html;charset=UTF-8");
-        
+            
         String Usuario=request.getParameter("Usuario");
         String Password=request.getParameter("Pass");
         HttpSession session=request.getSession();
@@ -20,7 +20,6 @@ response.setContentType("text/html;charset=UTF-8");
         session.setAttribute("userPassword",Password);
         LoginBean lb = new LoginBean(request.getRealPath("/")+"\\xml\\Usuarios.xml");
         
-      
         // Comprueba si el password o el usuario son correctos
         if(lb.validateUser(Usuario,Password)){
             LectorXML tipo_usuario=new LectorXML(request.getRealPath("/")+"\\xml\\Usuarios.xml");
@@ -32,12 +31,15 @@ response.setContentType("text/html;charset=UTF-8");
                if(nombre[i].equals(Usuario) &&pass[i].equals(Password)){
                    switch(tipo[i]){
                        case "Administrador":
+                           session.setAttribute("tipoUsuario",tipo[i]);
                            response.sendRedirect("Administrador");
                        break;
                        case "Profesor":
+                           session.setAttribute("tipoUsuario",tipo[i]);
                            response.sendRedirect("Profesor");
                        break;
                        case "Alumno":
+                           session.setAttribute("tipoUsuario",tipo[i]);
                            response.sendRedirect("Alumno");
                        break;
                    }

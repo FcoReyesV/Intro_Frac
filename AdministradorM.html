@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Administrador - Introducción a las fracciones</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/admin.css">
+	</head>
+	<body>
+
+	<div class="container">
+		
+		
+		<div class="row">
+			<div id="logo-gris" class="col-md-1"></div>
+			<div class="col-md-2">
+				<h3 class="nombre">Admnistrador: </h3>
+			</div>
+			<div class="col-md-1 col-md-offset-8">
+				<div class="btn-cerrars">
+					<form id="cerrar-s" action="CerrarSesion">
+						<input class="btn btn-primary" type="submit" value="Cerrar Sesión"/>
+					</form>
+				</div>
+				
+			</div>
+		</div>
+		
+		
+
+		<div id="table" class="table-editable">
+		   
+			
+		    
+		    <table class="table table-hover">
+		      <tr>
+		      	<thead>
+		      		<th>Nombre</th>
+			        <th>Tipo</th>
+			        <th></th>
+			        <th>
+			        	<button title="Agregar nuevo usuario" class="btn-add" type="button" id="btn"> <span class="table-add glyphicon glyphicon-plus"></span>
+			</button>
+
+			        </th>
+		      	</thead>
+		        
+		      </tr>
+		      <tr>
+		        <td>admin2</td>
+		        <td>Administrador</td>
+		        <td>
+		        	<form action='EliminarUsuario' method='post'>
+                            <input type='hidden' value='"+i+"' name='nodo'/>
+                            <input type='hidden' value='"+nombre[i]+"' name='userNombre'/>
+                            <input type='hidden' value='"+tipo[i]+"' name='userTipo'/>
+                            <input type='hidden' value='"+pass[i]+"' name='userPass'/>
+                            <button title="Eliminar Usuario" class="update" type="submit">
+							 <span title="Eliminar usuario" class="table-remove glyphicon glyphicon-remove"></span>
+							 </button> 
+
+                            </form>
+		         
+		        </td>
+		        <td>
+		          	
+					<form action="Modificar" method="post">
+							<input type="hidden" value="1" name="nodo">
+							<input type="hidden" value="admin2" name="userNombre">
+							<input type="hidden" value="Administrador" name="userTipo">
+							<input type="hidden" value="admin" name="userPass">
+							<button title="Actualizar datos" class="update" type="submit">
+							<span class="table-up glyphicon glyphicon-arrow-up"></span>
+		          	<span class="table-down glyphicon glyphicon-arrow-down"></span></button> 
+					</form>
+
+
+		        </td>
+		      </tr>
+		    </table>
+	  	</div>
+	</div>
+		<script src="./AdministradorM_files/Redireccionar.js.descarga"></script>
+	</body>
+</html>
