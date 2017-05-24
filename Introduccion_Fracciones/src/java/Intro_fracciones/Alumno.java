@@ -26,7 +26,7 @@ public class Alumno extends HttpServlet {
         //Provoca que la caché de proxy vea la página como "obsoleta"
         response.setHeader("Pragma", "no-cache");
         if(userName==null) //Verifica si está logeado algun usuario
-            response.sendRedirect("login.html");
+            response.sendRedirect("Inicio");
 	PrintWriter out=response.getWriter();
             out.println("<!DOCTYPE html>");
             out.println("<html>");

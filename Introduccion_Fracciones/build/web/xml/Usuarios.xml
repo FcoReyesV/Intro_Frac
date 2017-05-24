@@ -1,15 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><login>
-		<usuario>
-			<nombre>admin</nombre>
-			<pass>admin</pass>
-			<tipo>Administrador</tipo>
-		</usuario>
-		
-                
-                <usuario>
-			<nombre>b</nombre>
-			<pass>b</pass>
-			<tipo>Profesor</tipo>
-		</usuario>
-	
-	<usuario><nombre>a</nombre><pass>a</pass><tipo>Alumno</tipo></usuario><usuario><nombre>GaboPutoyGay</nombre><pass>ggesneta</pass><tipo>Profesor</tipo></usuario></login>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><login xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Usuarios_esquema.xsd">
+	<usuario>
+		<nombre>admin</nombre>
+		<pass>admin</pass>
+		<tipo>Administrador</tipo>
+	</usuario>
+<usuario><nombre>aa</nombre><pass>aa</pass><tipo>Administrador</tipo></usuario><usuario><nombre>aaa</nombre><pass>a</pass><tipo>Profesor</tipo></usuario></login>

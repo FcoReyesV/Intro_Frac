@@ -17,15 +17,18 @@ public class Administrador extends HttpServlet {
         HttpSession session=request.getSession();
         String userName=(String)session.getAttribute("userName");//Obtenemos nombre del administrador
         String userPassword=(String)session.getAttribute("userPassword");//Obtenemos password del administrador
-	response.setHeader("Cache-Control", "no-cache");
+	
+        response.setHeader("Cache-Control", "no-cache");
         //Fuerza a la caché para obtener una nueva copia de la página desde el servidor de origen
         response.setHeader("Cache-Control", "no-store");
         //Dirige a la caché a no almacenar la página bajo ninguna circunstancia
         response.setDateHeader("Expires", 0);
         //Provoca que la caché de proxy vea la página como "obsoleta"
         response.setHeader("Pragma", "no-cache");
-        if(userName==null) //Verifica si está logeado algun usuario
-            response.sendRedirect("login.html");
+        if(userName==null && userPassword==null) //Verifica si está logeado algun usuario
+            response.sendRedirect("Inicio");
+        
+        
         PrintWriter out=response.getWriter();
         //Creamos un objeto de tipo LectorXML para manipular el archivo 'Usuarios.xml'
         LectorXML total_usuarios=new LectorXML(request.getRealPath("/")+"\\xml\\Usuarios.xml");
@@ -96,9 +99,7 @@ public class Administrador extends HttpServlet {
                         al servlet 'EliminarUsuario'*/
                             out.println("<form action='EliminarUsuario' method='post'>");
                             out.println("<input type='hidden' value='"+i+"' name='nodo'/>");
-                            out.println("<input type='hidden' value='"+nombre[i]+"' name='userNombre'/>");
-                            out.println("<input type='hidden' value='"+tipo[i]+"' name='userTipo'/>");
-                            out.println("<input type='hidden' value='"+pass[i]+"' name='userPass'/>");
+                            
                             out.println("<button title=\"Eliminar Usuario\" class=\"update\" type=\"submit\">" +
 "							 <span title=\"Eliminar usuario\" class=\"table-remove glyphicon glyphicon-remove\"></span>" +
 "							 </button> ");

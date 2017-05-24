@@ -8,14 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.jdom.input.SAXBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -32,16 +31,15 @@ public class EliminarUsuario extends HttpServlet {
         response.sendRedirect("Administrador");
     }
     public static void EliminarNodo(String archivo_direccion,int nodo) throws Exception {
-    String xmlFile=archivo_direccion;
-    File file = new File(xmlFile);
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder builder = factory.newDocumentBuilder();
-    Document doc = (Document)builder.parse(xmlFile);
-    Element element = (Element)doc.getElementsByTagName("usuario").item(nodo);
-//  Remove the node
-    element.getParentNode().removeChild(element);
-    escribirArchivo(doc,archivo_direccion);
-
+        SAXBuilder builder = new SAXBuilder();
+        String xmlFile=archivo_direccion;
+        File file = new File(xmlFile);
+       
+        Document doc = (Document) builder.build(xmlFile);
+        Element element = (Element)doc.getElementsByTagName("usuario").item(nodo);
+    //  Remove the node
+        element.getParentNode().removeChild(element);
+        escribirArchivo(doc,archivo_direccion);
     }
     public static void escribirArchivo(Document documento,String direccion) throws TransformerConfigurationException, TransformerException {
         // Creamos el objecto transformador
@@ -56,7 +54,7 @@ public class EliminarUsuario extends HttpServlet {
         
         // Resultado, el cual almacena en el archivo indicado
         StreamResult result = new StreamResult(archivo);
-// Transformamos de la fuente DOM a el resultado, lo que almacena todo en el archivo
+        // Transformamos de la fuente DOM a el resultado, lo que almacena todo en el archivo
         transformer.transform(source, result);
     }
 }

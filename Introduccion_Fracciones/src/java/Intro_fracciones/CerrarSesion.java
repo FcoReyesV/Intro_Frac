@@ -13,7 +13,8 @@ public class CerrarSesion extends HttpServlet {
             throws ServletException, IOException {   
         HttpSession session=request.getSession();
         session.removeAttribute("userName");
+        session.removeAttribute("userPassword");
         session.invalidate();
-        response.sendRedirect("login.html");
+        response.sendRedirect("Inicio");
     }
  }
