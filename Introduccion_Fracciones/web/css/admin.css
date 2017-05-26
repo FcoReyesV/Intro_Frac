@@ -48,12 +48,18 @@ th{
 }
 .table-remove:hover{
   color:rgb(128,0,0);
+  -webkit-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  transform: scale(1.2);
+  -webkit-transition: 0.2s;
 }
 
 .table-up, .table-down {
   color: rgb(64,64,255);
   cursor: pointer;
+
 }
+
 
 
 .table-add{
@@ -62,6 +68,10 @@ th{
 
 .table-add:hover{
   color:rgb(64,147,64);
+  -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    -webkit-transition: 0.2s;
 }
 
 .btn-cerrars{
@@ -73,6 +83,12 @@ th{
   background:none; 
   border:none;
   outline:0;
+}
+.update:hover{
+  -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    -webkit-transition: 0.2s;
 }
 
 #logo-gris{
@@ -91,6 +107,7 @@ th{
     transform: scale(1.1);
     -webkit-transition: 0.2s;   
     transition: 0.2s;
+
 }
 
 .agregar-usuario{
@@ -114,4 +131,16 @@ th{
   font-size: 30px;
   color: rgb(185,0,0);
   cursor: pointer;
+}
+
+.modificar-usuario{
+  display: none;
+}
+label{
+  color:rgb(169,0,0) !important;
+  font-size: 12px ;
+}
+.error-form{
+  
+  border: 1px solid rgb(169,0,0) !important;
 }

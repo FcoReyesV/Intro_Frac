@@ -52,6 +52,10 @@
         <servlet-name>Inicio</servlet-name>
         <servlet-class>Intro_fracciones.Inicio</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdministradorPrueba</servlet-name>
+        <servlet-class>Intro_fracciones.AdministradorPrueba</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -103,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>Inicio</servlet-name>
         <url-pattern>/Inicio</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdministradorPrueba</servlet-name>
+        <url-pattern>/AdministradorPrueba</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

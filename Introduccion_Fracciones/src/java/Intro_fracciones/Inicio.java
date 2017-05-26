@@ -26,7 +26,7 @@ response.setContentType("text/html;charset=UTF-8");
         if(tipo != null){
             switch(tipo){
                        case "Administrador":
-                           response.sendRedirect("Administrador");
+                           response.sendRedirect("AdministradorPrueba");
                        break;
                        case "Profesor":
                            response.sendRedirect("Profesor");

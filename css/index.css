@@ -111,12 +111,17 @@ nav.navegacion>ul li a:hover,#Cerrar-sesion:hover,#cerrar-s:hover{
   border-radius: 5px;
 }
 .form input:focus{
+  background-color: rgb(230,230,230);
   border: 1px solid rgb(102,175,233);
   -webkit-transition: 0.3s;   
   transition: 0.3s;
   -moz-box-shadow: 0 0 1px 1px rgba(140,140,140,0.33);
   -webkit-box-shadow: 0 0 1px 1px rgba(140,140,140,0.33);
   box-shadow: 0 0 1px 1px rgba(140,140,140,0.33);
+}
+
+.form input:hover{
+  background-color: rgb(230,230,230);
 }
 .form button {
   text-transform: uppercase;
