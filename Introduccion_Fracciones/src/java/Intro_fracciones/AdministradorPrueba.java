@@ -81,6 +81,7 @@ public class AdministradorPrueba extends HttpServlet {
                         out.println("<tr>");
                         out.println("<td>"+nombre[i]+"</td>");
                         out.println("<td>"+tipo[i]+"</td>");
+                        out.println("<td class='ocular-nodo'>"+i+"</td>");
                         out.println("<td>");
                         out.println("<button class=\"actualizar_datos update\" title=\"Actualizar datos\" type=\"submit\">\n" +
 "							<span class=\"table-up glyphicon glyphicon-arrow-up\"></span>\n" +
@@ -160,23 +161,24 @@ public class AdministradorPrueba extends HttpServlet {
             out.println("<div class=\"modificar-usuario\">\n" +
 "				<div class=\"form\">\n" +
 "					<div class=\"cerrar-addUser\">\n" +
-"					    <span id=\"close_update_users\" title=\"Cerrar formulario\" class=\"close-agregar-usuario glyphicon glyphicon-remove\"></span>\n" +
+"					    <span id=\"close_add_users\" title=\"Cerrar formulario\" class=\"close-agregar-usuario glyphicon glyphicon-remove\"></span>\n" +
 "					</div>\n" +
-"				    <form class=\"login-form validationFormUpdt\" method=\"post\" action=\"GuardarCambios\">	\n" +
-"				    	<input type='hidden' value='\"1\"' name='nodo'/>\n" +
-"				    	<input id=\"nombre_usuario\" oninvalid=\"setCustomValidity('Escribe un usuario')\"  oninput=\"setCustomValidity('')\"\n" +
-"				    	type=\"text\" placeholder=\"Nombre de usuario\" name=\"nombre\" required/>\n" +
-"				     	<select id=\"tipo_usuario\" name='tipo' class=\"select-tipo form-control\" title=\"Tipo de usuario\">\n" +
+"				    <form id=\"validationForm\" class=\"add-form login-form\" method=\"post\" action='GuardarCambios'>\n" +
+"				    	<input id=\"nodo\" type='hidden' name='nodo'/>\n" +
+"				    	<input id='nombre_usuario' type=\"text\" placeholder=\"Nombre de usuario\" name=\"nombre\"/>\n" +
+"				     	<select id='tipo_usuario' name='tipo' class=\"select-tipo form-control\" title=\"Tipo de usuario\">\n" +
 "		              		<option value='Administrador'>Administrador</option>\n" +
 "		               		<option value='Profesor'>Profesor</option>\n" +
 "		               		<option value='Alumno'>Alumno</option>\n" +
 "                		</select>\n" +
-"				    	<input class=\"pass_input passm1\" oninvalid=\"setCustomValidity('Escribe una contraseña')\"  oninput=\"setCustomValidity('')\"\n" +
-"				    	type=\"password\" placeholder=\"Contraseña\" name=\"pass\" required/>\n" +
-"				     	<input class=\"pass_input passm2\" oninvalid=\"setCustomValidity('Escribe una contraseña')\"  oninput=\"setCustomValidity('')\"\n" +
-"				    	type=\"password\" placeholder=\"Confirmar contraseña\" name=\"pass\" required/>\n" +
-"				    	<div class=\"error\">La contraseñas no coinciden</div>\n" +
-"				    	<button id=\"btn_updt_user\">Guardar cambios</button>\n" +
+"						\n" +
+"							<input  class='pass_input' id=\"pass\" type=\"password\" placeholder=\"Contraseña\" name=\"pass\" />\n" +
+"						\n" +
+"				    	\n" +
+"				    		<input  class='pass_input' type=\"password\" placeholder=\"Confirmar contraseña\" name=\"pass2\"/>\n" +
+"				    	\n" +
+"				     	\n" +
+"				    	<button id=\"btn_updt_user\" class=\"btn btn-success\">Guardar cambios</button>\n" +
 "			    	</form>\n" +
 "			  	</div>\n" +
 "			</div>"); //modificar un usuario

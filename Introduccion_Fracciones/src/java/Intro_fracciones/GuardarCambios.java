@@ -3,6 +3,7 @@ package Intro_fracciones;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -40,11 +41,10 @@ public class GuardarCambios extends HttpServlet {
             Logger.getLogger(GuardarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
        
-       response.sendRedirect("Administrador");
+       response.sendRedirect("AdministradorPrueba");
     }
 public static void ModificarNodo(String archivo_direccion,String datos[],int nodo) throws Exception {
     String xmlFile=archivo_direccion;
-    File file = new File(xmlFile);
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     DocumentBuilder builder = factory.newDocumentBuilder();
     Document doc = (Document)builder.parse(xmlFile);
@@ -61,12 +61,12 @@ public static void ModificarNodo(String archivo_direccion,String datos[],int nod
     usuario.appendChild(nombre);
     usuario.appendChild(pass);
     usuario.appendChild(tipo);
+
     
     Element root=(Element)doc.getElementsByTagName("usuario").item(nodo);
     root.getParentNode().replaceChild(usuario, root);
     escribirArchivo(doc,archivo_direccion);
-
-    }
+}
     public static void escribirArchivo(Document documento,String direccion) throws TransformerConfigurationException, TransformerException {
         // Creamos el objecto transformador
         TransformerFactory transformerFactory = TransformerFactory.newInstance();

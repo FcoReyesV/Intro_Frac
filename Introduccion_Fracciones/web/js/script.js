@@ -20,12 +20,13 @@ $(document).ready(function(){
 
 		$(".actualizar_datos").on( "click", function() {
 
-
 			var $nombre = $(this).parents("tr").find("td").eq(0).text();
 			var $tipo = $(this).parents("tr").find("td").eq(1).text();
+			var $nodo = $(this).parents("tr").find("td").eq(2).text();
 
 			$("#nombre_usuario").val($nombre);
 			$("#tipo_usuario").val($tipo);
+			$("#nodo").val($nodo);
 
 			$modificar_usuario.show(); 
 			 
@@ -109,7 +110,7 @@ $(document).ready(function(){
 		  });
 		
 
-	});
+});
         
    
 
