@@ -78,7 +78,7 @@
 					</div>
 				    <form id="validationForm" class="add-form login-form" method="post" action='GuardarUsuario'>
 				    	
-				    		<input type="text" placeholder="Nombre de usuario" name="nombre"/>
+				    	<input id="nombre" type="text" placeholder="Nombre de usuario" name="nombre"/>
 				    
 				    	
 				     	<select name='tipo' class="select-tipo form-control" title="Tipo de usuario">
@@ -104,18 +104,18 @@
 			<div class="modificar-usuario">
 				<div class="form">
 					<div class="cerrar-addUser">
-					    <span id="close_add_users" title="Cerrar formulario" class="close-agregar-usuario glyphicon glyphicon-remove"></span>
+					    <span id="close_update_users" title="Cerrar formulario" class="close-agregar-usuario glyphicon glyphicon-remove"></span>
 					</div>
-				    <form id="validationForm" class="add-form login-form" method="post" action='GuardarCambios'>
+				    <form id="validationFormUpdt" class="add-form login-form" method="post" action='GuardarCambios'>
 				    	<input id="nodo" type='hidden' name='nodo'/>
-				    	<input id='nombre_usuario' type="text" placeholder="Nombre de usuario" name="nombre"/>
+				    	<input id='nombre_usuario' class="name-disabled" type="text" placeholder="Nombre de usuario" name="nombre" disabled/>
 				     	<select id='tipo_usuario' name='tipo' class="select-tipo form-control" title="Tipo de usuario">
 		              		<option value='Administrador'>Administrador</option>
 		               		<option value='Profesor'>Profesor</option>
 		               		<option value='Alumno'>Alumno</option>
                 		</select>
 						
-							<input  class='pass_input' id="pass" type="password" placeholder="Contraseña" name="pass" />
+							<input  class='pass_input' id="pass_updt" type="password" placeholder="Contraseña" name="pass" />
 						
 				    	
 				    		<input  class='pass_input' type="password" placeholder="Confirmar contraseña" name="pass2"/>

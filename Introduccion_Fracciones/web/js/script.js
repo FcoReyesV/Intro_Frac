@@ -7,13 +7,14 @@ $(document).ready(function(){
 			$agregar_usuario.show(); 
 			 
 			$table_editable.hide(); 
+
 		 });
 		$("#close_add_users").on("click", function(){
 			$(".login-form")[0].reset(); //objeto jquery para resetear el formulario
 			$agregar_usuario.hide();
 			$table_editable.show(); 
 			$("label").hide();
-			 $('.add-form,input').removeClass('error-form');
+			$('.add-form,input').removeClass('error-form');
 
 		});
 
@@ -32,7 +33,7 @@ $(document).ready(function(){
 			 
 			$table_editable.hide(); 
 
-			$.get('../Introduccion_Fracciones/xml/Usuarios.xml', function(d){ //.get es el equivalente de ajax en jquery 
+			$.post('../Introduccion_Fracciones/xml/Usuarios.xml', function(d){ //metodo .post  de ajax en jquery 
 		        $(d).find('usuario').each(function(){
 
 		            var $usuario = $(this); 
@@ -45,13 +46,16 @@ $(document).ready(function(){
 			
 
 		 });
-
-
+		$("#btn_updt_user").on("click",function(){
+			$("#nombre_usuario").removeAttr('disabled');
+		});
 
 		$("#close_update_users").on("click", function(){
 			$(".login-form")[0].reset();
 			$modificar_usuario.hide(); 
 			$table_editable.show();  
+			$("label").hide();
+			$('.add-form,input').removeClass('error-form');
 		});
 
 
@@ -76,26 +80,63 @@ $(document).ready(function(){
 		      && /[a-z]/i.test(value);
  		 }, 'La contraseña debe tener al menos 4 caracteres y contener al menos un número y un caracter');
 		
-		$("#validationForm").validate({ //funcion de jQuery para validar formularios, en este caso el de agregar usuarios
-		    rules: {
-		      nombre: {
-		      	required: true,
-		      	minlength: 4
-		      },
+
+    	$("#validationForm").validate({ //funcion de jQuery para validar formularios, en este caso el de agregar usuarios
+			    rules: {
+			      nombre: {
+			      	required: true,
+			      	minlength: 4,
+			      	remote:{
+			      		url: "../Introduccion_Fracciones/UsuariosExistentesAjax",
+      					type: "post",
+      					data: {
+			          		nombre: function() {
+			           			return $("#validationForm #nombre").val();
+                                                }
+          				}
+			      	}
+			      },
+			      pass: {
+			        required: true,
+			        strongPassword: true
+			      },
+			      pass2: {
+			      	required: true,
+			      	equalTo: '#pass'
+			      }
+			    },
+			    messages: {
+			      nombre: {
+			      	required:'Ingresa un nombre de usuario',
+			      	minlength: 'El nombre debe tener al menos 4 caracteres',
+                    remote:  $.validator.format("El usuario {0} ya existe")
+			      },
+			      pass:{
+			      	required: 'Ingresa una contraseña'
+			      },
+			      pass2: {
+			      	required: 'Ingresa una contraseña',
+			      	equalTo: 'Las contraseñas son diferentes'
+			      }
+			    },
+			    submitHandler: function(form) {
+			      form.submit();
+			    }
+                        
+		});
+		
+		$("#validationFormUpdt").validate({
+			rules: {
 		      pass: {
 		        required: true,
 		        strongPassword: true
 		      },
 		      pass2: {
 		      	required: true,
-		      	equalTo: '#pass'
+		      	equalTo: '#pass_updt'
 		      }
 		    },
 		    messages: {
-		      nombre: {
-		      	required:'Ingresa un nombre de usuario',
-		      	minlength: 'El nombre debe tener al menos 4 caracteres'
-		      },
 		      pass:{
 		      	required: 'Ingresa una contraseña'
 		      },
@@ -107,8 +148,8 @@ $(document).ready(function(){
 		    submitHandler: function(form) {
 		      form.submit();
 		    }
-		  });
-		
+		});
+
 
 });
         

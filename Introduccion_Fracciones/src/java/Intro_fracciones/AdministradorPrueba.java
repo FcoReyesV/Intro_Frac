@@ -139,7 +139,7 @@ public class AdministradorPrueba extends HttpServlet {
 "					</div>\n" +
 "				    <form id=\"validationForm\" class=\"add-form login-form\" method=\"post\" action='GuardarUsuario'>\n" +
 "				    	\n" +
-"				    		<input type=\"text\" placeholder=\"Nombre de usuario\" name=\"nombre\"/>\n" +
+"				    	<input id=\"nombre\" type=\"text\" placeholder=\"Nombre de usuario\" name=\"nombre\"/>\n" +
 "				    \n" +
 "				    	\n" +
 "				     	<select name='tipo' class=\"select-tipo form-control\" title=\"Tipo de usuario\">\n" +
@@ -161,18 +161,18 @@ public class AdministradorPrueba extends HttpServlet {
             out.println("<div class=\"modificar-usuario\">\n" +
 "				<div class=\"form\">\n" +
 "					<div class=\"cerrar-addUser\">\n" +
-"					    <span id=\"close_add_users\" title=\"Cerrar formulario\" class=\"close-agregar-usuario glyphicon glyphicon-remove\"></span>\n" +
+"					    <span id=\"close_update_users\" title=\"Cerrar formulario\" class=\"close-agregar-usuario glyphicon glyphicon-remove\"></span>\n" +
 "					</div>\n" +
-"				    <form id=\"validationForm\" class=\"add-form login-form\" method=\"post\" action='GuardarCambios'>\n" +
+"				    <form id=\"validationFormUpdt\" class=\"add-form login-form\" method=\"post\" action='GuardarCambios'>\n" +
 "				    	<input id=\"nodo\" type='hidden' name='nodo'/>\n" +
-"				    	<input id='nombre_usuario' type=\"text\" placeholder=\"Nombre de usuario\" name=\"nombre\"/>\n" +
+"				    	<input id='nombre_usuario' class=\"name-disabled\" type=\"text\" placeholder=\"Nombre de usuario\" name=\"nombre\" disabled/>\n" +
 "				     	<select id='tipo_usuario' name='tipo' class=\"select-tipo form-control\" title=\"Tipo de usuario\">\n" +
 "		              		<option value='Administrador'>Administrador</option>\n" +
 "		               		<option value='Profesor'>Profesor</option>\n" +
 "		               		<option value='Alumno'>Alumno</option>\n" +
 "                		</select>\n" +
 "						\n" +
-"							<input  class='pass_input' id=\"pass\" type=\"password\" placeholder=\"Contraseña\" name=\"pass\" />\n" +
+"							<input  class='pass_input' id=\"pass_updt\" type=\"password\" placeholder=\"Contraseña\" name=\"pass\" />\n" +
 "						\n" +
 "				    	\n" +
 "				    		<input  class='pass_input' type=\"password\" placeholder=\"Confirmar contraseña\" name=\"pass2\"/>\n" +

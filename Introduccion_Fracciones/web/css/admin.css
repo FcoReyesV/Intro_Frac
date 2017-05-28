@@ -19,13 +19,13 @@ th{
 }
 
 .admin{
-	position: relative;
-  	background: #FFFFFF;
-  	max-width: 360px;
-  	margin: 30px auto 100px;
-  	padding: 30px;
-  	text-align: center;
-  	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  position: relative;
+    background: #FFFFFF;
+    max-width: 360px;
+    margin: 30px auto 100px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
 .nombre{
@@ -147,4 +147,9 @@ label{
 
 .ocular-nodo{
     display:none;
+}
+
+.name-disabled{
+  background-color: rgb(230,230,230) !important;
+  border-color: rgb(230,230,230) !important;
 }
