@@ -53,7 +53,7 @@ public class Administrador extends HttpServlet {
             out.println("<div class=\"row\">" +
 "			<div id=\"logo-gris\" class=\"col-md-1\"></div>" +
 "			<div class=\"col-md-2\">" +
-"				<h3 class=\"nombre\">Admnistrador:"+userName+"</h3>" +
+"				<h3 class=\"nombre\">Admnistrador:<p id=\"cabecera_usuario\">"+userName+"</p></h3>" +
 "			</div>" +
 "			<div class=\"col-md-1 col-md-offset-8\">" +
 "				<div class=\"btn-cerrars\">" +
@@ -64,36 +64,27 @@ public class Administrador extends HttpServlet {
 "			</div>" +
 "		</div>");
             out.println("<div id='table' class='table-editable'>");
-            out.println("<table class='table table-hover'>");
+            out.println("<table id=\"tabla_usuarios\" class=\"table table-hover\">");
                 out.println(" <tr>" +
 "		      	<thead>" +
 "		      		<th>Nombre</th>" +
 "			        <th>Tipo</th>" +
 "			        <th></th>" +
 "			        <th>\n" +
-"			        	<button title=\"Agregar nuevo usuario\" class=\"btn-add\" type=\"button\" id=\"agregar_usuario\"> <span class=\"table-add glyphicon glyphicon-plus\"></span>\n" +
-"			</button>"+
+                        "<button title=\"Agregar nuevo usuario\" class=\"btn-add\" type=\"button\" id=\"agregar_usuario\"> <span class=\"table-add glyphicon glyphicon-plus\"></span>"+
 "			        </th>" +
 "		      	</thead>" +
 "		      </tr>");
-            if(userName.equals("admin")){//Validamos que no pueda Modificar o Eliminar a otros administradores, en caso de no ser el 'admin'
                 for(int i=0;i<numero_usuarios;i++){
-                    if(!(nombre[i].equals(userName))||!(pass[i].equals(userPassword))){//Validamos que el administrador no se muestre a si mismo
+              
                         out.println("<tr>");
                         out.println("<td>"+nombre[i]+"</td>");
                         out.println("<td>"+tipo[i]+"</td>");
+                        out.println("<td class='ocular-nodo'>"+i+"</td>");
                         out.println("<td>");
-                        /*Creamos un formulario que sera el encargado de enviar el nombre del usuario a modificar
-                        al servlet 'Modificar'*/
-                            out.println("<form action='Modificar' method='post'>");
-                            out.println("<input type='hidden' value='"+i+"' name='nodo'/>");
-                            out.println("<input type='hidden' value='"+nombre[i]+"' name='userNombre'/>");
-                            out.println("<input type='hidden' value='"+tipo[i]+"' name='userTipo'/>");
-                            out.println("<input type='hidden' value='"+pass[i]+"' name='userPass'/>");
-                            out.println("<button title=\"Actualizar datos\" class=\"update\" type=\"submit\">" +
-"							<span class=\"table-up glyphicon glyphicon-arrow-up\"></span>" +
+                        out.println("<button class=\"actualizar_datos update\" title=\"Actualizar datos\" type=\"submit\">\n" +
+"							<span class=\"table-up glyphicon glyphicon-arrow-up\"></span>\n" +
 "		          	<span class=\"table-down glyphicon glyphicon-arrow-down\"></span></button> ");
-                            out.println("</form>");
                         out.println("</td>");
                         out.println("<td>");
                         /*Creamos un formulario que sera el encargado de enviar el nombre del usuario a eliminar
@@ -107,71 +98,65 @@ public class Administrador extends HttpServlet {
                             out.println("</form>");
                         out.println("</td>");
                         out.println("</tr>");
-                    }
+                    
                 }                
-            }else{
-                for(int i=0;i<numero_usuarios;i++){
-                    if(!(tipo[i].equals("Administrador"))&&(!(nombre[i].equals(userName))||!(pass[i].equals(userPassword)))){
-                    //Validamos que el administrador no vea otros administradores ni a si mismo
-                        out.println("<tr>");
-                        out.println("<td>"+nombre[i]+"</td>");
-                        out.println("<td>"+tipo[i]+"</td>");
-                        out.println("<td>");
-                        out.println("<td>");
-                        /*Creamos un formulario que sera el encargado de enviar el nombre del usuario a modificar
-                        al servlet 'Modificar'*/
-                            out.println("<form action='Modificar' method='post'>");
-                            out.println("<input type='hidden' value='"+i+"' name='nodo'/>");
-                            out.println("<input type='hidden' value='"+nombre[i]+"' name='userNombre'/>");
-                            out.println("<input type='hidden' value='"+tipo[i]+"' name='userTipo'/>");
-                            out.println("<input type='hidden' value='"+pass[i]+"' name='userPass'/>");
-                            out.println("<input type='submit' value='Modificar'/>");
-                            out.println("</form>");
-                        out.println("</td>");
-                        out.println("<td>");
-                        /*Creamos un formulario que sera el encargado de enviar el nombre del usuario a eliminar
-                        al servlet 'EliminarUsuario'*/
-                            out.println("<form action='EliminarUsuario' method='post'>");
-                            out.println("<input type='hidden' value='"+i+"' name='nodo'/>");
-                            out.println("<input type='hidden' value='"+nombre[i]+"' name='userNombre'/>");
-                            out.println("<input type='hidden' value='"+tipo[i]+"' name='userTipo'/>");
-                            out.println("<input type='hidden' value='"+pass[i]+"' name='userPass'/>");
-                            out.println("<input type='submit' value='Eliminar'/>");
-                            out.println("</form>");
-                        out.println("</td>");
-                        out.println("</tr>");
-                        
-                    }
-                }
-            }
             out.println("</table>");
             out.println("</div>"); //div .table-editable
             
-            out.println("<div class='agregar-usuario'>" +
-"				<div class='form'>'" +
-"					<div class='cerrar-addUser'>" +
-"					    <span id='close_add_users' title='Cerrar formulario' class='close-agregar-usuario glyphicon glyphicon-remove'></span>" +
+            out.println("<div class=\"agregar-usuario\">\n" +
+"				<div class=\"form\">\n" +
+"					<div class=\"cerrar-addUser\">\n" +
+"					    <span id=\"close_add_users\" title=\"Cerrar formulario\" class=\"close-agregar-usuario glyphicon glyphicon-remove\"></span>\n" +
 "					</div>\n" +
-"				    <form class='login-form' method='post' action='GuardarUsuario'>" +
-"				    	<input oninvalid='setCustomValidity('Escribe un usuario')'  oninput='setCustomValidity('')'" +
-"				    	type='text' placeholder=\"Nombre de usuario\" name=\"nombre\" required/>\n" +
+"				    <form id=\"validationForm\" class=\"add-form login-form\" method=\"post\" action='GuardarUsuario'>\n" +
+"				    	\n" +
+"				    	<input id=\"nombre\" type=\"text\" placeholder=\"Nombre de usuario\" name=\"nombre\"/>\n" +
+"				    \n" +
+"				    	\n" +
 "				     	<select name='tipo' class=\"select-tipo form-control\" title=\"Tipo de usuario\">\n" +
 "		              		<option value='Administrador'>Administrador</option>\n" +
 "		               		<option value='Profesor'>Profesor</option>\n" +
 "		               		<option value='Alumno'>Alumno</option>\n" +
 "                		</select>\n" +
-"				    	<input oninvalid=\"setCustomValidity('Escribe una contraseña')\"  oninput=\"setCustomValidity('')\"\n" +
-"				    	type=\"password\" placeholder=\"Contraseña\" name=\"pass\" required/>\n" +
-"				     	<input oninvalid=\"setCustomValidity('Escribe una contraseña')\"  oninput=\"setCustomValidity('')\"\n" +
-"				    	type=\"password\" placeholder=\"Confirmar contraseña\" name=\"Pass\" required/>\n" +
-"				    	<button class=\"btn btn-success\">Agregar usuario</button>\n" +
-"			    </form>" +
-"			  </div>'" +
+"						\n" +
+"							<input  id=\"pass\" type=\"password\" placeholder=\"Contraseña\" name=\"pass\" />\n" +
+"						\n" +
+"				    	\n" +
+"				    		<input  type=\"password\" placeholder=\"Confirmar contraseña\" name=\"pass2\"/>\n" +
+"				    	\n" +
+"				     	\n" +
+"				    	<button id=\"btn_add_user\" class=\"btn btn-success\">Agregar usuario</button>\n" +
+"			    	</form>\n" +
+"			  	</div>\n" +
 "			</div>"); //div agregar usuario
+            out.println("<div class=\"modificar-usuario\">\n" +
+"				<div class=\"form\">\n" +
+"					<div class=\"cerrar-addUser\">\n" +
+"					    <span id=\"close_update_users\" title=\"Cerrar formulario\" class=\"close-agregar-usuario glyphicon glyphicon-remove\"></span>\n" +
+"					</div>\n" +
+"				    <form id=\"validationFormUpdt\" class=\"add-form login-form\" method=\"post\" action='GuardarCambios'>\n" +
+"				    	<input id=\"nodo\" type='hidden' name='nodo'/>\n" +
+"				    	<input id='nombre_usuario' class=\"name-disabled\" type=\"text\" placeholder=\"Nombre de usuario\" name=\"nombre\" disabled/>\n" +
+"				     	<select id='tipo_usuario' name='tipo' class=\"select-tipo form-control\" title=\"Tipo de usuario\">\n" +
+"		              		<option value='Administrador'>Administrador</option>\n" +
+"		               		<option value='Profesor'>Profesor</option>\n" +
+"		               		<option value='Alumno'>Alumno</option>\n" +
+"                		</select>\n" +
+"						\n" +
+"							<input  class='pass_input' id=\"pass_updt\" type=\"password\" placeholder=\"Contraseña\" name=\"pass\" />\n" +
+"						\n" +
+"				    	\n" +
+"				    		<input  class='pass_input' type=\"password\" placeholder=\"Confirmar contraseña\" name=\"pass2\"/>\n" +
+"				    	\n" +
+"				     	\n" +
+"				    	<button id=\"btn_updt_user\" class=\"btn btn-success\">Guardar cambios</button>\n" +
+"			    	</form>\n" +
+"			  	</div>\n" +
+"			</div>"); //modificar un usuario
             out.println("</div>"); //div containter
-            out.println("<script type=\"text/javascript\" src=\"js/jquery-3.2.1.min.js\"></script>\n" +
-"		<script type=\"text/javascript\" src=\"js/script.js\"></script>");
-            out.println("<script src='js\\Redireccionar.js'></script>");
+           out.println("<script type=\"text/javascript\" src=\"js/jquery-3.2.1.min.js\"></script>\n" +
+"		<script type=\"text/javascript\" src=\"js/jquery.validate.min.js\"></script>\n" +
+"		<script type=\"text/javascript\" src=\"js/admin.js\"></script>");
             out.println("</body>");
             out.println("</html>");
     }

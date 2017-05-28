@@ -38,7 +38,7 @@ public class GuardarCambios extends HttpServlet {
             Logger.getLogger(GuardarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
        
-       response.sendRedirect("AdministradorPrueba");
+       response.sendRedirect("Administrador");
     }
 public static void ModificarNodo(String archivo_direccion,String datos[],int nodo) throws Exception {
     String xmlFile=archivo_direccion;

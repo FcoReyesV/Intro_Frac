@@ -162,3 +162,13 @@ nav.navegacion>ul li a:hover,#Cerrar-sesion:hover,#cerrar-s:hover{
   outline:0;
 
 }
+
+.error-form{
+  
+  border: 1px solid rgb(169,0,0) !important;
+}
+
+label{
+  color:rgb(169,0,0) !important;
+  font-size: 12px ;
+}

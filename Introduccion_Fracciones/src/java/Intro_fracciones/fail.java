@@ -26,7 +26,7 @@ public class fail extends HttpServlet {
             out.println("<body>");
             out.println("Fail:"+userName+"Pass: "+pass);
             
-            out.println("<a href='login.html' >Return</a>");            
+            out.println("<a href='Inicio' >Return</a>");            
             out.println("</body>");
             out.println("</html>");
     }

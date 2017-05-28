@@ -32,7 +32,7 @@ response.setContentType("text/html;charset=UTF-8");
                    switch(tipo[i]){
                        case "Administrador":
                            session.setAttribute("tipoUsuario",tipo[i]);
-                           response.sendRedirect("AdministradorPrueba");
+                           response.sendRedirect("Administrador");
                        break;
                        case "Profesor":
                            session.setAttribute("tipoUsuario",tipo[i]);

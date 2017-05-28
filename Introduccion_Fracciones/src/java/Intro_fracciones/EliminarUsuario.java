@@ -29,7 +29,7 @@ public class EliminarUsuario extends HttpServlet {
         } catch (Exception ex) {
             Logger.getLogger(EliminarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        response.sendRedirect("AdministradorPrueba");
+        response.sendRedirect("Administrador");
     }
     public static void EliminarNodo(String archivo_direccion,int nodo) throws Exception {
         String xmlFile=archivo_direccion;

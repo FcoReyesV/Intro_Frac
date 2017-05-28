@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class UsuariosExistentesAjax extends HttpServlet {
+public class LoginAjax extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -16,17 +16,20 @@ response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Cache-Control", "no-cache");
         LectorXML usuarios=new LectorXML(request.getRealPath("/")+"\\xml\\Usuarios.xml");
         String nombre[]=usuarios.datosUsuario("nombre");
-        String user=request.getParameter("nombre");
-        boolean ban=true;
+        String password[]=usuarios.datosUsuario("pass");
+        String user=request.getParameter("Usuario");
+        String pass=request.getParameter("Pass");
+        boolean ban=false;
         for(int i=0;i<usuarios.getTotalUsuarios();i++){
-               if(user.equals(nombre[i])){
-                   out.println("false"); 
-                   ban=false;
+               if(user.equals(nombre[i]) && pass.equals(password[i])){
+                   out.println("true"); 
+                   ban=true;
                    break;
                }
         }
-        if(ban)
-            out.print("true");
+        if(!ban)
+            out.print("false");
       
     }
  }
+

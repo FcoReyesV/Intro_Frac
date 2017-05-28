@@ -53,7 +53,7 @@ public class AdministradorPrueba extends HttpServlet {
             out.println("<div class=\"row\">" +
 "			<div id=\"logo-gris\" class=\"col-md-1\"></div>" +
 "			<div class=\"col-md-2\">" +
-"				<h3 class=\"nombre\">Admnistrador:"+userName+"</h3>" +
+"				<h3 class=\"nombre\">Admnistrador:<p id=\"cabecera_usuario\">"+userName+"</p></h3>" +
 "			</div>" +
 "			<div class=\"col-md-1 col-md-offset-8\">" +
 "				<div class=\"btn-cerrars\">" +
@@ -64,7 +64,7 @@ public class AdministradorPrueba extends HttpServlet {
 "			</div>" +
 "		</div>");
             out.println("<div id='table' class='table-editable'>");
-            out.println("<table class='table table-hover'>");
+            out.println("<table id=\"tabla_usuarios\" class=\"table table-hover\">");
                 out.println(" <tr>" +
 "		      	<thead>" +
 "		      		<th>Nombre</th>" +
@@ -75,9 +75,8 @@ public class AdministradorPrueba extends HttpServlet {
 "			        </th>" +
 "		      	</thead>" +
 "		      </tr>");
-            if(userName.equals("admin")){//Validamos que no pueda Modificar o Eliminar a otros administradores, en caso de no ser el 'admin'
                 for(int i=0;i<numero_usuarios;i++){
-                    if(!(nombre[i].equals(userName))||!(pass[i].equals(userPassword))){//Validamos que el administrador no se muestre a si mismo
+              
                         out.println("<tr>");
                         out.println("<td>"+nombre[i]+"</td>");
                         out.println("<td>"+tipo[i]+"</td>");
@@ -99,36 +98,8 @@ public class AdministradorPrueba extends HttpServlet {
                             out.println("</form>");
                         out.println("</td>");
                         out.println("</tr>");
-                    }
+                    
                 }                
-            }else{
-                for(int i=0;i<numero_usuarios;i++){
-                    if(!(tipo[i].equals("Administrador"))&&(!(nombre[i].equals(userName))||!(pass[i].equals(userPassword)))){
-                    //Validamos que el administrador no vea otros administradores ni a si mismo
-                        out.println("<tr>");
-                        out.println("<td>"+nombre[i]+"</td>");
-                        out.println("<td>"+tipo[i]+"</td>");
-                        out.println("<td>");
-                        out.println("<td>");
-                        /*Creamos un formulario que sera el encargado de enviar el nombre del usuario a eliminar
-                        al servlet 'EliminarUsuario'*/
-                            out.println("<form action='EliminarUsuario' method='post'>");
-                            out.println("<input type='hidden' value='"+i+"' name='nodo'/>");
-                            out.println("<button title=\"Eliminar Usuario\" class=\"update\" type=\"submit\">" +
-"							 <span title=\"Eliminar usuario\" class=\"table-remove glyphicon glyphicon-remove\"></span>" +
-"							 </button> ");
-                        out.println("</form>");
-                        out.println("</td>");
-                        out.println("<td>");
-                         out.println("<button class=\"actualizar_datos update\" title=\"Actualizar datos\" type=\"submit\">\n" +
-"							<span class=\"table-up glyphicon glyphicon-arrow-up\"></span>\n" +
-"		          	<span class=\"table-down glyphicon glyphicon-arrow-down\"></span></button> ");
-                        out.println("</td>");
-                        out.println("</tr>");
-                        
-                    }
-                }
-            }
             out.println("</table>");
             out.println("</div>"); //div .table-editable
             
@@ -183,9 +154,9 @@ public class AdministradorPrueba extends HttpServlet {
 "			  	</div>\n" +
 "			</div>"); //modificar un usuario
             out.println("</div>"); //div containter
-            out.println("<script type=\"text/javascript\" src=\"js/jquery-3.2.1.min.js\"></script>\n" +
+           out.println("<script type=\"text/javascript\" src=\"js/jquery-3.2.1.min.js\"></script>\n" +
 "		<script type=\"text/javascript\" src=\"js/jquery.validate.min.js\"></script>\n" +
-"		<script type=\"text/javascript\" src=\"js/script.js\"></script>");
+"		<script type=\"text/javascript\" src=\"js/admin.js\"></script>");
             out.println("</body>");
             out.println("</html>");
     }

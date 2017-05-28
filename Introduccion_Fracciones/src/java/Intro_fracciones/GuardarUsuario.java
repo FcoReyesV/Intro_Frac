@@ -35,7 +35,7 @@ public class GuardarUsuario extends HttpServlet {
             Logger.getLogger(GuardarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
        
-       response.sendRedirect("AdministradorPrueba");
+       response.sendRedirect("Administrador");
     }
 public static void AgregarNodo(String archivo_direccion,String datos[]) throws Exception {
     String xmlFile=archivo_direccion;

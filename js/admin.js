@@ -2,11 +2,29 @@ $(document).ready(function(){
 		var $agregar_usuario=$('.agregar-usuario');
 		var $table_editable=$('.table-editable');
 		var $modificar_usuario=$('.modificar-usuario');
+		var $cabecera_usuario=$("#cabecera_usuario").text();
+
+		
+
+		$("td").each(function(){
+			if($cabecera_usuario==="admin"){
+				if($(this).text()==="admin")
+					$(this).parent().hide();
+			}else{
+				if($(this).text()==="admin" || $(this).text()==="Administrador")
+					$(this).parent().hide();
+			}
+			
+ 		});
+
+		
 
 		$("#agregar_usuario").on( "click", function() { //funcion de jquery para  que al dar clic se muestren y oculten bloques
 			$agregar_usuario.show(); 
 			 
 			$table_editable.hide(); 
+			if($cabecera_usuario!=="admin")
+				$(".select-tipo option[value='Administrador']").remove();
 
 		 });
 		$("#close_add_users").on("click", function(){
@@ -43,6 +61,8 @@ $(document).ready(function(){
 		            	$(".pass_input").val($pass);
 		        });
 	   		});
+	   		if($cabecera_usuario!=="admin")
+				$(".select-tipo option[value='Administrador']").remove();
 			
 
 		 });

@@ -26,7 +26,7 @@ response.setContentType("text/html;charset=UTF-8");
         if(tipo != null){
             switch(tipo){
                        case "Administrador":
-                           response.sendRedirect("AdministradorPrueba");
+                           response.sendRedirect("Administrador");
                        break;
                        case "Profesor":
                            response.sendRedirect("Profesor");
@@ -46,20 +46,23 @@ response.setContentType("text/html;charset=UTF-8");
 "	<link rel=\"stylesheet\" href=\"css/index.css\">");
             out.println("</head>");
             out.println("<body>");
-            out.println("<div class=\"container\">" +
-"		<div id=\"knight_img\" class=\"col-md-1 col-md-offset-1\"></div>" +
-"		<div class=\"login-page col-md-8\">" +
-"		  <div class=\"form\">" +
-"		  	<p class=\"title\">Introducción a las fracciones</p>" +
-"		    <form class=\"login-form\" method=\"post\" action=\"Login\">" +
-"		      <input oninvalid=\"setCustomValidity('Escribe un usuario')\"  oninput=\"setCustomValidity('')\"" +
-"		      type=\"text\" placeholder=\"Usuario\" name=\"Usuario\" required/>\n" +
-"		      <input oninvalid=\"setCustomValidity('Escribe una contraseña')\"  oninput='setCustomValidity('')' type=\"password\" placeholder=\"Contraseña\" name=\"Pass\" required/>" +
-"		      <button>Iniciar Sesión</button>" +
+            out.println("<div class=\"container\">\n" +
+"		<div id=\"knight_img\" class=\"col-md-1 col-md-offset-1\"></div>\n" +
+"		<div class=\"login-page col-md-8\">\n" +
+"		  <div class=\"form\">\n" +
+"		  	<p class=\"title\">Introducción a las fracciones</p>\n" +
+"		    <form id=\"validateLogin\" class=\"login-form\" method=\"post\" action=\"Login\">\n" +
+"		      <input id=\"Usuario\" type=\"text\" placeholder=\"Usuario\" name=\"Usuario\" />\n" +
+"		      <input id=\"Pass\" type=\"password\" placeholder=\"Contraseña\" name=\"Pass\"/>"+
+"		      <button>Iniciar Sesión</button>\n" +
 "		    </form>\n" +
 "		  </div>\n" +
 "		</div>\n" +
+"		\n" +
 "	</div>");
+            out.println("<script type=\"text/javascript\" src=\"js/jquery-3.2.1.min.js\"></script>\n" +
+"	<script type=\"text/javascript\" src=\"js/jquery.validate.min.js\"></script>\n" +
+"	<script type=\"text/javascript\" src=\"js/inicio.js\"></script>");
             out.println("</body>");
             out.println("</html>");
     }
