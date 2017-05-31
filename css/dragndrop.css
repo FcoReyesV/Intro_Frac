@@ -18,15 +18,37 @@
   flex-direction: row;
   height: auto;
   width: auto;
-  margin-top: 20px;
+  position: absolute;
+  top:300px;
 }
-.contenedor-objetos-draggables{
+#contenedor-objetos-draggables{
   margin-left: 40px;
   z-index: 3;
   height: 130px;
   width: 320px;
   background-color: blue;
 }
+
+.figuras-color{
+  background-color: rgb(60,134,174) !important;
+  border: 1px solid black !important;
+}
+#figura0{
+
+}
+#figura1{
+  position: absolute;
+  top:10px;
+  right: 20px;
+}
+#figura2{
+  position: absolute;
+  top: 5px;
+  right:5px;
+}
+
+
+
 .flechas-fracc{
   z-index: 3;
   margin-right: 10px;
@@ -48,7 +70,7 @@
   font-size: 50px;
   color:black;
 }
-#aumentar-btn{
+#numerador-texto{
   border-bottom: solid 4px;
 
 }
@@ -65,7 +87,13 @@
 .flechas-add-contenedor .add-flecha-btn{
   margin-top:20px; 
 }
+.flechas-add-contenedor .add-flecha-btn-desact{
+  margin-top:20px; 
+}
 .flechas-add-contenedor .add-flecha-btn span{
+  font-size: 30px;
+}
+.flechas-add-contenedor .add-flecha-btn-desact span{
   font-size: 30px;
 }
 
@@ -86,6 +114,22 @@
  -moz-box-shadow: rgba(0,0,0,0.8) 0 0 10px;
  box-shadow: rgba(0,0,0,0.8) 0 0 10px;
   
+}
+.add-flecha-btn-desact{
+  width: 60px;
+  height:32.5px; 
+  border:none;
+  background:none;
+  outline:0;
+  font-size: 25px;
+  color: grey;
+}
+.add-flecha-btn-desact span{
+   border-radius: 50%;
+  background-color: rgb(207,208,210);
+  -webkit-box-shadow: rgba(0,0,0,0.8) 0px 0 10px;
+  -moz-box-shadow: rgba(0,0,0,0.8) 0 0 10px;
+  box-shadow: rgba(0,0,0,0.8) 0 0 10px;
 }
 
 
