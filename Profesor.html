@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Introducción - Introducción a las fracciones</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="css/dragndrop.css">
+</head>
+<body>
+		<header>
+			<div id="logo"></div>
+			<nav class="navegacion">
+				<ul>
+					<li><a href="#">Introducción</a></li>
+					<li><a href="#">Crear una Fracción</a></li>
+					<li><a href="#">Laboratorio de Igualdad</a></li>
+					<li><a href="#">Ayuda</a></li>
+					<li>
+						<form id="cerrar-s" action="CerrarSesion">
+							<input id="Cerrar-sesion" type="submit" value="Cerrar Sesión"/>
+						</form>	 
+					</li>
+				</ul>
+			</nav>
+		</header>
+	<div class="container-fluid">
+		
+		<div class="row">
+			<aside class="barra-lateral col-md-2">
+				
+					<div class="usuario-bloque">
+					<p>Usuario nombre</p>
+					<select name='#' class="select-tipo form-control select-guardar" title="Guardados">
+		              	<option value=''>Ejemplo</option>
+                	</select>
+				</div>	
+				<div class="opciones-intro">
+					<div class="opc col-md-1"></div>
+					<div class="opc col-md-1"></div>
+					<div class="opc col-md-1"></div>
+					<div class="opc col-md-1"></div>
+					<div class="opc col-md-1"></div>
+				</div>
+				
+				
+			
+			</aside>
+
+			<div class="bloque-central col-md-6">
+				<div class="contenedor-principal">
+					
+					<div class="contenedor-figura">
+						<div class="figura-rectangulo-horizontal-2">
+							
+						</div>
+						<div class="figura-rectangulo-horizontal-2">
+							
+						</div>
+					</div>
+					<div class="contenedor-figura">
+						<div class="figura-rectangulo-horizontal-3"></div>
+						<div class="figura-rectangulo-horizontal-3"></div>
+						<div class="figura-rectangulo-horizontal-3"></div>
+					</div>
+					<div class="contenedor-figura">
+						<div class="figura-rectangulo-horizontal-4"></div>
+						<div class="figura-rectangulo-horizontal-4"></div>
+						<div class="figura-rectangulo-horizontal-4"></div>
+						<div class="figura-rectangulo-horizontal-4"></div>
+					</div>
+					<div class="contenedor-figura">
+						<div class="figura-rectangulo-horizontal-5"></div>
+						<div class="figura-rectangulo-horizontal-5"></div>
+						<div class="figura-rectangulo-horizontal-5"></div>
+						<div class="figura-rectangulo-horizontal-5"></div>
+						<div class="figura-rectangulo-horizontal-5"></div>
+					</div>
+					<div class="contenedor-figura">
+						<div class="figura-rectangulo-horizontal-6"></div>
+						<div class="figura-rectangulo-horizontal-6"></div>
+						<div class="figura-rectangulo-horizontal-6"></div>
+						<div class="figura-rectangulo-horizontal-6"></div>
+						<div class="figura-rectangulo-horizontal-6"></div>
+						<div class="figura-rectangulo-horizontal-6"></div>
+					</div>
+					<div class="contenedor-figura">
+						<div class="figura-rectangulo-horizontal-7"></div>
+						<div class="figura-rectangulo-horizontal-7"></div>
+						<div class="figura-rectangulo-horizontal-7"></div>
+						<div class="figura-rectangulo-horizontal-7"></div>
+						<div class="figura-rectangulo-horizontal-7"></div>
+						<div class="figura-rectangulo-horizontal-7"></div>
+						<div class="figura-rectangulo-horizontal-7"></div>
+					</div>
+				</div>
+				
+				<div class="manejables">
+					<div class="flechas-add-contenedor">
+						<button class="add-flecha-btn"><span class="glyphicon glyphicon-chevron-up"></button>
+						<button class="add-flecha-btn">
+							<span class="glyphicon glyphicon-chevron-down"></span>	
+						</button>
+						
+					</div>
+					<div class="add-contenedor-figura">
+						<p>Máximo</p>
+						<div id="num-max">
+							1
+						</div>
+					</div>
+					<div class="flechas-fracc">
+						<button class="add-flecha-btn"><span class="glyphicon glyphicon-chevron-up"></button>
+						<button class="add-flecha-btn">
+							<span class="glyphicon glyphicon-chevron-down"></span>	
+						</button>
+						<button class="add-flecha-btn"><span class="glyphicon glyphicon-chevron-up"></button>
+						<button class="add-flecha-btn">
+							<span class="glyphicon glyphicon-chevron-down"></span>	
+						</button>
+					</div>
+					<div class="contadores">
+						<div id="aumentar-btn" class="num-contador">
+							1
+						</div>
+						<div id="disminuir-btn" class="num-contador">
+							2
+						</div>
+					</div>
+					<div class="contenedor-objetos-draggables"></div>
+				</div>
+				
+					
+				
+				<div class="guardar-btn">
+					<button>Guardar</button>
+				</div>
+			</div>
+			
+		</div>
+
+	</div>
+		
+
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/dragndrop.js"></script>
+</body>
+</html>

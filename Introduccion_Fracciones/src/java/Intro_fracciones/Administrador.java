@@ -89,7 +89,7 @@ public class Administrador extends HttpServlet {
                         out.println("<td>");
                         /*Creamos un formulario que sera el encargado de enviar el nombre del usuario a eliminar
                         al servlet 'EliminarUsuario'*/
-                            out.println("<form action='EliminarUsuario' method='post'>");
+                            out.println("<form method=\"post\" action=\"EliminarUsuario\">");
                             out.println("<input type='hidden' value='"+i+"' name='nodo'/>");
                             
                             out.println("<button title=\"Eliminar Usuario\" class=\"update\" type=\"submit\">" +

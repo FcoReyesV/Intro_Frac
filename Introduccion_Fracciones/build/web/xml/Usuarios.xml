@@ -4,4 +4,4 @@
 		<pass>admin</pass>
 		<tipo>Administrador</tipo>
 	</usuario>
-<usuario><nombre>MaressaY</nombre><pass>maressa1</pass><tipo>Administrador</tipo></usuario><usuario><nombre>Juan</nombre><pass>1234a</pass><tipo>Administrador</tipo></usuario></login>
+<usuario><nombre>JorgeP</nombre><pass>1234a</pass><tipo>Profesor</tipo></usuario><usuario><nombre>Admin1</nombre><pass>abcd1</pass><tipo>Administrador</tipo></usuario></login>
