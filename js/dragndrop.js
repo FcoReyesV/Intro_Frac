@@ -1,5 +1,6 @@
 $(document).ready(function(){
-	
+	crearContenedorFigura(1);
+	$('<div class="figura-rectangulo-horizontal-1">').attr('id','figuraDND0CF0').appendTo('#contenedorFigura0');
 	crearObjetosDraggables(8);
 	var contador_contenedores=1;
 	var $flecha_agregar_contenedor = $('#flecha-agregar-contenedor');
@@ -117,7 +118,7 @@ $(document).ready(function(){
 			//$numerador_quitar_btn.removeAttr('disabled','true');
 			$numerador_agregar_btn.removeAttr('disabled','true');
 		}
-		//crearContenedorFigura(contador_contenedores);
+		
 	});
 
 	$denominador_quitar_btn.click(function(event) {
@@ -223,15 +224,15 @@ function destruirContenedorFigura(num_contenedores){
 		$('#contenedorFigura'+i).remove();
 }
 
-function creaFiguraDND(contador_denominador){
+function creaFiguraDND(contador_denominador,contenedorFigura){
 	for(var i=0;i<contador_denominador;i++){
-		$('<div class="figura-rectangulo-horizontal-'+contador_denominador+'"> ').attr('id','figuraDND'+i+'CF0').appendTo('#contenedorFigura0');
+		$('<div class="figura-rectangulo-horizontal-'+contador_denominador+'"> ').attr('id','figuraDND'+i+'CF'+contenedorFigura).appendTo('#contenedorFigura'+contenedorFigura);
 	}
 }
 
-function destruirFiguraDND(contador_denominador){
+function destruirFiguraDND(contador_denominador,contenedorFigura){
 	for(var i=0;i<contador_denominador;i++){
-		$('#figuraDND'+i+'CF0').remove();
+		$('#figuraDND'+i+'CF'+contenedorFigura).remove();
 	}
 }
 
