@@ -1,11 +1,9 @@
 $(document).ready(function(){
-<<<<<<< HEAD
-	crearContenedorFigura(1);
+
+	//crearContenedorFigura(1);
 	$('<div class="figura-rectangulo-horizontal-1">').attr('id','figuraDND0CF0').appendTo('#contenedorFigura0');
-	crearObjetosDraggables(2);
-=======
-	
->>>>>>> 2465cf5a21c7d4a4c5c0204c196fc6a1362a4029
+	//crearObjetosDraggables(2);
+
 	var contador_contenedores=1;
 	var $flecha_agregar_contenedor = $('#flecha-agregar-contenedor');
 	var $flecha_quitar_contenedor = $('#flecha-quitar-contenedor');
@@ -248,8 +246,7 @@ $(document).ready(function(){
 	
 });
 
-<<<<<<< HEAD
-function crearObjetosDraggables(num_figura){
+/*function crearObjetosDraggables(num_figura){
 	for ( var i=0; i<3; i++ ) {
 	    $('<div class="figura-propiedades figuras-color figura-rectangulo-horizontal-'+num_figura+' figuraDraggable"></div>')//Se agrego la clase figuraDraggable
 	    	.attr( 'id', 'figura'+i )
@@ -268,12 +265,10 @@ function crearObjetosDraggables(num_figura){
 	    $('#figura'+i).data('top',top);//Se guarda su posicion en left en cada uno de los elementos
 	    $('#figura'+i).data('left',left);//Se guarda su posicion en top en cada uno de los elementos
 	}
-=======
-
-
+}*/
 function crearObjetosDraggables(contador_denominador,contador_figura){
 	
-	$('<div class="figura-propiedades figura-rectangulo-horizontal-'+contador_denominador+'"></div>')
+	$('<div class="figura-propiedades figura-rectangulo-horizontal-'+contador_denominador+' figuraDraggable"></div>')
 	    .attr('id','figura'+contador_figura)
 	    .appendTo( '#contenedor-objetos-draggables').draggable( {
 		containment: '.bloque-central',
@@ -287,10 +282,15 @@ function crearObjetosDraggables(contador_denominador,contador_figura){
 	    	top: '10px',
 	    	right: 10*contador_figura+'px'
 	    });    
+	    var left=$('#figura'+contador_figura).position().left;//Se obtiene el left inicial
+	   	var top=$('#figura'+contador_figura).position().top;//Se obtiene el top inicial
+	    $('#figura'+contador_figura).data('top',top);//Se guarda su posicion en left en cada uno de los elementos
+	    $('#figura'+contador_figura).data('left',left);//Se guarda su posicion en top en cada uno de los elementos
 }
 
 function cambiarTamObjetosDraggables(contador_denominador,contador_figura,i){
 	var tam= 280/contador_denominador;
+
 	$('#figura'+i).css({
 		z_index: '4',
 		height: '100px',
@@ -299,7 +299,7 @@ function cambiarTamObjetosDraggables(contador_denominador,contador_figura,i){
 		top: '10px ',
 		right: Math.floor(Math.random() * 50) + 15*contador_denominador+'px'
 	});;
->>>>>>> 2465cf5a21c7d4a4c5c0204c196fc6a1362a4029
+
 }
 
 function crearContenedorFigura(num_contenedores){
