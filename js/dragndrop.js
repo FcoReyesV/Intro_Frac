@@ -1,6 +1,4 @@
 $(document).ready(function(){
-	crearContenedorFigura(1);
-	$('<div class="figura-rectangulo-horizontal-1">').attr('id','figuraDND0CF0').appendTo('#contenedorFigura0');
 	
 	var contador_contenedores=1;
 	var $flecha_agregar_contenedor = $('#flecha-agregar-contenedor');
@@ -18,12 +16,16 @@ $(document).ready(function(){
 	var $numerador_quitar_btn = $('#numerador-quitar-btn');
 
 	var contador_figura=1;
+	crearContenedorFigura(1);
+	$('<div class="figura-rectangulo-horizontal-1">').attr('id','figuraDND0CF0').appendTo('#contenedorFigura0');
+
 	for(var i=0;i<6;i++){
 		crearObjetosDraggables(contador_denominador,contador_figura);
 		cambiarTamObjetosDraggables(contador_denominador,contador_figura,i);
 		contador_figura++;
 	}
-	
+
+
 	$flecha_agregar_contenedor.click(function(event) {
 		destruirFiguraDND(contador_denominador,contador_contenedores);
 		contador_contenedores++;
@@ -215,8 +217,32 @@ $(document).ready(function(){
 		//crearContenedorFigura(contador_contenedores);
 	});
 
+	 /*Botones de opciones de la barra lateral izquierda*/
+	var $opc1 = $('#opc1');
+	var $opc2 = $('#opc2');
+	var $opc3 = $('#opc3');
+	var $opc4 = $('#opc4');
+
+
+	$opc1.click(function(event) {
+		limpiarContenedores();
+		reiniciarContadores(contador_contenedores,contador_numerador,contador_denominador,contador_figura);
+		inicializarRectanguloHorizontal();
+		for(var i=0;i<6;i++){
+			crearObjetosDraggables(contador_denominador,contador_figura);
+			cambiarTamObjetosDraggables(contador_denominador,contador_figura,i);
+			contador_figura++;
+		}
+	});
+
+	$opc2.click(function(event) {
+		limpiarContenedores();
+		reiniciarContadores(contador_contenedores,contador_numerador,contador_denominador,contador_figura);
+	});
 	
 });
+
+
 
 function crearObjetosDraggables(contador_denominador,contador_figura){
 	
@@ -236,10 +262,6 @@ function crearObjetosDraggables(contador_denominador,contador_figura){
 	    });    
 }
 
-function quitarClaseTamObjetosDraggables(contador_denominador,contador_figura){
-	for(var i=0;i<contador_figura;i++)
-		$('#figura'+(i+1)).removeClass('figura-rectangulo-horizontal-'+contador_denominador);
-}
 function cambiarTamObjetosDraggables(contador_denominador,contador_figura,i){
 	var tam= 280/contador_denominador;
 	$('#figura'+i).css({
@@ -276,4 +298,6 @@ function destruirFiguraDND(contador_denominador,contenedorFigura){
 		}
 	}
 }
+
+
 
