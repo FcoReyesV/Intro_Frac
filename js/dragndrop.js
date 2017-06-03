@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	crearContenedorFigura(1);
 	$('<div class="figura-rectangulo-horizontal-1">').attr('id','figuraDND0CF0').appendTo('#contenedorFigura0');
-	crearObjetosDraggables(8);
+	
 	var contador_contenedores=1;
 	var $flecha_agregar_contenedor = $('#flecha-agregar-contenedor');
 	var $flecha_quitar_contenedor = $('#flecha-quitar-contenedor');
@@ -17,8 +17,13 @@ $(document).ready(function(){
 	var $numerador_agregar_btn = $('#numerador-agregar-btn');
 	var $numerador_quitar_btn = $('#numerador-quitar-btn');
 
+	var contador_figura=1;
+	for(var i=0;i<6;i++){
+		crearObjetosDraggables(contador_denominador,contador_figura);
+		cambiarTamObjetosDraggables(contador_denominador,contador_figura,i);
+		contador_figura++;
+	}
 	
-
 	$flecha_agregar_contenedor.click(function(event) {
 		destruirFiguraDND(contador_denominador,contador_contenedores);
 		contador_contenedores++;
@@ -99,9 +104,15 @@ $(document).ready(function(){
 
 	$denominador_agregar_btn.click(function(event) {
 		destruirFiguraDND(contador_denominador,contador_contenedores);
+		//quitarClaseTamObjetosDraggables(contador_denominador,contador_figura);
 		contador_denominador++;
 		$denominador_texto .text(contador_denominador);
 		creaFiguraDND(contador_denominador,contador_contenedores);
+		
+		for(var i=0;i<contador_figura;i++)
+			cambiarTamObjetosDraggables(contador_denominador,contador_contenedores,i+1);
+
+
 		if(contador_denominador==8){
 			$denominador_agregar_btn.attr('disabled','true');
 			$denominador_agregar_btn.removeClass('add-flecha-btn');
@@ -125,9 +136,15 @@ $(document).ready(function(){
 
 	$denominador_quitar_btn.click(function(event) {
 		destruirFiguraDND(contador_denominador,contador_contenedores);
+		//quitarClaseTamObjetosDraggables(contador_denominador,contador_figura);
 		contador_denominador--;
 		creaFiguraDND(contador_denominador,contador_contenedores);
+		
+		for(var i=0;i<contador_figura;i++)
+			cambiarTamObjetosDraggables(contador_denominador,contador_contenedores,i+1);
+
 		$denominador_texto .text(contador_denominador);
+
 		if(contador_denominador==contador_numerador){
 					$numerador_agregar_btn.attr('disabled','true');
 					$numerador_agregar_btn.removeClass('add-flecha-btn');
@@ -201,22 +218,40 @@ $(document).ready(function(){
 	
 });
 
-function crearObjetosDraggables(num_figura){
-	for ( var i=0; i<3; i++ ) {
-	    $('<div class="figura-propiedades figuras-color figura-rectangulo-horizontal-'+num_figura+'"></div>')
-	    	.attr( 'id', 'figura'+i )
-	    	.appendTo( '#contenedor-objetos-draggables' ).draggable( {
-		      containment: '.bloque-central',
-		      stack: '#contenedor-objetos-draggables div',
-		      cursor: 'move',
-		      revert: true
+function crearObjetosDraggables(contador_denominador,contador_figura){
+	
+	$('<div class="figura-propiedades figura-rectangulo-horizontal-'+contador_denominador+'"></div>')
+	    .attr('id','figura'+contador_figura)
+	    .appendTo( '#contenedor-objetos-draggables').draggable( {
+		containment: '.bloque-central',
+			stack: '#contenedor-objetos-draggables div',
+		    cursor: 'move',
+		   	revert: true
 		});
-	    $('#figura'+i).css({
+
+
+	    $('#figura'+contador_figura).css({
 	    	top: '10px',
-	    	right: 10*i+'px'
-	    });
-	}
+	    	right: 10*contador_figura+'px'
+	    });    
 }
+
+function quitarClaseTamObjetosDraggables(contador_denominador,contador_figura){
+	for(var i=0;i<contador_figura;i++)
+		$('#figura'+(i+1)).removeClass('figura-rectangulo-horizontal-'+contador_denominador);
+}
+function cambiarTamObjetosDraggables(contador_denominador,contador_figura,i){
+	var tam= 280/contador_denominador;
+	$('#figura'+i).css({
+		z_index: '4',
+		height: '100px',
+		width: tam+'px',
+  		border: '2px dashed rgb(176,176,176)',
+		top: '10px ',
+		right: Math.floor(Math.random() * 50) + 15*contador_denominador+'px'
+	});;
+}
+
 function crearContenedorFigura(num_contenedores){
 	for(var i=0; i<num_contenedores;i++)
 		$('<div class="contenedor-figura"><div>').attr('id','contenedorFigura'+i).appendTo('.contenedor-principal');

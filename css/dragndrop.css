@@ -29,12 +29,9 @@
   background-color: blue;
 }
 
-.figuras-color{
+.figura-propiedades{
   background-color: rgb(60,134,174) !important;
   border: 1px solid black !important;
-}
-
-.figura-propiedades{
   position: absolute;
 }
 
