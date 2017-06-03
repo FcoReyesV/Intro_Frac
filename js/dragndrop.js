@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	crearContenedorFigura(1);
 	$('<div class="figura-rectangulo-horizontal-1">').attr('id','figuraDND0CF0').appendTo('#contenedorFigura0');
-	crearObjetosDraggables(8);
+	crearObjetosDraggables(2);
 	var contador_contenedores=1;
 	var $flecha_agregar_contenedor = $('#flecha-agregar-contenedor');
 	var $flecha_quitar_contenedor = $('#flecha-quitar-contenedor');
@@ -203,18 +203,22 @@ $(document).ready(function(){
 
 function crearObjetosDraggables(num_figura){
 	for ( var i=0; i<3; i++ ) {
-	    $('<div class="figura-propiedades figuras-color figura-rectangulo-horizontal-'+num_figura+'"></div>')
+	    $('<div class="figura-propiedades figuras-color figura-rectangulo-horizontal-'+num_figura+' figuraDraggable"></div>')//Se agrego la clase figuraDraggable
 	    	.attr( 'id', 'figura'+i )
 	    	.appendTo( '#contenedor-objetos-draggables' ).draggable( {
 		      containment: '.bloque-central',
 		      stack: '#contenedor-objetos-draggables div',
 		      cursor: 'move',
-		      revert: true
-		});
+		      revert:true
+		});//Guardamos la posicion inicial
 	    $('#figura'+i).css({
 	    	top: '10px',
 	    	right: 10*i+'px'
 	    });
+	    var left=$('#figura'+i).position().left;//Se obtiene el left inicial
+	   	var top=$('#figura'+i).position().top;//Se obtiene el top inicial
+	    $('#figura'+i).data('top',top);//Se guarda su posicion en left en cada uno de los elementos
+	    $('#figura'+i).data('left',left);//Se guarda su posicion en top en cada uno de los elementos
 	}
 }
 function crearContenedorFigura(num_contenedores){
@@ -229,7 +233,29 @@ function destruirContenedorFigura(num_contenedores){
 function creaFiguraDND(contador_denominador,contenedorFigura){
 	for(var j=0;j<contenedorFigura;j++){
 		for(var i=0;i<contador_denominador;i++){
-			$('<div class="figura-rectangulo-horizontal-'+contador_denominador+'"> ').attr('id','figuraDND'+i+'CF'+j).appendTo('#contenedorFigura'+j);
+			$('<div class="figura-rectangulo-horizontal-'+contador_denominador+'"> ')
+				.attr('id','figuraDND'+i+'CF'+j)
+				.appendTo('#contenedorFigura'+j).droppable({
+					drop: function(event,ui){
+						tolerance: 'fit'//Solo se aceptan si estan por completo las figuras
+						accept: '.figuraDraggable'//Solo se acepataran las figuras con dicha clase
+						var elemento=ui.draggable;
+						elemento.draggable({
+							revert:false//Se quita el revert, para evitar que se regrese la figura
+						});	
+					},
+					out: function(event,ui){
+						var elemento=ui.draggable;
+						elemento.draggable({
+							revert:function() {//Se restablece un nuevo revert, solo que este no retornara nuevo elemento droppable, si no al contenedor original, en el que estaba el elemento
+								var elemento=$(this);
+								var topElemento=$(this).data('top');//Se recupera la posicion en top que tenia la figura inicialmente
+								var leftElemento=$(this).data('left');//Se recupera la posicion en left que tenia la figura inicialmente
+								elemento.animate({top:topElemento,left:leftElemento},'slow');//La animacion es la que genera el efecto de que vuelve la figuara a la posicion inicial
+							}
+						});
+					}
+				});//termina droppable
 		}
 	}
 }
