@@ -20,10 +20,12 @@ $(document).ready(function(){
 	
 
 	$flecha_agregar_contenedor.click(function(event) {
+		destruirFiguraDND(contador_denominador,contador_contenedores);
 		contador_contenedores++;
 		$num_max .text(contador_contenedores);
 		destruirContenedorFigura(contador_contenedores);
 		crearContenedorFigura(contador_contenedores);
+		creaFiguraDND(contador_denominador,contador_contenedores);
 
 		if(contador_numerador<(contador_denominador*contador_contenedores)){
 			if(contador_numerador==0){
@@ -63,10 +65,12 @@ $(document).ready(function(){
 	});
 
 	$flecha_quitar_contenedor.click(function(event) {
+		destruirFiguraDND(contador_denominador,contador_contenedores);
 		destruirContenedorFigura(contador_contenedores);
 		contador_contenedores--;
 		$num_max .text(contador_contenedores);
 		crearContenedorFigura(contador_contenedores);
+		creaFiguraDND(contador_denominador,contador_contenedores);
 		if(contador_numerador>(contador_contenedores*contador_denominador)){
 			contador_numerador=contador_contenedores*contador_denominador;
 			$numerador_texto.text(contador_numerador);
