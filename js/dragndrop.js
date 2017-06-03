@@ -25,8 +25,6 @@ $(document).ready(function(){
 		destruirContenedorFigura(contador_contenedores);
 		crearContenedorFigura(contador_contenedores);
 
-
-
 		if(contador_numerador<(contador_denominador*contador_contenedores)){
 			if(contador_numerador==0){
 
@@ -96,10 +94,10 @@ $(document).ready(function(){
 	});
 
 	$denominador_agregar_btn.click(function(event) {
-		destruirFiguraDND(contador_denominador);
+		destruirFiguraDND(contador_denominador,contador_contenedores);
 		contador_denominador++;
 		$denominador_texto .text(contador_denominador);
-		creaFiguraDND(contador_denominador);
+		creaFiguraDND(contador_denominador,contador_contenedores);
 		if(contador_denominador==8){
 			$denominador_agregar_btn.attr('disabled','true');
 			$denominador_agregar_btn.removeClass('add-flecha-btn');
@@ -122,9 +120,9 @@ $(document).ready(function(){
 	});
 
 	$denominador_quitar_btn.click(function(event) {
-		destruirFiguraDND(contador_denominador);
+		destruirFiguraDND(contador_denominador,contador_contenedores);
 		contador_denominador--;
-		creaFiguraDND(contador_denominador);
+		creaFiguraDND(contador_denominador,contador_contenedores);
 		$denominador_texto .text(contador_denominador);
 		if(contador_denominador==contador_numerador){
 					$numerador_agregar_btn.attr('disabled','true');
@@ -225,14 +223,18 @@ function destruirContenedorFigura(num_contenedores){
 }
 
 function creaFiguraDND(contador_denominador,contenedorFigura){
-	for(var i=0;i<contador_denominador;i++){
-		$('<div class="figura-rectangulo-horizontal-'+contador_denominador+'"> ').attr('id','figuraDND'+i+'CF'+contenedorFigura).appendTo('#contenedorFigura'+contenedorFigura);
+	for(var j=0;j<contenedorFigura;j++){
+		for(var i=0;i<contador_denominador;i++){
+			$('<div class="figura-rectangulo-horizontal-'+contador_denominador+'"> ').attr('id','figuraDND'+i+'CF'+j).appendTo('#contenedorFigura'+j);
+		}
 	}
 }
 
 function destruirFiguraDND(contador_denominador,contenedorFigura){
-	for(var i=0;i<contador_denominador;i++){
-		$('#figuraDND'+i+'CF'+contenedorFigura).remove();
+	for(var j=0;j<contenedorFigura;j++){
+		for(var i=0;i<contador_denominador;i++){
+			$('#figuraDND'+i+'CF'+j).remove();
+		}
 	}
 }
 
