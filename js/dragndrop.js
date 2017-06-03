@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 	//crearContenedorFigura(1);
-	$('<div class="figura-rectangulo-horizontal-1">').attr('id','figuraDND0CF0').appendTo('#contenedorFigura0');
+	//$('<div class="figura-rectangulo-horizontal-1">').attr('id','figuraDND0CF0').appendTo('#contenedorFigura0');
 	//crearObjetosDraggables(2);
 
 	var contador_contenedores=1;
@@ -21,7 +21,7 @@ $(document).ready(function(){
 
 	var contador_figura=1;
 	crearContenedorFigura(1);
-	$('<div class="figura-rectangulo-horizontal-1">').attr('id','figuraDND0CF0').appendTo('#contenedorFigura0');
+	creaFiguraDND(contador_denominador,contador_contenedores);
 
 	for(var i=0;i<6;i++){
 		crearObjetosDraggables(contador_denominador,contador_figura);
@@ -268,7 +268,7 @@ $(document).ready(function(){
 }*/
 function crearObjetosDraggables(contador_denominador,contador_figura){
 	
-	$('<div class="figura-propiedades figura-rectangulo-horizontal-'+contador_denominador+' figuraDraggable"></div>')
+	$('<div class="figuraDraggable figura-propiedades figura-rectangulo-horizontal-'+contador_denominador+'"></div>')
 	    .attr('id','figura'+contador_figura)
 	    .appendTo( '#contenedor-objetos-draggables').draggable( {
 		containment: '.bloque-central',
