@@ -279,3 +279,15 @@ box-shadow:         4px 4px 0px 0px rgba(50, 50, 50, 0.81);
 .guardar-btn button:hover{
   background-color: rgb(40,96,144); 
 }
+
+
+.contenedor-figuraV{
+  display: flex;
+  flex-direction: row;
+
+  z-index: 3;
+  width: 130px;
+  height: 200px;
+  background-color: green;
+  margin: 10px;
+}

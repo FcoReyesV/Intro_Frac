@@ -140,7 +140,6 @@ function crearContenedorFigura(num_contenedores){
 	for(var i=0; i<num_contenedores;i++)
 		$('<div class="contenedor-figura"><div>').attr('id','contenedorFigura'+i).appendTo('.contenedor-principal');
 }
-
 function destruirContenedorFigura(num_contenedores){
 	for(var i=0; i<num_contenedores;i++)
 		$('#contenedorFigura'+i).remove();
