@@ -152,7 +152,7 @@
 .contenedor-figura{
   display: flex;
   flex-direction: row;
-
+  
   z-index: 3;
   width: 280px;
   height: 100px;
@@ -165,6 +165,7 @@
   width: 280px;
   background-color: white;
   border: 2px dashed rgb(176,176,176);
+
 }
 .figura-rectangulo-horizontal-2{
   z-index: 4;
@@ -281,9 +282,9 @@ box-shadow:         4px 4px 0px 0px rgba(50, 50, 50, 0.81);
 }
 
 
-.contenedor-figuraV{
+.contenedor-figuraRV{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 
   z-index: 3;
   width: 130px;
@@ -291,3 +292,70 @@ box-shadow:         4px 4px 0px 0px rgba(50, 50, 50, 0.81);
   background-color: green;
   margin: 10px;
 }
+
+.figura-rectangulo-vertical-1{
+  z-index: 4;
+  height: 200px;
+  width: 130px;
+  background-color: white;
+  border: 2px dashed rgb(176,176,176);
+
+}
+.figura-rectangulo-vertical-2{
+  z-index: 4;
+  height: 100px;
+  width: 130px;
+  background-color: white;
+  border: 2px dashed rgb(176,176,176);
+}
+.figura-rectangulo-vertical-3{
+  z-index: 4;
+  height: 66.667px;
+  width: 130px;
+  background-color: white;
+  border: 2px dashed rgb(176,176,176);
+}
+.figura-rectangulo-vertical-4{
+  z-index: 4;
+  height: 50px;
+  width: 130px;
+  background-color: white;
+  border: 2px dashed rgb(176,176,176);
+}
+.figura-rectangulo-vertical-5{
+  z-index: 4;
+  height: 40px;
+  width: 130px;
+  background-color: white;
+  border: 2px dashed rgb(176,176,176);
+}
+.figura-rectangulo-vertical-6{
+  z-index: 4;
+  height: 33.33px;
+  width: 130px;
+  background-color: white;
+  border: 2px dashed rgb(176,176,176);
+}
+.figura-rectangulo-vertical-7{
+  z-index: 4;
+  height: 28.57px;
+  width: 130px;
+  background-color: white;
+  border: 2px dashed rgb(176,176,176);
+}
+.figura-rectangulo-vertical-8{
+  z-index: 4;
+  height: 25px;
+  width: 130px;
+  background-color: white;
+  border: 2px dashed rgb(176,176,176);
+}
+
+.figura-propiedadesRV{
+  background-color: rgb(255,41,43) !important;
+  border: 1px solid black !important;
+  position: absolute;
+  /*transform: scale(0.8, 0.8);*/
+  
+}
+
