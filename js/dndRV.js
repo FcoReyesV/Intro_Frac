@@ -27,7 +27,7 @@
 	var contenedor_figura;
 
 
-	function propiedadesFigura(){
+	function propiedadesFigura(){//Se crean figuras
 		switch($('body').attr('name')){
 			case 'RH':
 				figura_propiedades="figura-propiedades";
@@ -61,7 +61,7 @@ $(document).ready(function(){
 	crearContenedorFigura(1);
 	creaFiguraDND(contador_denominador,contador_contenedores);
 
-	for(var i=0;i<6;i++){
+	for(var i=0;i<1;i++){
 		crearObjetosDraggables(contador_denominador,contador_figura);
 		cambiarTamObjetosDraggables(contador_denominador,contador_figura,i);
 		contador_figura++;
@@ -115,33 +115,39 @@ $(document).ready(function(){
 
 	$numerador_agregar_btn.click(function(event) {
 		controladorNumeradorAgregarBoton();
-		//if(contador_numerador>=0){
-		
-			for(var j=0;j<contador_contenedores;j++){
-				for(var i=0;i<=contador_numerador;i++){
-					$('#figura'+(i+1)).animate({
-						left: $('#figuraDND'+i+'CF'+j).position().left,
-						bottom: '250px'
-						
-					})
-					.animate({
-				        left: $('#figuraDND'+i+'CF'+j).position().left,
-				        top: $('#figuraDND'+i+'CF'+j).position().top
-				        //right: $('#figura'+i).position().right,
-				        //bottom: $('#figura'+i).position().bottom
-				      },200)
-					.appendTo($('#figuraDND'+i+'CF'+j));
+		crearObjetosDraggables(contador_denominador,contador_figura);
+			for (var j = 0; j < contador_contenedores; j++) {
+				for (var i = 0; i < contador_denominador; i++) {
+					if($('#figuraDND'+i+'CF'+j).attr('name')=='enable'){
+						$('#figura'+contador_figura).animate({
+							left: $('#figuraDND'+i+'CF'+j).offset().left - $('#contenedor-objetos-draggables').offset().left +470,
+							top: $('#figuraDND'+i+'CF'+j).offset().top - $('#contenedor-objetos-draggables').offset().top
+						},'slow').data('lugar','#figuraDND'+i+'CF'+j);
+						$('#figuraDND'+i+'CF'+j).attr('name','disable');
+						contador_figura++;
+						return;
+					}
+					
 				}
+			
 			}
-			//console.log("Right figura azul: "+	$('#figura'+i).position().right);
+		}
+				
 
-		//}
-
-
-	});
+	);
 
 	$numerador_quitar_btn.click(function(event) {
 		controladorNumeradorQuitarBoton();
+		for (var i=1;i<contador_figura;i++){
+			if($('#figura'+i).data('lugar')!=''){
+				$($('#figura'+i).data('lugar')).attr('name','enable');
+				$('#figura'+i).animate({
+					top: $('#figura'+i).data('top'),
+					left: $('#figura'+i).data('left')
+				},'slow').data('lugar','');
+			}
+			
+		}
 		
 	});
 
@@ -176,6 +182,7 @@ function crearObjetosDraggables(contador_denominador,contador_figura){
  
 	$('<div class="figuraDraggable '+figura_propiedades+' '+figura_rectangulo+'-'+contador_denominador+'"></div>')
 	    .attr('id','figura'+contador_figura)
+	    .data('lugar','')
 	    .appendTo( '#contenedor-objetos-draggables').draggable( {
 		containment: '.bloque-central',
 			stack: '#contenedor-objetos-draggables div',
@@ -184,18 +191,14 @@ function crearObjetosDraggables(contador_denominador,contador_figura){
 		});
 
 	    $('#figura'+contador_figura).css({
-	    	bottom: '0px',
-	    	right: Math.floor(Math.random() * 50) + 15*contador_denominador+'px'
+	    	top: '10px',
+	    	right: 3*contador_figura+'px'
 	    });      
 	    var $figura= $('#figura'+contador_figura);
 	    var left= $figura.position().left;//Se obtiene el left inicial
 	   	var top= $figura.position().top;//Se obtiene el top inicial
-	   	var right= $figura.position().right;
-	   	var bottom= $figura.position().bottom;
 	    $figura.data('top',top);//Se guarda su posicion en left en cada uno de los elementos
 	    $figura.data('left',left);//Se guarda su posicion en top en cada uno de los elementos
-	    $figura.data('right',right);
-	     $figura.data('bottom', bottom);
 }
 
 function cambiarTamObjetosDraggables(contador_denominador,contador_figura,i){
@@ -230,37 +233,40 @@ function creaFiguraDND(contador_denominador,contenedorFigura){
 				.attr({
 					id: 'figuraDND'+i+'CF'+j,
 					name: 'enable'
-				})
-				.appendTo('#contenedorFigura'+j).droppable({					
+			}).droppable({					
 					accept: '.figuraDraggable',//Solo se acepataran las figuras con dicha clase
-					drop: handleDropFigure,
-
+					drop: function(event,ui){
+						if($(this).attr('name')=='enable'){//Verificamos que la caja punteada este disponible
+							tolerance: 'fit'//Solo se aceptan si estan adentro por completo las figuras
+							var elemento=ui.draggable;
+							elemento.draggable({
+								revert:false//Se quita el revert, para evitar que se regrese el cuadro azul
+							}).offset({
+								left:$(this).offset().left,//El offset se copia, para que el cuadro azul se ajuste al cuadro punteado
+								top:$(this).offset().top
+							}).data('lugar','figuraDND'+i+'CF'+j);//Guardamos el lugar en el que se pone la caja azul, es decir el id de la subcaja punteada
+							$(this).attr('name', 'disable');
+							controladorNumeradorAgregarBoton();//Actualizamos el numerador
+		 					crearObjetosDraggables(contador_denominador,contador_figura);//Creamos una nueva figurita azul
+		 					contador_figura++;//Actualizamos el contador de las figuras azules
+						}
+					},
 					out: function(event,ui){
 						var elemento=ui.draggable;
 						elemento.draggable({
-							revert:function() {//Se restablece un nuevo revert, solo que este no retornara nuevo elemento droppable, si no al contenedor original, en el que estaba el elemento
+							revert:function() {//Se restablece un nuevo revert, solo que este no regresara al cuadro punteado, si no al contenedor original, en el que estaba el elemento
 								var elemento=$(this);
 								var topElemento=$(this).data('top');//Se recupera la posicion en top que tenia la figura inicialmente
 								var leftElemento=$(this).data('left');//Se recupera la posicion en left que tenia la figura inicialmente
-								elemento.animate({top:topElemento,left:leftElemento},'slow');//La animacion es la que genera el efecto de que vuelve la figuara a la posicion inicial
+								elemento.animate({top:topElemento,left:leftElemento},'slow')//La animacion es la que genera el efecto de que vuelve la figuara a la posicion inicial
+								.data('lugar','');
 							}
 						});
+							controladorNumeradorQuitarBoton();//Actualizamos el contador del numerador
+							$(this).attr('name', 'enable');	//Habilitamos el cuadro punteado						
 					}
-				});//termina droppable
-				var left=$('#figuraDND'+i+'CF'+j).position().left;//Se obtiene el left inicial
-			   	var top=$('#figuraDND'+i+'CF'+j).position().top;//Se obtiene el top inicial
-			    	
-			   	var bottom=$('#figuraDND'+i+'CF'+j).position().bottom;
-			    $('#figuraDND'+i+'CF'+j).data('top',top);//Se guarda su posicion en left en cada uno de los elementos
-			    $('#figuraDND'+i+'CF'+j).data('left',left);//Se guarda su posicion en top en cada uno de los elementos
-			    $('#figuraDND'+i+'CF'+j).data('bottom',bottom);
-
-	    console.log("Top: "+top);
-	    console.log("Left: "+left);
-
-
+			}).appendTo('#contenedorFigura'+j);
 		}
-
 	}
 }
 
@@ -272,32 +278,7 @@ function destruirFiguraDND(contador_denominador,contenedorFigura){
 	}
 }
 
-/*Función que compruba si ya está ocupado un slot para las figuras*/
-function handleDropFigure(event, ui) {
-	if($(this).attr("name")=='enable'){
-		controladorNumeradorAgregarBoton();
-		//alert(contador_numerador);
-		$(this).attr('name', 'disable');
-      	$(this).append(ui.draggable.css({
-        /* manually append the element
-                and reset positioning */
-      //  right: $(this).position().right,
-        top: $(this).position().top,
-        left: $(this).position().left
-        //bottom: $(this).position().bottom
-      }));
-      ui.draggable.position({
-        my: "center",
-        at: "center",
-        of: $(this)
-      });
-
-
-  }
-}
-
 /*Controladores de flechas. Estos se actualizan cuando se hacen modificaciones*/
-
 
 function controladorFlechaAgregarContenedor(){
 	contador_contenedores++;
@@ -440,20 +421,22 @@ function controladorNumeradorAgregarBoton(){
 }
 
 function controladorNumeradorQuitarBoton(){
-	contador_numerador--;
-		$numerador_texto.text(contador_numerador);
-		if(contador_numerador==0){
+		if((contador_numerador-1)>0){
+			contador_numerador--;
+			$numerador_texto.text(contador_numerador);
+			$numerador_agregar_btn.removeClass('add-flecha-btn-desact');
+			$numerador_agregar_btn.addClass('add-flecha-btn');
+			$numerador_quitar_btn.removeAttr('disabled','true');
+			$numerador_agregar_btn.removeAttr('disabled','true');
+		}else{
+			contador_numerador=0;
+			$numerador_texto.text(0);
 			$numerador_quitar_btn.attr('disabled','true');
 			$numerador_agregar_btn.removeAttr('disabled','true');
 			$numerador_quitar_btn.removeClass('add-flecha-btn');
 			$numerador_quitar_btn.addClass('add-flecha-btn-desact');
 			$numerador_agregar_btn.removeClass('add-flecha-btn-desact');
 			$numerador_agregar_btn.addClass('add-flecha-btn');
-		}else{
-			$numerador_agregar_btn.removeClass('add-flecha-btn-desact');
-			$numerador_agregar_btn.addClass('add-flecha-btn');
-			$numerador_quitar_btn.removeAttr('disabled','true');
-			$numerador_agregar_btn.removeAttr('disabled','true');
 			
 		}
 }
