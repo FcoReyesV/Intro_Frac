@@ -260,9 +260,9 @@ function creaFiguraDND(contador_denominador,contenedorFigura){
 								var leftElemento=$(this).data('left');//Se recupera la posicion en left que tenia la figura inicialmente
 								elemento.animate({top:topElemento,left:leftElemento},'slow')//La animacion es la que genera el efecto de que vuelve la figuara a la posicion inicial
 								.data('lugar','');
+								controladorNumeradorQuitarBoton();//Actualizamos el contador del numerador
 							}
 						});
-							controladorNumeradorQuitarBoton();//Actualizamos el contador del numerador
 							$(this).attr('name', 'enable');	//Habilitamos el cuadro punteado						
 					}
 			}).appendTo('#contenedorFigura'+j);
