@@ -1,5 +1,8 @@
 	
 	/*Variables globales que controlan el contenido*/
+	//var left_inicial='10px';
+	//var top_inicial='510px';
+	var draggables_colocados=0;
 	var contador_contenedores=1;
 	var $flecha_agregar_contenedor = $('#flecha-agregar-contenedor');
 	var $flecha_quitar_contenedor = $('#flecha-quitar-contenedor');
@@ -75,7 +78,17 @@ $(document).ready(function(){
 		destruirContenedorFigura(contador_contenedores);
 		crearContenedorFigura(contador_contenedores);
 		creaFiguraDND(contador_denominador,contador_contenedores);
+		for(var i=0;i<contador_figura;i++){
+			for (var j = contador_contenedores-1; j >= 0; j--){
+				for (var k = contador_denominador-1; k >= 0; k--){
+					if($('#figuraDND'+k+'CF'+j).attr('id')==$('#figura'+i).data('lugar')){//Ya que se eliminan todos las figuras dropabbles y se crean nuevamente, tenemos que agregar nuevamente aquellas figras que ya tenian un lugar asegurado
+						$('#figuraDND'+k+'CF'+j).data('ocupado','figura'+i);
+						$('#figuraDND'+k+'CF'+j).attr('name','disable');
+					}
 
+				}
+			}
+		}
 		
 	});
 
@@ -86,7 +99,6 @@ $(document).ready(function(){
 		controladorFlechaQuitarContenedor();
 		crearContenedorFigura(contador_contenedores);
 		creaFiguraDND(contador_denominador,contador_contenedores);
-		
 	});
 
 	$denominador_agregar_btn.click(function(event) {
@@ -116,14 +128,15 @@ $(document).ready(function(){
 	$numerador_agregar_btn.click(function(event) {
 		controladorNumeradorAgregarBoton();
 		crearObjetosDraggables(contador_denominador,contador_figura);
-			for (var j = 0; j < contador_contenedores; j++) {
-				for (var i = 0; i < contador_denominador; i++) {
+			for (var j = contador_contenedores-1; j >= 0; j--) {
+				for (var i = contador_denominador-1; i >= 0; i--) {
 					if($('#figuraDND'+i+'CF'+j).attr('name')=='enable'){
-						$('#figura'+contador_figura).animate({
+						$('#figura'+contador_figura).animate({//Posicionamos los cuadros azules en los cuadros punteados disponibles
 							left: $('#figuraDND'+i+'CF'+j).offset().left - $('#contenedor-objetos-draggables').offset().left +470,
 							top: $('#figuraDND'+i+'CF'+j).offset().top - $('#contenedor-objetos-draggables').offset().top
-						},'slow').data('lugar','#figuraDND'+i+'CF'+j);
+						},'slow').data('lugar','figuraDND'+i+'CF'+j);
 						$('#figuraDND'+i+'CF'+j).attr('name','disable');
+						$('#figuraDND'+i+'CF'+j).data('ocupado','figura'+contador_figura);//Guardamos en el cuadro punteado, el id del cuadro azul que lo ocupo
 						contador_figura++;
 						return;
 					}
@@ -132,19 +145,25 @@ $(document).ready(function(){
 			
 			}
 		}
-				
-
 	);
 
 	$numerador_quitar_btn.click(function(event) {
 		controladorNumeradorQuitarBoton();
-		for (var i=1;i<contador_figura;i++){
-			if($('#figura'+i).data('lugar')!=''){
-				$($('#figura'+i).data('lugar')).attr('name','enable');
-				$('#figura'+i).animate({
-					top: $('#figura'+i).data('top'),
-					left: $('#figura'+i).data('left')
-				},'slow').data('lugar','');
+		for (var j = contador_contenedores-1; j >= 0; j--){
+			for (var i = contador_denominador-1; i >= 0; i--){
+				if($('#figuraDND'+i+'CF'+j).data('ocupado')!=''){
+					var elemento='#'+$('#figuraDND'+i+'CF'+j).data('ocupado');
+					var topElemento=$(elemento).data('top');//Se recupera la posicion en top que tenia la figura inicialmente
+					var leftElemento=$(elemento).data('left');//Se recupera la posicion en left que tenia la figura inicialmente
+					$(elemento).animate({
+						top: topElemento,
+						left: leftElemento
+					},'slow');
+					$('#figuraDND'+i+'CF'+j).data('ocupado','');
+					$('#figuraDND'+i+'CF'+j).attr('name','enable');
+					i=0;
+					j=0;
+				}
 			}
 			
 		}
@@ -176,7 +195,6 @@ $(document).ready(function(){
 	
 });
 
-
 function crearObjetosDraggables(contador_denominador,contador_figura){
 	propiedadesFigura();
  
@@ -191,8 +209,9 @@ function crearObjetosDraggables(contador_denominador,contador_figura){
 		});
 
 	    $('#figura'+contador_figura).css({
-	    	top: '10px',
-	    	right: 3*contador_figura+'px'
+	    	//Si quieres modificar la posicion inicial, solo modifica el valor de las variables 'top_inicial' y 'left_inicial'
+	    	top: '10px',//Todos se los draggables creados se crearan uno debajo de otro, paa que no se vean todos feos ahi encimados
+	    	right: '0px'//Todos se los draggables creados se crearan uno debajo de otro, paa que no se vean todos feos ahi encimados
 	    });      
 	    var $figura= $('#figura'+contador_figura);
 	    var left= $figura.position().left;//Se obtiene el left inicial
@@ -220,6 +239,7 @@ function cambiarTamObjetosDraggables(contador_denominador,contador_figura,i){
 function crearContenedorFigura(num_contenedores){
 	for(var i=0; i<num_contenedores;i++)
 		$('<div class="'+contenedor_figura+'"><div>').attr('id', 'contenedorFigura'+i).appendTo('.contenedor-principal');
+
 }
 function destruirContenedorFigura(num_contenedores){
 	for(var i=0; i<num_contenedores;i++)
@@ -239,6 +259,7 @@ function creaFiguraDND(contador_denominador,contenedorFigura){
 						if($(this).attr('name')=='enable'){//Verificamos que la caja punteada este disponible
 							tolerance: 'fit'//Solo se aceptan si estan adentro por completo las figuras
 							var elemento=ui.draggable;
+							$(this).data('ocupado',elemento.attr('id'));//Guardamos el id del cuadro azul, para saber por cual cuadro fue ocupado
 							elemento.draggable({
 								revert:false//Se quita el revert, para evitar que se regrese el cuadro azul
 							}).offset({
@@ -249,10 +270,17 @@ function creaFiguraDND(contador_denominador,contenedorFigura){
 							controladorNumeradorAgregarBoton();//Actualizamos el numerador
 		 					crearObjetosDraggables(contador_denominador,contador_figura);//Creamos una nueva figurita azul
 		 					contador_figura++;//Actualizamos el contador de las figuras azules
+		 					draggables_colocados++;//Actualizamos que se coloco un nuevo cuadro azul
 						}
 					},
 					out: function(event,ui){
 						var elemento=ui.draggable;
+						if($(this).data('ocupado')==elemento.attr('id')){//Verificamos que el cuadro punteado este ocupado, esto para ver si disminuimos o no el contador del numerador
+							controladorNumeradorQuitarBoton();//Actualizamos el contador del numerador
+							$(this).attr('name', 'enable');	//Habilitamos el cuadro punteado
+							$(this).data('ocupado','');
+							draggables_colocados--;//Actualizamos que se quito un draggable
+						}
 						elemento.draggable({
 							revert:function() {//Se restablece un nuevo revert, solo que este no regresara al cuadro punteado, si no al contenedor original, en el que estaba el elemento
 								var elemento=$(this);
@@ -264,6 +292,7 @@ function creaFiguraDND(contador_denominador,contenedorFigura){
 							}
 						});
 							$(this).attr('name', 'enable');	//Habilitamos el cuadro punteado						
+						});						
 					}
 			}).appendTo('#contenedorFigura'+j);
 		}
@@ -386,7 +415,7 @@ function controladorDenominadorQuitarBoton(){
 			contador_numerador=contador_contenedores*contador_denominador;
 			$numerador_texto.text(contador_numerador);
 		}
-		if(contador_denominador==1){
+		if(contador_denominador==1 || draggables_colocados>((contador_contenedores-1)*(contador_denominador-1))){//El numero draggables colocados no tiene que superar al numero maximo de draggables que se pueden poner
 			$denominador_quitar_btn.attr('disabled','true');
 			$denominador_agregar_btn.removeAttr('disabled','true');
 			$denominador_quitar_btn.removeClass('add-flecha-btn');
