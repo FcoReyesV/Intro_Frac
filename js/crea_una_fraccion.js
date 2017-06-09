@@ -114,62 +114,75 @@ $(document).ready(function() {
 //Este contenedor es el que guarda las figuras que se introducen al arrastrar y soltar
 function contenedorDraggable($nivel_contador_figura,$nivel){
 	$('<div class="figuraDraggable propiedades-contenedores"></div>')
-	    .attr('id', 'figura'+$nivel_contador_figura+'lvl'+$nivel)
+	    .attr({
+	    	id: 'figura'+$nivel_contador_figura+'lvl'+$nivel,
+	    	name: '0'
+	    })
 	    .appendTo( '#nivelfnc'+$nivel+' .contenedor-figuras').draggable({
 		containment: '.bloque-central',
 			stack: '.contenedor-figuras div',
-		    cursor: 'move'
+		    cursor: 'move',
+		    revert: true
 		})
 		.droppable({
 			accept: '.figuras-draggables', //son los ractangulos que se agregan
 			drop: function(event,ui){
 				var $item=ui.draggable;
+				var valor_contenedor=parseFloat($(this).attr('name'));
+				var valor_draggable=parseFloat($item.attr('name'));
+			
+				valor_contenedor+=valor_draggable;
+				$(this).attr('name', valor_contenedor); //Le asigname el valor del draggable que se colocó 
+				//Se hace la comparación para que el contenedor solo acepte un entero
+				if(valor_contenedor<=1){
 
-				switch($item.width()+2){
-					case 150:
-						$('<div class="rectangulo-1"></div>').css({
-							backgroundColor: 'none',
-							position: 'relative'
-						})
-						.appendTo($(this)).append($item.css({
-							top: '',
-							left: ''
-						}));
-						$item.draggable( 'option', 'revert', false );
-					break;
-					case 75:
-					
-						$('<div class="rectangulo-2"></div>').css({
-							backgroundColor: 'none',
-							position: 'relative'
-						})
-						.appendTo($(this)).append($item);
-						$item.css({
-							top: $item.parent().position.top-10,
-							left: $item.parent().position.left-20
-						});
-					break;
-					case 50:
-						$('<div class="rectangulo-3"></div>').css({
-							backgroundColor: 'none',
-							position: 'relative'
-						})
-						.appendTo($(this)).append($item.css({
-							top: '',
-							left: ''
-						}));
-					break;
+				
+					switch($item.width()+2){
+						case 150:
+							$('<div class="rectangulo-1"></div>').css({
+								backgroundColor: 'none',
+								position: 'relative'
+							})
+							.appendTo($(this)).append($item.css({
+								top: '',
+								left: ''
+							}));
+
+						break;
+						case 75:
+							$('<div class="rectangulo-2"></div>').css({
+								backgroundColor: 'none',
+								position: 'relative'
+							})
+							.appendTo($(this)).append($item.css({
+								top: '',
+								left: ''
+							}));
+						break;
+						case 50:
+							$('<div class="rectangulo-3"></div>').css({
+								backgroundColor: 'none',
+								position: 'relative'
+							})
+							.appendTo($(this)).append($item.css({
+								top: '',
+								left: ''
+							}));
+						break;
+					}	//Fin del switch
+					$item.draggable( 'option', 'revert', false );
+					$item.position({
+						my: "left",
+						at: "left",
+						of: $(this)
+					});
+
+				}//Fin del if que acepta solo un entero
+				else{
+					valor_contenedor-=valor_draggable;
+					$(this).attr('name', valor_contenedor);
 				}
-				//console.log($item.width()+2);
-				//$item.appendTo('#este1');
-
-				
-				
-				 //ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );	
-				
-				//$item.appendTo(this); 	
-				//$item.draggable( 'option', 'revert', false );
-			}
+			}//Fin de la función anónima del drop
 
 
 		});
@@ -227,43 +240,66 @@ function agregarContenedor(nivel){
 
 function droppablesCorrectos(nivel,i){
 	var nivel_valor=[3];
+	var imagen_figura=[3];
 	switch(nivel.charAt(0)){
 		case '1':
 			nivel_valor[0]=1/3;
 			nivel_valor[1]=2/3;
 			nivel_valor[2]=1;
+		
+			imagen_figura[0]="images/alvl1a.png";
+			imagen_figura[1]="images/alvl1b.png";
+			imagen_figura[2]="images/alvl1c.png";
 		break;
 		case '2':
 			nivel_valor[0]=1/3;
 			nivel_valor[1]=2/3;
 			nivel_valor[2]=3/5;
+			imagen_figura[0]="images/alvl1a.png";
+			imagen_figura[1]="images/alvl1b.png";
+			imagen_figura[2]="images/alvl2c.png";
 		break;
 		case '3':
 			nivel_valor[0]=2/6;
 			nivel_valor[1]=1;
 			nivel_valor[2]=1/2;
+			imagen_figura[0]="images/alvl3a.png";
+			imagen_figura[1]="images/alvl1c.png";
+			imagen_figura[2]="images/alvl3c.png";
 		break;
 		case '4':
 			nivel_valor[0]=1/5;
 			nivel_valor[1]=1;
 			nivel_valor[2]=3/4;
+			imagen_figura[0]="images/alvl4a.png";
+			imagen_figura[1]="images/alvl1c.png";
+			imagen_figura[2]="images/alvl4c.png";
+			
 		break;
 		case '5':
 			nivel_valor[0]=2/5;
 			nivel_valor[1]=1/4;
 			nivel_valor[2]=2/3;
+			imagen_figura[0]="images/alvl5a.png";
+			imagen_figura[1]="images/alvl5b.png";
+			imagen_figura[2]="images/alvl1b.png";
+			
 		break;
 	}
 
 	$('<div class="droppable-correctos"></div>').attr('id', 'correcto'+i+'lvl'+nivel).appendTo('#contenedor-droppable-'+nivel)
 	.attr('name',nivel_valor[i])
+	.css('z-index', '1')
 	.droppable({
 		accept:'.figuraDraggable',
 		drop: function(event,ui){
+			var $item=ui.draggable;
+			var valor_correcto=parseFloat($(this).attr('name'));
+			var valor_item=parseFloat($item.attr('name'));
 			//se compara con el valor que toman al agregar los valores
-			//if($('#correcto'+i+'lvl'+nivel).attr('name') == ui.draggable.attr('name')){
+			if(valor_correcto == valor_item){
 				var $item=ui.draggable;
-				$item.css({"left":""-10, "top":""-10, "bottom":"", "right":"" });
+				$item.css({"left":""-12, "top":""-12, "bottom":"", "right":"" });
 				$item.draggable( 'option', 'revert', false ); 	
 				$(this).append($item);
 				$item.position({
@@ -273,9 +309,17 @@ function droppablesCorrectos(nivel,i){
 				});
 
 				
-			//} fin del if que compara si el atibuto es el mimso que está en el fondo	
+			} //fin del if que compara si es correcto el valor de la figura arrastrada	
 		}
 	});
+
+	if(nivel.charAt(1)=='a'){
+		$('#correcto'+i+'lvl'+nivel).css('background-image', 'url('+imagen_figura[i]+')');
+	}else{
+		//$('#correcto'+i+'lvl'+nivel).css('background-image', 'url(../images/myimage.jpg)');
+	}
+
+
 }
 
 
@@ -285,6 +329,7 @@ function crearFigurasDraggables(nivel){
 				$('<div id="fig1'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
 				for(var i=0;i<2;i++){
 					$('<div id="draggable'+i+'alvl'+nivel+'" name="1" class="figuras-draggables rectangulo-1"></div>').css('background-color', 'rgb(60,134,174)').appendTo('#fig1'+nivel)
+					
 					.draggable( {
 						containment: '.bloque-central',
 						stack: '#contenedor-manejable-'+nivel,
