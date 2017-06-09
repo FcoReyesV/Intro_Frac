@@ -111,24 +111,71 @@ $(document).ready(function() {
 });
 
 
-function contenedorFraccionesCorrectas(){
-	
-}
-
+//Este contenedor es el que guarda las figuras que se introducen al arrastrar y soltar
 function contenedorDraggable($nivel_contador_figura,$nivel){
 	$('<div class="figuraDraggable propiedades-contenedores"></div>')
-	    .attr('id','figura'+$nivel_contador_figura+'lvl'+$nivel)
-	    .appendTo( '#nivelfnc'+$nivel+' .contenedor-figuras').draggable( {
+	    .attr('id', 'figura'+$nivel_contador_figura+'lvl'+$nivel)
+	    .appendTo( '#nivelfnc'+$nivel+' .contenedor-figuras').draggable({
 		containment: '.bloque-central',
 			stack: '.contenedor-figuras div',
-		    cursor: 'move',
-		   	revert: true
+		    cursor: 'move'
+		})
+		.droppable({
+			accept: '.figuras-draggables', //son los ractangulos que se agregan
+			drop: function(event,ui){
+				var $item=ui.draggable;
+
+				switch($item.width()+2){
+					case 150:
+						$('<div class="rectangulo-1"></div>').css({
+							backgroundColor: 'none',
+							position: 'relative'
+						})
+						.appendTo($(this)).append($item.css({
+							top: '',
+							left: ''
+						}));
+						$item.draggable( 'option', 'revert', false );
+					break;
+					case 75:
+					
+						$('<div class="rectangulo-2"></div>').css({
+							backgroundColor: 'none',
+							position: 'relative'
+						})
+						.appendTo($(this)).append($item);
+						$item.css({
+							top: $item.parent().position.top-10,
+							left: $item.parent().position.left-20
+						});
+					break;
+					case 50:
+						$('<div class="rectangulo-3"></div>').css({
+							backgroundColor: 'none',
+							position: 'relative'
+						})
+						.appendTo($(this)).append($item.css({
+							top: '',
+							left: ''
+						}));
+					break;
+				}
+				//console.log($item.width()+2);
+				//$item.appendTo('#este1');
+
+				
+				
+				 //ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );	
+				
+				//$item.appendTo(this); 	
+				//$item.draggable( 'option', 'revert', false );
+			}
+
+
 		});
 }
 
-function figurasDraggables(){
 
-}
 
 function mostrarAreaPrincipal(nivel,niveltipo){
 	$('#contenedor-niveles').fadeOut(600,function(){
@@ -176,7 +223,6 @@ function agregarContenedor(nivel){
 }
 
 
-	
 
 
 function droppablesCorrectos(nivel,i){
@@ -213,39 +259,115 @@ function droppablesCorrectos(nivel,i){
 	.attr('name',nivel_valor[i])
 	.droppable({
 		accept:'.figuraDraggable',
-		drop: function(nivel,i,event,ui){
-			ui.draggable.draggable({
-			revert:false//Se quita el revert, para evitar que se regrese el cuadro azul
-			}).css({
-				left:$(this).position().left,//El offset se copia, para que el cuadro azul se ajuste al cuadro punteado
-				top:$(this).position().top
-			})
+		drop: function(event,ui){
+			//se compara con el valor que toman al agregar los valores
+			//if($('#correcto'+i+'lvl'+nivel).attr('name') == ui.draggable.attr('name')){
+				var $item=ui.draggable;
+				$item.css({"left":""-10, "top":""-10, "bottom":"", "right":"" });
+				$item.draggable( 'option', 'revert', false ); 	
+				$(this).append($item);
+				$item.position({
+					my: "left",
+					at: "left",
+					of: $(this)
+				});
+
+				
+			//} fin del if que compara si el atibuto es el mimso que está en el fondo	
 		}
 	});
 }
 
 
-function handleDropFigure(nivel,i,event,ui){
-	console.log('attr: '+$('#correcto'+i+'lvl'+nivel).attr('name'));
-	//se tiene que comparar con el valor que toman al agregar los valores
-	/*if($('#correcto'+i+'lvl'+nivel).attr('name')){
+function crearFigurasDraggables(nivel){
+		switch(nivel){
+			case '1a':
+				$('<div id="fig1'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<2;i++){
+					$('<div id="draggable'+i+'alvl'+nivel+'" name="1" class="figuras-draggables rectangulo-1"></div>').css('background-color', 'rgb(60,134,174)').appendTo('#fig1'+nivel)
+					.draggable( {
+						containment: '.bloque-central',
+						stack: '#contenedor-manejable-'+nivel,
+					    cursor: 'move',
+					   	revert: true
+					});
+					$('#draggable'+i+'alvl'+nivel).css({
+						bottom: i*5,
+						right: i*5
+					});
 
-	}*/
-	
-	
-	
+				}
+				
+				
+				$('<div id="fig2'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<2;i++){
+					$('<div id="draggable'+i+'blvl'+nivel+'" name="0.5" class="figuras-draggables rectangulo-2"></div>').css('background-color', 'rgb(60,134,174)').appendTo('#fig2'+nivel)
+					.draggable( {
+						containment: '.bloque-central',
+						stack: '#contenedor-manejable-'+nivel,
+					    cursor: 'move',
+					   	revert: true
+					});
+					$('#draggable'+i+'blvl'+nivel).css({
+						bottom: i*5,
+						right: i*5
+					});
+				}
+				
+				
+				$('<div id="fig3'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<3;i++){
+					$('<div id="draggable'+i+'clvl'+nivel+'" name="0.3333333333333333" class="figuras-draggables rectangulo-3"></div>').css('background-color', 'rgb(60,134,174)').appendTo('#fig3'+nivel)
+					.draggable({
+						containment: '.bloque-central',
+						stack: '#contenedor-manejable-'+nivel,
+					    cursor: 'move',
+					   	revert: true
+					});
+					$('#draggable'+i+'clvl'+nivel).css({
+						bottom: i*5,
+						right: i*5
+					});
+				}
+
+			break;
+			case '2a':
+			break;
+			case '3a':
+			break;
+			case '4a':
+			break;
+			case '5a':
+			break;
+			case '1b':
+			break;
+			case '2b':
+			break;
+			case '3b':
+			break;
+			case '4b':
+			break;
+			case '5b':
+			break;
+		}
 }
+
 
 
 function contenedorFuncionNivel(nivel){
 	$('<div class="contenedor-funcion"></div>').attr('id', 'nivelfnc'+nivel).appendTo('.bloque-central');
 	$('<div class="contenedor-figuras"></div>').appendTo('#nivelfnc'+nivel);
-	$('<div class="contenedor-manejables"><button  id="agregarContenedor'+nivel+'" class="agregar-contenedor" title="Agregar nuevo contenedor"><span class="glyphicon glyphicon-plus"></span></button></div>').appendTo('#nivelfnc'+nivel);
+	$('<div id="contenedor-manejable-'+nivel+'" class="contenedor-manejables"><button  id="agregarContenedor'+nivel+'" class="agregar-contenedor" title="Agregar nuevo contenedor"><span class="glyphicon glyphicon-plus"></span></button></div>').appendTo('#nivelfnc'+nivel);
 	$('<div id="contenedor-droppable-'+nivel+'" class="contenedor-droppables"></div><button class="btn btn-primary reiniciar">Reiniciar</button>').appendTo('#nivelfnc'+nivel);
 	
 	for(var i=0;i<3;i++){
 		droppablesCorrectos(nivel,i);
 	}
-		
+	crearFigurasDraggables(nivel);
+
+}
+
+
+function nivel1a(nivel){
 
 }
