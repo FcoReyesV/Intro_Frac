@@ -18,7 +18,7 @@
 	var $numerador_agregar_btn = $('#numerador-agregar-btn');
 	var $numerador_quitar_btn = $('#numerador-quitar-btn');
 
-	var contador_figura=1;
+	var contador_figura=2;
 
 	/*Propiedades de cada figura*/
 	var figura_propiedades;
@@ -64,11 +64,11 @@ $(document).ready(function(){
 	crearContenedorFigura(1);
 	creaFiguraDND(contador_denominador,contador_contenedores);
 
-	for(var i=0;i<1;i++){
-		crearObjetosDraggables(contador_denominador,contador_figura);
-		cambiarTamObjetosDraggables(contador_denominador,contador_figura,i);
-		contador_figura++;
-	}
+	//for(var i=0;i<1;i++){
+		crearObjetosDraggables(contador_denominador,1);
+		cambiarTamObjetosDraggables(contador_denominador,1,0);
+		//contador_figura++;
+	//}
 
 
 	$flecha_agregar_contenedor.click(function(event) {
@@ -78,17 +78,7 @@ $(document).ready(function(){
 		destruirContenedorFigura(contador_contenedores);
 		crearContenedorFigura(contador_contenedores);
 		creaFiguraDND(contador_denominador,contador_contenedores);
-		for(var i=0;i<contador_figura;i++){
-			for (var j = contador_contenedores-1; j >= 0; j--){
-				for (var k = contador_denominador-1; k >= 0; k--){
-					if($('#figuraDND'+k+'CF'+j).attr('id')==$('#figura'+i).data('lugar')){//Ya que se eliminan todos las figuras dropabbles y se crean nuevamente, tenemos que agregar nuevamente aquellas figras que ya tenian un lugar asegurado
-						$('#figuraDND'+k+'CF'+j).data('ocupado','figura'+i);
-						$('#figuraDND'+k+'CF'+j).attr('name','disable');
-					}
-
-				}
-			}
-		}
+		ajustarDraggableContenedorNuevo();
 		
 	});
 
@@ -99,6 +89,8 @@ $(document).ready(function(){
 		controladorFlechaQuitarContenedor();
 		crearContenedorFigura(contador_contenedores);
 		creaFiguraDND(contador_denominador,contador_contenedores);
+		ajustarDraggableContenedorRemovido();
+
 	});
 
 	$denominador_agregar_btn.click(function(event) {
@@ -127,47 +119,16 @@ $(document).ready(function(){
 
 	$numerador_agregar_btn.click(function(event) {
 		controladorNumeradorAgregarBoton();
+		draggables_colocados++;
 		crearObjetosDraggables(contador_denominador,contador_figura);
-			for (var j = contador_contenedores-1; j >= 0; j--) {
-				for (var i = contador_denominador-1; i >= 0; i--) {
-					if($('#figuraDND'+i+'CF'+j).attr('name')=='enable'){
-						$('#figura'+contador_figura).animate({//Posicionamos los cuadros azules en los cuadros punteados disponibles
-							left: $('#figuraDND'+i+'CF'+j).offset().left - $('#contenedor-objetos-draggables').offset().left +470,
-							top: $('#figuraDND'+i+'CF'+j).offset().top - $('#contenedor-objetos-draggables').offset().top
-						},'slow').data('lugar','figuraDND'+i+'CF'+j);
-						$('#figuraDND'+i+'CF'+j).attr('name','disable');
-						$('#figuraDND'+i+'CF'+j).data('ocupado','figura'+contador_figura);//Guardamos en el cuadro punteado, el id del cuadro azul que lo ocupo
-						contador_figura++;
-						return;
-					}
-					
-				}
-			
-			}
+		agregarDraggable();
 		}
 	);
 
 	$numerador_quitar_btn.click(function(event) {
 		controladorNumeradorQuitarBoton();
-		for (var j = contador_contenedores-1; j >= 0; j--){
-			for (var i = contador_denominador-1; i >= 0; i--){
-				if($('#figuraDND'+i+'CF'+j).data('ocupado')!=''){
-					var elemento='#'+$('#figuraDND'+i+'CF'+j).data('ocupado');
-					var topElemento=$(elemento).data('top');//Se recupera la posicion en top que tenia la figura inicialmente
-					var leftElemento=$(elemento).data('left');//Se recupera la posicion en left que tenia la figura inicialmente
-					$(elemento).animate({
-						top: topElemento,
-						left: leftElemento
-					},'slow');
-					$('#figuraDND'+i+'CF'+j).data('ocupado','');
-					$('#figuraDND'+i+'CF'+j).attr('name','enable');
-					i=0;
-					j=0;
-				}
-			}
-			
-		}
-		
+		draggables_colocados--;
+		quitarDraggable();
 	});
 
 	 /*Botones de opciones de la barra lateral izquierda*/
@@ -265,7 +226,7 @@ function creaFiguraDND(contador_denominador,contenedorFigura){
 							}).offset({
 								left:$(this).offset().left,//El offset se copia, para que el cuadro azul se ajuste al cuadro punteado
 								top:$(this).offset().top
-							}).data('lugar','figuraDND'+i+'CF'+j);//Guardamos el lugar en el que se pone la caja azul, es decir el id de la subcaja punteada
+							}).data('lugar',$(this).attr('id'));//Guardamos el lugar en el que se pone la caja azul, es decir el id de la subcaja punteada
 							$(this).attr('name', 'disable');
 							controladorNumeradorAgregarBoton();//Actualizamos el numerador
 		 					crearObjetosDraggables(contador_denominador,contador_figura);//Creamos una nueva figurita azul
@@ -288,13 +249,10 @@ function creaFiguraDND(contador_denominador,contenedorFigura){
 								var leftElemento=$(this).data('left');//Se recupera la posicion en left que tenia la figura inicialmente
 								elemento.animate({top:topElemento,left:leftElemento},'slow')//La animacion es la que genera el efecto de que vuelve la figuara a la posicion inicial
 								.data('lugar','');
-								controladorNumeradorQuitarBoton();//Actualizamos el contador del numerador
 							}
-						});
-							$(this).attr('name', 'enable');	//Habilitamos el cuadro punteado						
 						});						
 					}
-			}).appendTo('#contenedorFigura'+j);
+			}).appendTo('#contenedorFigura'+j).data('ocupado','');
 		}
 	}
 }
@@ -305,6 +263,127 @@ function destruirFiguraDND(contador_denominador,contenedorFigura){
 			$('#figuraDND'+i+'CF'+j).remove();
 		}
 	}
+}
+
+function quitarDraggable(){
+	for (var j = contador_contenedores-1; j >= 0; j--){
+			for (var i = contador_denominador-1; i >=0; i--){
+				if($('#figuraDND'+i+'CF'+j).data('ocupado')!=''){
+					var elemento='#'+$('#figuraDND'+i+'CF'+j).data('ocupado');
+					var topElemento=$(elemento).data('top');//Se recupera la posicion en top que tenia la figura inicialmente
+					var leftElemento=$(elemento).data('left');//Se recupera la posicion en left que tenia la figura inicialmente
+					$(elemento).animate({
+						top: topElemento,
+						left: leftElemento
+					},'slow').offset({
+						top: topElemento,
+						left: leftElemento
+					}).data('lugar','');
+					$('#figuraDND'+i+'CF'+j).data('ocupado','');
+					$('#figuraDND'+i+'CF'+j).attr('name','enable');
+					i=0;
+					j=0;
+				}
+			}
+			
+		}
+}
+
+function agregarDraggable(){
+	for (var j = contador_contenedores-1; j >= 0; j--) {
+				for (var i = contador_denominador-1; i >= 0; i--) {
+					if($('#figuraDND'+i+'CF'+j).attr('name')=='enable'){
+						$('#figura'+contador_figura).animate({//Posicionamos los cuadros azules en los cuadros punteados disponibles
+							left: $('#figuraDND'+i+'CF'+j).offset().left - $('#contenedor-objetos-draggables').offset().left +470,
+							top: $('#figuraDND'+i+'CF'+j).offset().top - $('#contenedor-objetos-draggables').offset().top
+						},'slow').data('lugar','figuraDND'+i+'CF'+j);
+						$('#figuraDND'+i+'CF'+j).attr('name','disable');
+						$('#figuraDND'+i+'CF'+j).data('ocupado','figura'+contador_figura);//Guardamos en el cuadro punteado, el id del cuadro azul que lo ocupo
+						contador_figura++;
+						return;
+					}
+					
+				}
+			
+			}
+}
+
+function ajustarDraggableContenedorNuevo(){
+	for(var i=0;i<contador_figura;i++){
+			for (var j = contador_contenedores-1; j >= 0; j--){
+				for (var k = contador_denominador-1; k >= 0; k--){
+					if($('#figuraDND'+k+'CF'+j).attr('id')==$('#figura'+i).data('lugar')){//Ya que se eliminan todos las figuras dropabbles y se crean nuevamente, tenemos que agregar nuevamente aquellas figras que ya tenian un lugar asegurado
+						$('#figuraDND'+k+'CF'+j).data('ocupado','figura'+i);
+						$('#figuraDND'+k+'CF'+j).attr('name','disable');
+						$('#figura'+i).offset({
+							left: $('#figuraDND'+k+'CF'+j).offset().left,
+							top: $('#figuraDND'+k+'CF'+j).offset().top
+						});
+					}
+
+				}
+			}
+		}
+}
+
+function ajustarDraggableContenedorRemovido(){
+	var colocados=new Array();
+	var conPosicion=new Array();
+	console.log(draggables_colocados);
+	for (var i = 0; i < contador_figura; i++) {//Primero guardamos el indice de los draggables que ya estan colocados
+		if($('#figura'+i).data('lugar')!='' && $('#figura'+i).data('lugar')!=null ){
+			colocados[i]=i;
+		}
+	}
+
+	for (var i = 0; i < colocados.length; i++) {//Aqui se colocan nuevamente los draggables que su droppable aun no ha sido eliminado
+		for (var j = contador_contenedores-1; j >= 0; j--){
+			for (var k = contador_denominador-1; k >= 0; k--){
+				if($('#figuraDND'+k+'CF'+j).attr('id')==$('#figura'+colocados[i]).data('lugar')){
+					$('#figuraDND'+k+'CF'+j).data('ocupado','figura'+colocados[i]);
+					$('#figuraDND'+k+'CF'+j).attr('name','disable');
+					$('#figura'+i).offset({
+						left: $('#figuraDND'+k+'CF'+j).offset().left,
+						top: $('#figuraDND'+k+'CF'+j).offset().top
+					}).data('lugar',$('#figuraDND'+k+'CF'+j).attr('id'));
+					colocados[i]='';
+				}
+			}
+		}
+	}
+
+	for (var i = 0; i < colocados.length; i++) {//Se colocan los draggables que su droppable fue eliminado
+		for (var j = contador_contenedores-1; j >= 0; j--){
+			for (var k = contador_denominador-1; k >= 0; k--){
+				if(colocados[i]!=null && colocados[i]!='' && $('#figuraDND'+k+'CF'+j).attr('name')=='enable'){
+					$('#figuraDND'+k+'CF'+j).data('ocupado','figura'+colocados[i]);
+					$('#figuraDND'+k+'CF'+j).attr('name','disable');
+					$('#figura'+i).offset({
+						left: $('#figuraDND'+k+'CF'+j).offset().left,
+						top: $('#figuraDND'+k+'CF'+j).offset().top
+					}).data('lugar',$('#figuraDND'+k+'CF'+j).attr('id'));
+					colocados[i]='';
+				}
+			}
+		}
+	}
+
+	for (var i = 0; i < colocados.length; i++){//En caso de que aun sobren draggables hasta este punto, se devuelven a su lugar de origen
+		if(colocados[i]!=null && colocados[i]!=''){
+			var elemento='#figura'+colocados[i];
+			var topElemento=$(elemento).data('top');//Se recupera la posicion en top que tenia la figura inicialmente
+			var leftElemento=$(elemento).data('left');//Se recupera la posicion en left que tenia la figura inicialmente
+			$(elemento).animate({
+				top: topElemento,
+				left: leftElemento
+			},'slow').offset({
+				top: topElemento,
+				left: leftElemento
+			}).data('lugar','');
+		}
+	}
+
+
 }
 
 /*Controladores de flechas. Estos se actualizan cuando se hacen modificaciones*/
