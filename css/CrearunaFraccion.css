@@ -60,12 +60,18 @@
   margin:10px 5px;
   font-size: 30px;
   text-align: center;
+  font-weight: bold;
 }
 
 .reiniciar{
   position: absolute;
-  bottom: 30px;
-  right: 50px;
+  border-style: none;
+  background:none;
+  outline:0;
+  top:140px;
+  left: 50px;
+  font-size: 45px;
+  color: rgb(51,122,183);
 }
 .contenedor-figuras{
   height: 230px;
@@ -75,6 +81,7 @@
   flex-direction: row;
   justify-content: center;
   position: relative;
+  background-image: url("../images/agregar_contenedor.png");
 
 }
 
@@ -105,11 +112,12 @@
 .propiedades-contenedores{
   width: 150px;
   height: 100px;
-  background-color: blue;
+  background-color: white;
   margin: 10px 10px;
   display: flex;
   flex-direction: row;
   position: relative;
+  border: 1px solid black;
   
 
 }
@@ -193,7 +201,7 @@
 .contenedor-draggables{
   width: 150px;
   height: 100px;
-  background-color: green;
+  background-color: white;
   margin: 0 10px;
   position: relative;
 }
@@ -202,10 +210,14 @@
   border-style: none;
   background:none;
   outline:0;
-  font-size: 15px;
+  font-size: 9px;
   position: absolute;
   top: 5px;
   right: 5px;
-  z-index: 10;
+  z-index: 0;
+}
+
+.remover-bloque:hover,.remover-draggable:hover{
+  font-size:15px;
 }
 

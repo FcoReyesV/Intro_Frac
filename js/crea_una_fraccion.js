@@ -14,11 +14,10 @@ for(var i=1;i<=5;i++){
 
 $(document).ready(function() {
 
-
 	$('#regresarMenu').hide();
 
 	$nivel_a[1].click(function() {
-		
+		//Primero comprobamos que exista en el DOM el nivel, sino lo crea
 		if(!$('#nivelfnc1a').length){
 			contenedorFuncionNivel('1a');	
 		}
@@ -100,6 +99,7 @@ $(document).ready(function() {
 	regresarMenu();
 	removerElementoCorrecto();
 	removerDraggable();
+	reiniciarNivel();
 
 	
 });
@@ -133,9 +133,10 @@ function contenedorDraggable($nivel_contador_figura,$nivel){
 	    })
 	    .appendTo( '#nivelfnc'+$nivel+' .contenedor-figuras').draggable({
 		containment: '.bloque-central',
-			stack: '.contenedor-figuras div',
+			
 		    cursor: 'move',
-		    revert: true
+		    revert: true,
+		    zIndex: 1
 		})
 		.droppable({
 			accept: '.figuras-draggables', //son los ractangulos que se agregan
@@ -248,7 +249,16 @@ function mostrarAreaPrincipal(nivel,niveltipo){
 
 function agregarContenedor(nivel){
 	$('#agregarContenedor'+nivel).click(function() {
+		
+		if($(this).parent().siblings('.contenedor-figuras').is(':empty')){
+			for(var i=1;i<=5;i++){
+				$nivel_a_contador_figura[i]=0;
+				$nivel_b_contador_figura[i]=0;
+			}
+			
+		}
 		var aux;
+		//Controlamos los contadores de cada figura creada en cada nivel
 		if(nivel.charAt(1)=='a'){
 
 				for(var i=1;i<=5;i++){
@@ -270,12 +280,13 @@ function agregarContenedor(nivel){
 
 		
 		if(aux<=3){
+			$(this).parent().siblings('.contenedor-figuras').css('background-image', 'none');
 			contenedorDraggable(aux,nivel);
 		}
 		if(aux==3){
 				$(this).removeClass('agregar-contenedor');
 				$(this).addClass('contenedor-completo');
-				$(this).attr('disabled', 'true');
+				$(this).prop('disabled', true);
 		}	
 	
 
@@ -309,7 +320,7 @@ function droppablesCorrectos(nivel,i){
 		case '2':
 			nivel_valor[0]=1/3;
 			nivel_valor[1]=2/3;
-			nivel_valor[2]=3/5;
+			nivel_valor[2]=2/5;
 			nivel_valorb[0]=1/4;
 			nivel_valorb[1]=2/4;
 			nivel_valorb[2]=4/5;
@@ -383,11 +394,11 @@ function droppablesCorrectos(nivel,i){
 			var $item=ui.draggable;
 			var valor_correcto=parseFloat($(this).attr('name'));
 			var valor_item=parseFloat($item.attr('name'));
-			
+			$item.css('z-index', '1');
 			//Se compara con el valor que toman al agregar los valores si está vacío true y sino false
 
 			if(valor_correcto == valor_item && $(this).is(':empty')){
-				
+				$item.droppable("disable");
 				var $remover_bloque=$('<button class="remover-bloque"><span title="Remover bloque" class="glyphicon glyphicon-remove"></span></button>');
 
 				$item.append($remover_bloque);
@@ -404,12 +415,19 @@ function droppablesCorrectos(nivel,i){
 					at: "left",
 					of: $(this)
 				});
+			
+				
 				
 				
 			} //fin del if que compara si es correcto el valor de la figura arrastrada	
 
-		}//fin de la funcion anonima del droppable
+		},//fin de la funcion anonima del droppable
+		over:function(event,ui){
+			ui.draggable.css('z-index', '1');
+		}
+
 	});
+
 }
 
 
@@ -419,71 +437,94 @@ function droppablesCorrectos(nivel,i){
 function crearFigurasDraggables(nivel){
 		switch(nivel){
 			case '1a':
+				//Si no existe el bloque, lo crea
 				if(!$('#fig1'+nivel).length)
 					$('<div id="fig1'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
 				for(var i=0;i<2;i++){
-					//Comprobamos que el elemento exista
-					if(!$('#draggable'+i+'alvl'+nivel).length){
-						$('<div id="draggable'+i+'alvl'+nivel+'" name="1" class="figuras-draggables rectangulo-1"></div>').css('background-color', 'rgb(60,134,174)').appendTo('#fig1'+nivel)
-						
-						.draggable( {
-							containment: '.bloque-central',
-							stack: '#contenedor-manejable-'+nivel,
-						    cursor: 'move',
-						   	revert: true
-						});
-						$('#draggable'+i+'alvl'+nivel).css({
-							bottom: i*5,
-							right: i*5
-						});
-					}
-
-				}//Fin del for que crea las figuras
+					figura1(nivel,i,'#fig1'+nivel,'rgb(0,101,144)');
+				}
 				
 				if(!$('#fig2'+nivel).length)
 					$('<div id="fig2'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
 				for(var i=0;i<2;i++){
-					if(!$('#draggable'+i+'blvl'+nivel).length){
-						$('<div id="draggable'+i+'blvl'+nivel+'" name="0.5" class="figuras-draggables rectangulo-2"></div>').css('background-color', 'rgb(60,134,174)').appendTo('#fig2'+nivel)
-						.draggable( {
-							containment: '.bloque-central',
-							stack: '#contenedor-manejable-'+nivel,
-						    cursor: 'move',
-						   	revert: true
-						});
-						$('#draggable'+i+'blvl'+nivel).css({
-							bottom: i*5,
-							right: i*5
-						});
-					}
+					figura1_2(nivel,i,'#fig2'+nivel,'rgb(0,147,202)');
 				}
 				
 				if(!$('#fig3'+nivel).length)
 					$('<div id="fig3'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
 				for(var i=0;i<3;i++){
-					if(!$('#draggable'+i+'clvl'+nivel).length){
-						$('<div id="draggable'+i+'clvl'+nivel+'" name="0.3333333333333333" class="figuras-draggables rectangulo-3"></div>').css('background-color', 'rgb(60,134,174)').appendTo('#fig3'+nivel)
-						.draggable({
-							containment: '.bloque-central',
-							stack: '#contenedor-manejable-'+nivel,
-						    cursor: 'move',
-						   	revert: true
-						});
-						$('#draggable'+i+'clvl'+nivel).css({
-							bottom: i*5,
-							right: i*5
-						});
-					}
+					figura1_3(nivel,i,'#fig3'+nivel,'rgb(153,218,213)');
 				}
 
 			break;
 			case '2a':
+				if(!$('#fig1'+nivel).length)
+					$('<div id="fig1'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<2;i++){
+					figura1_3(nivel,i,'#fig1'+nivel,'rgb(221,88,0)');
+				}
+				if(!$('#fig2'+nivel).length)
+					$('<div id="fig2'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<3;i++){
+					figura1_5(nivel,i,'#fig2'+nivel,'rgb(255,127,39)');
+				}
+				if(!$('#fig3'+nivel).length)
+					$('<div id="fig3'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<3;i++){
+					figura1_6(nivel,i,'#fig3'+nivel,'rgb(255,167,108)');
+				}
 			break;
 			case '3a':
+				if(!$('#fig1'+nivel).length)
+					$('<div id="fig1'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<3;i++){
+					figura1_3(nivel,i,'#fig1'+nivel,'rgb(163,73,164)');
+				}
+				if(!$('#fig2'+nivel).length)
+					$('<div id="fig2'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<3;i++){
+					figura1_4(nivel,i,'#fig2'+nivel,'rgb(206,101,255)');
+				}
+				if(!$('#fig3'+nivel).length)
+					$('<div id="fig3'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<3;i++){
+					figura1_6(nivel,i,'#fig3'+nivel,'rgb(206,153,255)');
+				}
+
 			break;
 			case '4a':
+				if(!$('#fig1'+nivel).length)
+					$('<div id="fig1'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<2;i++){
+					figura1_2(nivel,i,'#fig1'+nivel,'rgb(225,174,0)');
+				}
+				if(!$('#fig2'+nivel).length)
+					$('<div id="fig2'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<3;i++){
+					figura1_4(nivel,i,'#fig2'+nivel,'rgb(255,203,21)');
+				}
+				if(!$('#fig3'+nivel).length)
+					$('<div id="fig3'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<2;i++){
+					figura1_5(nivel,i,'#fig3'+nivel,'rgb(255,217,83)');
+				}
 			break;
 			case '5a':
+				if(!$('#fig1'+nivel).length)
+					$('<div id="fig1'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<2;i++){
+					figura1_4(nivel,i,'#fig1'+nivel,'rgb(137,176,19)');
+				}
+				if(!$('#fig2'+nivel).length)
+					$('<div id="fig2'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<3;i++){
+					figura1_5(nivel,i,'#fig2'+nivel,'rgb(163,208,23)');
+				}
+				if(!$('#fig3'+nivel).length)
+					$('<div id="fig3'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<4;i++){
+					figura1_6(nivel,i,'#fig3'+nivel,'rgb(191,234,62)');
+				}
 			break;
 			case '1b':
 			break;
@@ -498,13 +539,117 @@ function crearFigurasDraggables(nivel){
 		}
 }
 
+//Funciones para crear las figuras draggables que se depositan en el bloque
+
+function figura1(nivel, i,appendPadre,color){
+	//Primero verifica si existe o no la figura
+	if(!$('#draggable'+i+'alvl'+nivel).length){
+		$('<div id="draggable'+i+'alvl'+nivel+'" name="1" class="figuras-draggables rectangulo-1"></div>')
+		.css('background-color', color)
+		.appendTo(appendPadre)
+		.draggable( {
+			containment: '.bloque-central',
+			cursor: 'move',
+			revert: true
+		});
+		$('#draggable'+i+'alvl'+nivel).css({
+			bottom: i*5,
+			right: i*5
+		});
+	}
+}
+
+function figura1_2(nivel,i,appendPadre,color){
+	if(!$('#draggable'+i+'blvl'+nivel).length){
+		$('<div id="draggable'+i+'blvl'+nivel+'" name="0.5" class="figuras-draggables rectangulo-2"></div>')
+		.css('background-color', color)
+		.appendTo(appendPadre)
+		.draggable({
+			containment: '.bloque-central',
+			cursor: 'move',
+			revert: true
+		});
+		$('#draggable'+i+'blvl'+nivel).css({
+			bottom: i*5,
+			right: i*5
+		});
+	}
+}
+
+function figura1_3(nivel,i,appendPadre,color){
+	if(!$('#draggable'+i+'clvl'+nivel).length){
+		$('<div id="draggable'+i+'clvl'+nivel+'" name="0.3333333333333333" class="figuras-draggables rectangulo-3"></div>')
+		.css('background-color',color)
+		.appendTo(appendPadre)
+		.draggable({
+			containment: '.bloque-central',
+			cursor: 'move',
+			revert: true
+		});
+		$('#draggable'+i+'clvl'+nivel).css({
+			bottom: i*5,
+			right: i*5
+		});
+	}
+}
+
+function figura1_4(nivel,i,appendPadre,color){
+	if(!$('#draggable'+i+'dlvl'+nivel).length){
+		$('<div id="draggable'+i+'dlvl'+nivel+'" name="0.25" class="figuras-draggables rectangulo-4"></div>')
+		.css('background-color',color)
+		.appendTo(appendPadre)
+		.draggable({
+			containment: '.bloque-central',
+			cursor: 'move',
+			revert: true
+		});
+		$('#draggable'+i+'dlvl'+nivel).css({
+			bottom: i*5,
+			right: i*5
+		});
+	}
+}
+function figura1_5(nivel,i,appendPadre,color){
+	if(!$('#draggable'+i+'elvl'+nivel).length){
+		$('<div id="draggable'+i+'elvl'+nivel+'" name="0.2" class="figuras-draggables rectangulo-5"></div>')
+		.css('background-color',color)
+		.appendTo(appendPadre)
+		.draggable({
+			containment: '.bloque-central',
+			cursor: 'move',
+			revert: true
+		});
+		$('#draggable'+i+'elvl'+nivel).css({
+			bottom: i*5,
+			right: i*5
+		});
+	}
+}
+
+function figura1_6(nivel,i,appendPadre,color){
+	if(!$('#draggable'+i+'flvl'+nivel).length){
+		$('<div id="draggable'+i+'flvl'+nivel+'" name="0.166666666666666666" class="figuras-draggables rectangulo-6"></div>')
+		.css('background-color',color)
+		.appendTo(appendPadre)
+		.draggable({
+			containment: '.bloque-central',
+			cursor: 'move',
+			revert: true
+		});
+		$('#draggable'+i+'flvl'+nivel).css({
+			bottom: i*5,
+			right: i*5
+		});
+	}
+}
+
 
 
 function contenedorFuncionNivel(nivel){
 	$('<div class="contenedor-funcion"></div>').attr('id', 'nivelfnc'+nivel).appendTo('.bloque-central');
 	$('<div class="contenedor-figuras"></div>').appendTo('#nivelfnc'+nivel);
 	$('<div id="contenedor-manejable-'+nivel+'" class="contenedor-manejables"><button  id="agregarContenedor'+nivel+'" class="agregar-contenedor" title="Agregar nuevo contenedor"><span class="glyphicon glyphicon-plus"></span></button></div>').appendTo('#nivelfnc'+nivel);
-	$('<div id="contenedor-droppable-'+nivel+'" class="contenedor-droppables"></div><button class="btn btn-primary reiniciar">Reiniciar</button>').appendTo('#nivelfnc'+nivel);
+	$('<div id="contenedor-droppable-'+nivel+'" class="contenedor-droppables"></div><button title="Reiniciar nivel" class="reiniciar"><span class="glyphicon glyphicon-refresh"></span></button>').appendTo('#nivelfnc'+nivel);
 	
 	for(var i=0;i<3;i++){
 		droppablesCorrectos(nivel,i);
@@ -524,7 +669,6 @@ function removerElementoCorrecto(){
 		
 		var nivel_contador_figura=figura_drag_drop.attr('id').slice(6,7);
 		var nivel=figura_drag_drop.attr('id').slice(10,12);
-		console.log(nivel_contador_figura+'lvl'+nivel);
 		contenedorDraggable(nivel_contador_figura,nivel);
 		$(this).parent().remove();
 		crearFigurasDraggables(nivel);
@@ -541,7 +685,7 @@ function removerDraggable(){
 		var $contenedor=$(this).parent().parent().parent();
 		var nivel = $contenedor.attr('id').slice(10, 12);
 		$(this).parent().parent().remove();
-		//recorremos todas las figuras que se encuentran dentro 
+		//recorremos todas las figuras que se encuentran dentro para obtener su valor
 		$contenedor.children().children().each(function() {
 			valor_contenedor+=parseFloat($(this).attr('name'));
 		});
@@ -550,3 +694,31 @@ function removerDraggable(){
 	});
 	
 }
+
+function reiniciarNivel(){
+	$(document).on('click', '.reiniciar', function() {
+		var nivel = $(this).siblings('.contenedor-manejables').attr('id').slice(21,23);
+	
+		//$(this).parent().fadeOut(1000);
+		
+			
+
+		$(this).parent().fadeOut(100, function() {
+			
+			$(this).children().siblings('.contenedor-figuras').children().remove();
+			agregarContenedor(nivel);
+			$(this).children().siblings('.contenedor-manejables').children('.contenedor-completo').prop('disabled', false).removeClass('contenedor-completo').addClass('agregar-contenedor');
+			$(this).children().siblings('.contenedor-droppables').children().each(function() {
+				$(this).children().remove();
+			});
+			crearFigurasDraggables(nivel);
+			$(this).children('.contenedor-figuras').css('background-image', 'url("images/agregar_contenedor.png")');
+			
+		});
+
+		$(this).parent().fadeIn(1000);
+
+
+	});
+}
+
