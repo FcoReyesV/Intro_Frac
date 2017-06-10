@@ -102,7 +102,7 @@ $(document).ready(function(){
 		for(var i=0;i<contador_figura;i++)
 			cambiarTamObjetosDraggables(contador_denominador,contador_contenedores,i+1);
 		
-
+		ajustarDraggableContenedorNuevo();
 			
 		
 	});
@@ -114,6 +114,8 @@ $(document).ready(function(){
 		creaFiguraDND(contador_denominador,contador_contenedores);
 		for(var i=0;i<contador_figura;i++)
 			cambiarTamObjetosDraggables(contador_denominador,contador_contenedores,i+1);
+		ajustarDraggableContenedorRemovido();
+
 		
 	});
 
@@ -142,7 +144,7 @@ $(document).ready(function(){
 		limpiarContenedores();
 		reiniciarContadores(contador_contenedores,contador_numerador,contador_denominador,contador_figura);
 		inicializarRectanguloHorizontal();
-		for(var i=0;i<6;i++){
+		for(var i=0;i<1;i++){
 			crearObjetosDraggables(contador_denominador,contador_figura);
 			cambiarTamObjetosDraggables(contador_denominador,contador_figura,i);
 			contador_figura++;
@@ -328,8 +330,6 @@ function ajustarDraggableContenedorNuevo(){
 
 function ajustarDraggableContenedorRemovido(){
 	var colocados=new Array();
-	var conPosicion=new Array();
-	console.log(draggables_colocados);
 	for (var i = 0; i < contador_figura; i++) {//Primero guardamos el indice de los draggables que ya estan colocados
 		if($('#figura'+i).data('lugar')!='' && $('#figura'+i).data('lugar')!=null ){
 			colocados[i]=i;
@@ -486,15 +486,16 @@ function controladorDenominadorQuitarBoton(){
 					$numerador_agregar_btn.removeClass('add-flecha-btn');
 					$numerador_agregar_btn.addClass('add-flecha-btn-desact');
 		}
-		if(contador_denominador<contador_numerador){			
+		/*if(contador_denominador<contador_numerador){//-------¿Esto para que es?---------	
 				contador_numerador--;
 				$numerador_texto.text(contador_numerador);	
-		}
+		}*/
 		if(contador_numerador>(contador_contenedores*contador_denominador)){
 			contador_numerador=contador_contenedores*contador_denominador;
 			$numerador_texto.text(contador_numerador);
 		}
-		if(contador_denominador==1 || draggables_colocados>((contador_contenedores-1)*(contador_denominador-1))){//El numero draggables colocados no tiene que superar al numero maximo de draggables que se pueden poner
+
+		if(contador_denominador==1){
 			$denominador_quitar_btn.attr('disabled','true');
 			$denominador_agregar_btn.removeAttr('disabled','true');
 			$denominador_quitar_btn.removeClass('add-flecha-btn');
