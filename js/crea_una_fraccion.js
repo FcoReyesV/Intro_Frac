@@ -13,6 +13,8 @@ for(var i=1;i<=5;i++){
 }
 
 $(document).ready(function() {
+
+
 	$('#regresarMenu').hide();
 
 	$nivel_a[1].click(function() {
@@ -22,6 +24,7 @@ $(document).ready(function() {
 		}
 		mostrarAreaPrincipal(1,'1a');
 		agregarContenedor('1a');
+		
 		
 	});
 
@@ -93,6 +96,15 @@ $(document).ready(function() {
 	});
 	
 	
+	
+	regresarMenu();
+	removerElementoCorrecto();
+	removerDraggable();
+
+	
+});
+
+function regresarMenu(){
 	$('#regresarMenu').click(function() {
 		
 		for(var i=1;i<=5;i++){
@@ -106,13 +118,14 @@ $(document).ready(function() {
 		//console.log("Valor de a[1] "+$nivel_a_contador_figura[1])
 		
 	});
-	
+}
 
-});
+
 
 
 //Este contenedor es el que guarda las figuras que se introducen al arrastrar y soltar
 function contenedorDraggable($nivel_contador_figura,$nivel){
+
 	$('<div class="figuraDraggable propiedades-contenedores"></div>')
 	    .attr({
 	    	id: 'figura'+$nivel_contador_figura+'lvl'+$nivel,
@@ -135,8 +148,11 @@ function contenedorDraggable($nivel_contador_figura,$nivel){
 				$(this).attr('name', valor_contenedor); //Le asigname el valor del draggable que se colocó 
 				//Se hace la comparación para que el contenedor solo acepte un entero
 				if(valor_contenedor<=1){
+					var $remover_bloque=$('<button class="remover-draggable"><span title="Remover figura" class="glyphicon glyphicon-remove"></span></button>');
 
-				
+					$item.append($remover_bloque);
+
+					//Se agrega un subbloque para que se orden de manera horizontal. Es necesario porque la posicion de los originales es absolute.
 					switch($item.width()+2){
 						case 150:
 							$('<div class="rectangulo-1"></div>').css({
@@ -169,6 +185,36 @@ function contenedorDraggable($nivel_contador_figura,$nivel){
 								left: ''
 							}));
 						break;
+						case 37.5:
+							$('<div class="rectangulo-4"></div>').css({
+								backgroundColor: 'none',
+								position: 'relative'
+							})
+							.appendTo($(this)).append($item.css({
+								top: '',
+								left: ''
+							}));
+						break;
+						case 30:
+							$('<div class="rectangulo-5"></div>').css({
+									backgroundColor: 'none',
+									position: 'relative'
+								})
+								.appendTo($(this)).append($item.css({
+									top: '',
+									left: ''
+							}));
+						break;
+						case 25:
+							$('<div class="rectangulo-6"></div>').css({
+									backgroundColor: 'none',
+									position: 'relative'
+								})
+								.appendTo($(this)).append($item.css({
+									top: '',
+									left: ''
+							}));
+						break;
 					}	//Fin del switch
 					$item.draggable( 'option', 'revert', false );
 					$item.position({
@@ -177,6 +223,7 @@ function contenedorDraggable($nivel_contador_figura,$nivel){
 						of: $(this)
 					});
 
+				
 				}//Fin del if que acepta solo un entero
 				else{
 					valor_contenedor-=valor_draggable;
@@ -240,65 +287,115 @@ function agregarContenedor(nivel){
 
 function droppablesCorrectos(nivel,i){
 	var nivel_valor=[3];
+	var nivel_valorb=[3];
 	var imagen_figura=[3];
+	var imagen_figurab=[3];
 	switch(nivel.charAt(0)){
 		case '1':
 			nivel_valor[0]=1/3;
 			nivel_valor[1]=2/3;
 			nivel_valor[2]=1;
+			nivel_valorb[0]=1/3;
+			nivel_valorb[1]=2/3;
+			nivel_valorb[2]=1/2;
 		
 			imagen_figura[0]="images/alvl1a.png";
 			imagen_figura[1]="images/alvl1b.png";
 			imagen_figura[2]="images/alvl1c.png";
+			imagen_figurab[0]="images/blvl1a.png";
+			imagen_figurab[1]="images/blvl1b.png";
+			imagen_figurab[2]="images/blvl1c.png";
 		break;
 		case '2':
 			nivel_valor[0]=1/3;
 			nivel_valor[1]=2/3;
 			nivel_valor[2]=3/5;
+			nivel_valorb[0]=1/4;
+			nivel_valorb[1]=2/4;
+			nivel_valorb[2]=4/5;
 			imagen_figura[0]="images/alvl1a.png";
 			imagen_figura[1]="images/alvl1b.png";
 			imagen_figura[2]="images/alvl2c.png";
+			imagen_figurab[0]="images/blvl2a.png";
+			imagen_figurab[1]="images/blvl2b.png";
+			imagen_figurab[2]="images/blvl2c.png";
 		break;
 		case '3':
 			nivel_valor[0]=2/6;
 			nivel_valor[1]=1;
 			nivel_valor[2]=1/2;
+			nivel_valorb[0]=2/6;
+			nivel_valorb[1]=4/6;
+			nivel_valorb[2]=1/6;
 			imagen_figura[0]="images/alvl3a.png";
 			imagen_figura[1]="images/alvl1c.png";
 			imagen_figura[2]="images/alvl3c.png";
+			imagen_figurab[0]="images/blvl3a.png";
+			imagen_figurab[1]="images/blvl3b.png";
+			imagen_figurab[2]="images/blvl3c.png";
+			
 		break;
 		case '4':
 			nivel_valor[0]=1/5;
 			nivel_valor[1]=1;
 			nivel_valor[2]=3/4;
+			nivel_valorb[0]=1;
+			nivel_valorb[1]=4/4;
+			nivel_valorb[2]=6/9;
 			imagen_figura[0]="images/alvl4a.png";
 			imagen_figura[1]="images/alvl1c.png";
 			imagen_figura[2]="images/alvl4c.png";
+			imagen_figurab[0]="images/blvl4a.png";
+			imagen_figurab[1]="images/blvl4b.png";
+			imagen_figurab[2]="images/blvl4c.png";
 			
 		break;
 		case '5':
 			nivel_valor[0]=2/5;
 			nivel_valor[1]=1/4;
 			nivel_valor[2]=2/3;
+			nivel_valorb[0]=6/9;
+			nivel_valorb[1]=1/4;
+			nivel_valorb[2]=3/3;
 			imagen_figura[0]="images/alvl5a.png";
 			imagen_figura[1]="images/alvl5b.png";
 			imagen_figura[2]="images/alvl1b.png";
+			imagen_figurab[0]="images/blvl5a.png";
+			imagen_figurab[1]="images/blvl5b.png";
+			imagen_figurab[2]="images/blvl5c.png";
 			
 		break;
 	}
 
-	$('<div class="droppable-correctos"></div>').attr('id', 'correcto'+i+'lvl'+nivel).appendTo('#contenedor-droppable-'+nivel)
-	.attr('name',nivel_valor[i])
-	.css('z-index', '1')
-	.droppable({
+	if(nivel.charAt(1)=='a'){
+		$('<div class="droppable-correctos"></div>').attr('id', 'correcto'+i+'lvl'+nivel).appendTo('#contenedor-droppable-'+nivel)
+		.attr('name',nivel_valor[i])
+		.css('background-image', 'url('+imagen_figura[i]+')');
+	}else{
+		$('<div class="droppable-correctos"></div>').attr('id', 'correcto'+i+'lvl'+nivel).appendTo('#contenedor-droppable-'+nivel)
+		.attr('name',nivel_valorb[i])
+		.css('background-image', 'url('+imagen_figurab[i]+')');
+	}
+
+	$('#correcto'+i+'lvl'+nivel).css('z-index', '1').droppable({
 		accept:'.figuraDraggable',
 		drop: function(event,ui){
 			var $item=ui.draggable;
 			var valor_correcto=parseFloat($(this).attr('name'));
 			var valor_item=parseFloat($item.attr('name'));
-			//se compara con el valor que toman al agregar los valores
-			if(valor_correcto == valor_item){
-				var $item=ui.draggable;
+			
+			//Se compara con el valor que toman al agregar los valores si está vacío true y sino false
+
+			if(valor_correcto == valor_item && $(this).is(':empty')){
+				
+				var $remover_bloque=$('<button class="remover-bloque"><span title="Remover bloque" class="glyphicon glyphicon-remove"></span></button>');
+
+				$item.append($remover_bloque);
+
+				$item.children().children().each(function() {
+					$(this).children('.remover-draggable').remove();
+				});
+
 				$item.css({"left":""-12, "top":""-12, "bottom":"", "right":"" });
 				$item.draggable( 'option', 'revert', false ); 	
 				$(this).append($item);
@@ -307,72 +404,76 @@ function droppablesCorrectos(nivel,i){
 					at: "left",
 					of: $(this)
 				});
-
+				
 				
 			} //fin del if que compara si es correcto el valor de la figura arrastrada	
-		}
+
+		}//fin de la funcion anonima del droppable
 	});
-
-	if(nivel.charAt(1)=='a'){
-		$('#correcto'+i+'lvl'+nivel).css('background-image', 'url('+imagen_figura[i]+')');
-	}else{
-		//$('#correcto'+i+'lvl'+nivel).css('background-image', 'url(../images/myimage.jpg)');
-	}
-
-
 }
+
+
+
 
 
 function crearFigurasDraggables(nivel){
 		switch(nivel){
 			case '1a':
-				$('<div id="fig1'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				if(!$('#fig1'+nivel).length)
+					$('<div id="fig1'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
 				for(var i=0;i<2;i++){
-					$('<div id="draggable'+i+'alvl'+nivel+'" name="1" class="figuras-draggables rectangulo-1"></div>').css('background-color', 'rgb(60,134,174)').appendTo('#fig1'+nivel)
-					
-					.draggable( {
-						containment: '.bloque-central',
-						stack: '#contenedor-manejable-'+nivel,
-					    cursor: 'move',
-					   	revert: true
-					});
-					$('#draggable'+i+'alvl'+nivel).css({
-						bottom: i*5,
-						right: i*5
-					});
+					//Comprobamos que el elemento exista
+					if(!$('#draggable'+i+'alvl'+nivel).length){
+						$('<div id="draggable'+i+'alvl'+nivel+'" name="1" class="figuras-draggables rectangulo-1"></div>').css('background-color', 'rgb(60,134,174)').appendTo('#fig1'+nivel)
+						
+						.draggable( {
+							containment: '.bloque-central',
+							stack: '#contenedor-manejable-'+nivel,
+						    cursor: 'move',
+						   	revert: true
+						});
+						$('#draggable'+i+'alvl'+nivel).css({
+							bottom: i*5,
+							right: i*5
+						});
+					}
 
-				}
+				}//Fin del for que crea las figuras
 				
-				
-				$('<div id="fig2'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				if(!$('#fig2'+nivel).length)
+					$('<div id="fig2'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
 				for(var i=0;i<2;i++){
-					$('<div id="draggable'+i+'blvl'+nivel+'" name="0.5" class="figuras-draggables rectangulo-2"></div>').css('background-color', 'rgb(60,134,174)').appendTo('#fig2'+nivel)
-					.draggable( {
-						containment: '.bloque-central',
-						stack: '#contenedor-manejable-'+nivel,
-					    cursor: 'move',
-					   	revert: true
-					});
-					$('#draggable'+i+'blvl'+nivel).css({
-						bottom: i*5,
-						right: i*5
-					});
+					if(!$('#draggable'+i+'blvl'+nivel).length){
+						$('<div id="draggable'+i+'blvl'+nivel+'" name="0.5" class="figuras-draggables rectangulo-2"></div>').css('background-color', 'rgb(60,134,174)').appendTo('#fig2'+nivel)
+						.draggable( {
+							containment: '.bloque-central',
+							stack: '#contenedor-manejable-'+nivel,
+						    cursor: 'move',
+						   	revert: true
+						});
+						$('#draggable'+i+'blvl'+nivel).css({
+							bottom: i*5,
+							right: i*5
+						});
+					}
 				}
 				
-				
-				$('<div id="fig3'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
+				if(!$('#fig3'+nivel).length)
+					$('<div id="fig3'+nivel+'" class="contenedor-draggables"></div>').appendTo('#contenedor-manejable-'+nivel);
 				for(var i=0;i<3;i++){
-					$('<div id="draggable'+i+'clvl'+nivel+'" name="0.3333333333333333" class="figuras-draggables rectangulo-3"></div>').css('background-color', 'rgb(60,134,174)').appendTo('#fig3'+nivel)
-					.draggable({
-						containment: '.bloque-central',
-						stack: '#contenedor-manejable-'+nivel,
-					    cursor: 'move',
-					   	revert: true
-					});
-					$('#draggable'+i+'clvl'+nivel).css({
-						bottom: i*5,
-						right: i*5
-					});
+					if(!$('#draggable'+i+'clvl'+nivel).length){
+						$('<div id="draggable'+i+'clvl'+nivel+'" name="0.3333333333333333" class="figuras-draggables rectangulo-3"></div>').css('background-color', 'rgb(60,134,174)').appendTo('#fig3'+nivel)
+						.draggable({
+							containment: '.bloque-central',
+							stack: '#contenedor-manejable-'+nivel,
+						    cursor: 'move',
+						   	revert: true
+						});
+						$('#draggable'+i+'clvl'+nivel).css({
+							bottom: i*5,
+							right: i*5
+						});
+					}
 				}
 
 			break;
@@ -413,6 +514,39 @@ function contenedorFuncionNivel(nivel){
 }
 
 
-function nivel1a(nivel){
+function removerElementoCorrecto(){
+	//Como se crean de manera dinámica las flechas, se tiene que buscar en el documento
+	$(document).on('click', '.remover-bloque',function() {
 
+		//$(this).siblings().remove();
+		var figura_drag_drop=$(this).parent();
+		//Primero vamos a obtener su id para hacerlo de nuevo con las propiedades
+		
+		var nivel_contador_figura=figura_drag_drop.attr('id').slice(6,7);
+		var nivel=figura_drag_drop.attr('id').slice(10,12);
+		console.log(nivel_contador_figura+'lvl'+nivel);
+		contenedorDraggable(nivel_contador_figura,nivel);
+		$(this).parent().remove();
+		crearFigurasDraggables(nivel);
+		//$(this).remove();
+
+		
+	});
+
+}
+
+function removerDraggable(){
+	$(document).on('click', '.remover-draggable', function() {
+		var valor_contenedor=0;
+		var $contenedor=$(this).parent().parent().parent();
+		var nivel = $contenedor.attr('id').slice(10, 12);
+		$(this).parent().parent().remove();
+		//recorremos todas las figuras que se encuentran dentro 
+		$contenedor.children().children().each(function() {
+			valor_contenedor+=parseFloat($(this).attr('name'));
+		});
+		$contenedor.attr('name',parseFloat(valor_contenedor));
+		crearFigurasDraggables(nivel);
+	});
+	
 }
