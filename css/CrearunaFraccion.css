@@ -60,22 +60,28 @@
   margin:10px 5px;
   font-size: 30px;
   text-align: center;
+  font-weight: bold;
 }
 
 .reiniciar{
   position: absolute;
-  bottom: 30px;
-  right: 50px;
+  border-style: none;
+  background:none;
+  outline:0;
+  top:140px;
+  left: 50px;
+  font-size: 45px;
+  color: rgb(51,122,183);
 }
 .contenedor-figuras{
   height: 230px;
   width: 600px;
-  background-color: grey;
   margin: 10px auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
   position: relative;
+  background-image: url("../images/agregar_contenedor.png");
 
 }
 
@@ -104,13 +110,15 @@
 
 
 .propiedades-contenedores{
-  width: 160px;
-  height: 120px;
-  background-color: blue;
+  width: 150px;
+  height: 100px;
+  background-color: white;
   margin: 10px 10px;
   display: flex;
   flex-direction: row;
   position: relative;
+  border: 1px solid black;
+  
 
 }
 
@@ -141,9 +149,11 @@
 .droppable-correctos{
   width: 150px;
   height: 100px;
-  border: 2px solid rgb(51,122,183);
+  border: 2px dashed rgb(51,122,183);
   margin: 10px 0;
   background-color: rgb(225,225,225);
+  font-size: 60px;
+  text-align: center;
 }
 
 .rectangulo-1{
@@ -191,7 +201,23 @@
 .contenedor-draggables{
   width: 150px;
   height: 100px;
-  background-color: green;
+  background-color: white;
   margin: 0 10px;
   position: relative;
 }
+
+.remover-bloque,.remover-draggable{
+  border-style: none;
+  background:none;
+  outline:0;
+  font-size: 9px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 0;
+}
+
+.remover-bloque:hover,.remover-draggable:hover{
+  font-size:15px;
+}
+
