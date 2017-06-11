@@ -115,7 +115,7 @@ function regresarMenu(){
 		$('#contenedor-niveles').fadeIn(800);
 		$('.encabezado-titulo').text("Crear una Fracción");
 		$('#regresarMenu').hide();
-		//console.log("Valor de a[1] "+$nivel_a_contador_figura[1])
+		$('body').css('cursor', 'auto');
 		
 	});
 }
@@ -144,7 +144,7 @@ function contenedorDraggable($nivel_contador_figura,$nivel){
 				var $item=ui.draggable;
 				var valor_contenedor=parseFloat($(this).attr('name'));
 				var valor_draggable=parseFloat($item.attr('name'));
-			
+				
 				valor_contenedor+=valor_draggable;
 				$(this).attr('name', valor_contenedor); //Le asigname el valor del draggable que se colocó 
 				//Se hace la comparación para que el contenedor solo acepte un entero
@@ -224,17 +224,119 @@ function contenedorDraggable($nivel_contador_figura,$nivel){
 						of: $(this)
 					});
 
-				
+					
 				}//Fin del if que acepta solo un entero
 				else{
 					valor_contenedor-=valor_draggable;
 					$(this).attr('name', valor_contenedor);
 				}
+
 			}//Fin de la función anónima del drop
 
 
 		});
 }
+
+
+//Este contenedor es el que guarda las figuras que se introducen al arrastrar y soltar de los niveles 'b'
+function contenedorDraggableB($nivel_contador_figura,$nivel){
+	var $numerador=$('<div class="numerador"></div>')
+	.attr({
+		id: 'num'+$nivel_contador_figura+'lvl'+$nivel,
+		name: '0'
+	});
+	var $denominador=$('<div id class="denominador"></div>')
+	.attr({
+		id: 'den'+$nivel_contador_figura+'lvl'+$nivel,
+		name: '0'
+	});
+	$('<div class="figuraDraggable propiedades-contenedoresB"></div>')
+	.attr({
+	    	id: 'figura'+$nivel_contador_figura+'lvl'+$nivel,
+	    	name: '0'
+	})
+	.append($numerador,$denominador)
+	.appendTo( '#nivelfnc'+$nivel+' .contenedor-figuras')
+	.draggable({
+			containment: '.bloque-central',
+		    cursor: 'move',
+		    revert: true,
+		    zIndex: 1
+	});
+
+	//Droppable del numerador
+	$('#num'+$nivel_contador_figura+'lvl'+$nivel)
+		.droppable({
+			accept: '.figuras-draggables', //son los ractangulos que se agregan
+			drop: function(event,ui){
+				var $item=ui.draggable;
+				//Condicion para aceptar solo una figura
+				if($(this).is(':empty')){
+					var $remover_bloque=$('<button class="remover-draggable"><span title="Remover figura" class="glyphicon glyphicon-remove"></span></button>');
+					$item.append($remover_bloque);
+					
+					//Obtenemos los valores del objeto que se depositó y del denominador
+					var numerador=parseFloat($item.attr('name'));
+					var denominador=parseFloat($(this).siblings().attr('name'));
+					$(this).attr('name', numerador);
+					var resultado=parseFloat(numerador/denominador);
+					//El resultado se guarda en la caja padre que es la que compara con los bloques correctos
+					$(this).parent().attr('name', resultado);
+
+					$item.appendTo($(this))
+					.css({
+						top: '',
+						left: '',
+						borderBottom: '2px solid black'
+					}).draggable( 'option', 'revert', false );
+						$item.position({
+							my: "left",
+							at: "left",
+							of: $(this)
+					});
+				
+				} //fin de la condicion que acepta solo un objeto
+
+			}//Fin de la función anónima del drop
+		});
+
+
+		//Droppable del denominador
+		$('#den'+$nivel_contador_figura+'lvl'+$nivel)
+		.droppable({
+			accept: '.figuras-draggables', //son los ractangulos que se agregan
+			drop: function(event,ui){
+				var $item=ui.draggable;
+				//Condicion para aceptar solo una figura
+				if($(this).is(':empty')){
+					var $remover_bloque=$('<button class="remover-draggable"><span title="Remover figura" class="glyphicon glyphicon-remove"></span></button>');
+					$item.append($remover_bloque);
+					
+					//Obtenemos los valores del objeto que se depositó y del numerador
+					var numerador=parseFloat($(this).siblings().attr('name'));
+					var denominador=parseFloat($item.attr('name'));
+					$(this).attr('name', denominador);
+					var resultado=parseFloat(numerador/denominador);
+					//El resultado se guarda en la caja padre que es la que compara con los bloques correctos
+					$(this).parent().attr('name', resultado);
+					$item.appendTo($(this))
+					.css({
+						top: '',
+						left: ''
+					}).draggable( 'option', 'revert', false );
+					$item.position({
+							my: "left",
+							at: "left",
+							of: $(this)
+					});
+				
+				}//Fin del if para aceptar solo una figura
+
+			}//Fin de la función anónima del drop
+		});
+}
+
+
 
 
 
@@ -257,7 +359,7 @@ function agregarContenedor(nivel){
 			}
 			
 		}
-		var aux;
+		var aux; //Variable auxiliar para controlar los contadores
 		//Controlamos los contadores de cada figura creada en cada nivel
 		if(nivel.charAt(1)=='a'){
 
@@ -281,7 +383,11 @@ function agregarContenedor(nivel){
 		
 		if(aux<=3){
 			$(this).parent().siblings('.contenedor-figuras').css('background-image', 'none');
-			contenedorDraggable(aux,nivel);
+			//Separamos los contenedores draggables-droppables dependiendo si es nivel 'a' o 'b'
+			if($(this).attr('id').slice(18,19)=='a')
+				contenedorDraggable(aux,nivel);
+			else	
+				contenedorDraggableB(aux,nivel);
 		}
 		if(aux==3){
 				$(this).removeClass('agregar-contenedor');
@@ -398,7 +504,14 @@ function droppablesCorrectos(nivel,i){
 			//Se compara con el valor que toman al agregar los valores si está vacío true y sino false
 
 			if(valor_correcto == valor_item && $(this).is(':empty')){
-				$item.droppable("disable");
+				if(nivel.charAt(1)=='a')	
+					$item.droppable('disable');
+				else{
+					$item.children().each(function() {
+						$(this).droppable('disable');
+					});
+				} 
+
 				var $remover_bloque=$('<button class="remover-bloque"><span title="Remover bloque" class="glyphicon glyphicon-remove"></span></button>');
 
 				$item.append($remover_bloque);
@@ -417,7 +530,7 @@ function droppablesCorrectos(nivel,i){
 				});
 			
 				
-				
+			
 				
 			} //fin del if que compara si es correcto el valor de la figura arrastrada	
 
@@ -527,14 +640,110 @@ function crearFigurasDraggables(nivel){
 				}
 			break;
 			case '1b':
+				if(!$('#fig1'+nivel).length)
+					$('<div id="fig1'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<2;i++){
+					figuraNivelB(nivel,i,'#fig1'+nivel,1);
+				}
+				if(!$('#fig2'+nivel).length)
+					$('<div id="fig2'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<2;i++){
+					figuraNivelB(nivel,i,'#fig2'+nivel,2);
+				}
+				if(!$('#fig3'+nivel).length)
+					$('<div id="fig3'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<2;i++){
+					figuraNivelB(nivel,i,'#fig3'+nivel,3);
+				}
 			break;
 			case '2b':
+				if(!$('#fig1'+nivel).length)
+					$('<div id="fig1'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<1;i++){
+					figuraNivelB(nivel,i,'#fig1'+nivel,1);
+				}
+				if(!$('#fig2'+nivel).length)
+					$('<div id="fig2'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<2;i++){
+					figuraNivelB(nivel,i,'#fig2'+nivel,2);
+				}
+				if(!$('#fig3'+nivel).length)
+					$('<div id="fig3'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<3;i++){
+					figuraNivelB(nivel,i,'#fig3'+nivel,4);
+				}
+				if(!$('#fig4'+nivel).length)
+					$('<div id="fig4'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<2;i++){
+					figuraNivelB(nivel,i,'#fig4'+nivel,5);
+				}
 			break;
 			case '3b':
+				if(!$('#fig1'+nivel).length)
+					$('<div id="fig1'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<3;i++){
+					figuraNivelB(nivel,i,'#fig1'+nivel,1);
+				}
+				if(!$('#fig2'+nivel).length)
+					$('<div id="fig2'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<3;i++){
+					figuraNivelB(nivel,i,'#fig2'+nivel,2);
+				}
+				if(!$('#fig3'+nivel).length)
+					$('<div id="fig3'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<3;i++){
+					figuraNivelB(nivel,i,'#fig3'+nivel,3);
+				}
+				if(!$('#fig4'+nivel).length)
+					$('<div id="fig4'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<2;i++){
+					figuraNivelB(nivel,i,'#fig4'+nivel,6);
+				}
+				
 			break;
 			case '4b':
+				if(!$('#fig1'+nivel).length)
+					$('<div id="fig1'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<2;i++){
+					figuraNivelB(nivel,i,'#fig1'+nivel,1);
+				}
+				if(!$('#fig2'+nivel).length)
+					$('<div id="fig2'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<2;i++){
+					figuraNivelB(nivel,i,'#fig2'+nivel,2);
+				}
+				if(!$('#fig3'+nivel).length)
+					$('<div id="fig3'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<1;i++){
+					figuraNivelB(nivel,i,'#fig3'+nivel,6);
+				}
+				if(!$('#fig4'+nivel).length)
+					$('<div id="fig4'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<1;i++){
+					figuraNivelB(nivel,i,'#fig4'+nivel,9);
+				}
 			break;
 			case '5b':
+				if(!$('#fig1'+nivel).length)
+					$('<div id="fig1'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<1;i++){
+					figuraNivelB(nivel,i,'#fig1'+nivel,1);
+				}
+				if(!$('#fig2'+nivel).length)
+					$('<div id="fig2'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<3;i++){
+					figuraNivelB(nivel,i,'#fig2'+nivel,2);
+				}
+				if(!$('#fig3'+nivel).length)
+					$('<div id="fig3'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<2;i++){
+					figuraNivelB(nivel,i,'#fig3'+nivel,3);
+				}
+				if(!$('#fig4'+nivel).length)
+					$('<div id="fig4'+nivel+'" class="contenedor-draggables"></div>').css('background-color', 'rgb(225,225,225)').appendTo('#contenedor-manejable-'+nivel);
+				for(var i=0;i<1;i++){
+					figuraNivelB(nivel,i,'#fig4'+nivel,4);
+				}
 			break;
 		}
 }
@@ -643,6 +852,22 @@ function figura1_6(nivel,i,appendPadre,color){
 	}
 }
 
+function figuraNivelB(nivel,i,appendPadre,numero){
+	if(!$('#draggable'+i+'flvl'+nivel+'num'+numero).length){
+		$('<div id="draggable'+i+'flvl'+nivel+'num'+numero+'" name="'+numero+'" class="figuras-draggables figuras-numeros"></div>')
+		.text(numero)
+		.appendTo(appendPadre)
+		.draggable({
+			containment: '.bloque-central',
+			cursor: 'move',
+			revert: true
+		});
+		$('#draggable'+i+'flvl'+nivel+'num'+numero).css({
+			bottom: 20+i*5,
+			right: 30+i*5
+		});
+	}
+}
 
 
 function contenedorFuncionNivel(nivel){
@@ -660,21 +885,23 @@ function contenedorFuncionNivel(nivel){
 
 
 function removerElementoCorrecto(){
-	//Como se crean de manera dinámica las flechas, se tiene que buscar en el documento
+	//Como se crean de manera dinámica las 'x', se tiene que buscar en el documento
 	$(document).on('click', '.remover-bloque',function() {
 
-		//$(this).siblings().remove();
 		var figura_drag_drop=$(this).parent();
 		//Primero vamos a obtener su id para hacerlo de nuevo con las propiedades
 		
 		var nivel_contador_figura=figura_drag_drop.attr('id').slice(6,7);
 		var nivel=figura_drag_drop.attr('id').slice(10,12);
-		contenedorDraggable(nivel_contador_figura,nivel);
+		//De acuerdo al nivel se agrega el contenedor draggable-droppable
 		$(this).parent().remove();
-		crearFigurasDraggables(nivel);
-		//$(this).remove();
-
+		if(nivel.charAt(1)=='a'){
+			contenedorDraggable(nivel_contador_figura,nivel);
+		}else{
+			contenedorDraggableB(nivel_contador_figura,nivel);
+		}
 		
+		crearFigurasDraggables(nivel);
 	});
 
 }
@@ -684,11 +911,16 @@ function removerDraggable(){
 		var valor_contenedor=0;
 		var $contenedor=$(this).parent().parent().parent();
 		var nivel = $contenedor.attr('id').slice(10, 12);
-		$(this).parent().parent().remove();
-		//recorremos todas las figuras que se encuentran dentro para obtener su valor
-		$contenedor.children().children().each(function() {
-			valor_contenedor+=parseFloat($(this).attr('name'));
-		});
+		if(nivel.charAt(1)=='a'){
+			$(this).parent().parent().remove();
+			//recorremos todas las figuras que se encuentran dentro para obtener su valor
+			$contenedor.children().children().each(function() {
+				valor_contenedor+=parseFloat($(this).attr('name'));
+			});
+		}else{
+			$(this).parent().remove();
+		}
+		
 		$contenedor.attr('name',parseFloat(valor_contenedor));
 		crearFigurasDraggables(nivel);
 	});
@@ -698,13 +930,9 @@ function removerDraggable(){
 function reiniciarNivel(){
 	$(document).on('click', '.reiniciar', function() {
 		var nivel = $(this).siblings('.contenedor-manejables').attr('id').slice(21,23);
-	
-		//$(this).parent().fadeOut(1000);
-		
-			
-
+		//Ocultamos y mostramos de nuevo el contenedor principal 
 		$(this).parent().fadeOut(100, function() {
-			
+			//Se remueven del DOM las figuras que han sido colocadas y se crean de nuevo
 			$(this).children().siblings('.contenedor-figuras').children().remove();
 			agregarContenedor(nivel);
 			$(this).children().siblings('.contenedor-manejables').children('.contenedor-completo').prop('disabled', false).removeClass('contenedor-completo').addClass('agregar-contenedor');
@@ -713,7 +941,7 @@ function reiniciarNivel(){
 			});
 			crearFigurasDraggables(nivel);
 			$(this).children('.contenedor-figuras').css('background-image', 'url("images/agregar_contenedor.png")');
-			
+			$('body').css('cursor', 'auto');
 		});
 
 		$(this).parent().fadeIn(1000);
