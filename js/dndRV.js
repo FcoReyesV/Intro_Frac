@@ -163,7 +163,7 @@ function crearObjetosDraggables(contador_denominador,contador_figura){
  
 	$('<div class="figuraDraggable '+figura_propiedades+' '+figura_rectangulo+'-'+contador_denominador+'"></div>')
 	    .attr('id','figura'+contador_figura)
-	    .data('lugar','')
+	    .attr('lugar','')
 	    .appendTo( '#contenedor-objetos-draggables').draggable( {
 		containment: '.bloque-central',
 			stack: '#contenedor-objetos-draggables div',
@@ -179,8 +179,8 @@ function crearObjetosDraggables(contador_denominador,contador_figura){
 	    var $figura= $('#figura'+contador_figura);
 	    var left= $figura.position().left;//Se obtiene el left inicial
 	   	var top= $figura.position().top;//Se obtiene el top inicial
-	    $figura.data('top',top);//Se guarda su posicion en left en cada uno de los elementos
-	    $figura.data('left',left);//Se guarda su posicion en top en cada uno de los elementos
+	    $figura.attr('top',top);//Se guarda su posicion en left en cada uno de los elementos
+	    $figura.attr('left',left);//Se guarda su posicion en top en cada uno de los elementos
 }
 
 function cambiarTamObjetosDraggables(contador_denominador,contador_figura,i){
@@ -222,13 +222,13 @@ function creaFiguraDND(contador_denominador,contenedorFigura){
 						if($(this).attr('name')=='enable'){//Verificamos que la caja punteada este disponible
 							tolerance: 'fit'//Solo se aceptan si estan adentro por completo las figuras
 							var elemento=ui.draggable;
-							$(this).data('ocupado',elemento.attr('id'));//Guardamos el id del cuadro azul, para saber por cual cuadro fue ocupado
+							$(this).attr('ocupado',elemento.attr('id'));//Guardamos el id del cuadro azul, para saber por cual cuadro fue ocupado
 							elemento.draggable({
 								revert:false//Se quita el revert, para evitar que se regrese el cuadro azul
 							}).offset({
 								left:$(this).offset().left,//El offset se copia, para que el cuadro azul se ajuste al cuadro punteado
 								top:$(this).offset().top
-							}).data('lugar',$(this).attr('id'));//Guardamos el lugar en el que se pone la caja azul, es decir el id de la subcaja punteada
+							}).attr('lugar',$(this).attr('id'));//Guardamos el lugar en el que se pone la caja azul, es decir el id de la subcaja punteada
 							$(this).attr('name', 'disable');
 							controladorNumeradorAgregarBoton();//Actualizamos el numerador
 		 					crearObjetosDraggables(contador_denominador,contador_figura);//Creamos una nueva figurita azul
@@ -238,23 +238,23 @@ function creaFiguraDND(contador_denominador,contenedorFigura){
 					},
 					out: function(event,ui){
 						var elemento=ui.draggable;
-						if($(this).data('ocupado')==elemento.attr('id')){//Verificamos que el cuadro punteado este ocupado, esto para ver si disminuimos o no el contador del numerador
+						if($(this).attr('ocupado')==elemento.attr('id')){//Verificamos que el cuadro punteado este ocupado, esto para ver si disminuimos o no el contador del numerador
 							controladorNumeradorQuitarBoton();//Actualizamos el contador del numerador
 							$(this).attr('name', 'enable');	//Habilitamos el cuadro punteado
-							$(this).data('ocupado','');
+							$(this).attr('ocupado','');
 							draggables_colocados--;//Actualizamos que se quito un draggable
 						}
 						elemento.draggable({
 							revert:function() {//Se restablece un nuevo revert, solo que este no regresara al cuadro punteado, si no al contenedor original, en el que estaba el elemento
 								var elemento=$(this);
-								var topElemento=$(this).data('top');//Se recupera la posicion en top que tenia la figura inicialmente
-								var leftElemento=$(this).data('left');//Se recupera la posicion en left que tenia la figura inicialmente
+								var topElemento=$(this).attr('top');//Se recupera la posicion en top que tenia la figura inicialmente
+								var leftElemento=$(this).attr('left');//Se recupera la posicion en left que tenia la figura inicialmente
 								elemento.animate({top:topElemento,left:leftElemento},'slow')//La animacion es la que genera el efecto de que vuelve la figuara a la posicion inicial
-								.data('lugar','');
+								.attr('lugar','');
 							}
 						});						
 					}
-			}).appendTo('#contenedorFigura'+j).data('ocupado','');
+			}).appendTo('#contenedorFigura'+j).attr('ocupado','');
 		}
 	}
 }
@@ -270,18 +270,18 @@ function destruirFiguraDND(contador_denominador,contenedorFigura){
 function quitarDraggable(){
 	for (var j = contador_contenedores-1; j >= 0; j--){
 			for (var i = contador_denominador-1; i >=0; i--){
-				if($('#figuraDND'+i+'CF'+j).data('ocupado')!=''){
-					var elemento='#'+$('#figuraDND'+i+'CF'+j).data('ocupado');
-					var topElemento=$(elemento).data('top');//Se recupera la posicion en top que tenia la figura inicialmente
-					var leftElemento=$(elemento).data('left');//Se recupera la posicion en left que tenia la figura inicialmente
+				if($('#figuraDND'+i+'CF'+j).attr('ocupado')!=''){
+					var elemento='#'+$('#figuraDND'+i+'CF'+j).attr('ocupado');
+					var topElemento=$(elemento).attr('top');//Se recupera la posicion en top que tenia la figura inicialmente
+					var leftElemento=$(elemento).attr('left');//Se recupera la posicion en left que tenia la figura inicialmente
 					$(elemento).animate({
 						top: topElemento,
 						left: leftElemento
 					},'slow').offset({
 						top: topElemento,
 						left: leftElemento
-					}).data('lugar','');
-					$('#figuraDND'+i+'CF'+j).data('ocupado','');
+					}).attr('lugar','');
+					$('#figuraDND'+i+'CF'+j).attr('ocupado','');
 					$('#figuraDND'+i+'CF'+j).attr('name','enable');
 					i=0;
 					j=0;
@@ -298,9 +298,9 @@ function agregarDraggable(){
 						$('#figura'+contador_figura).animate({//Posicionamos los cuadros azules en los cuadros punteados disponibles
 							left: $('#figuraDND'+i+'CF'+j).offset().left - $('#contenedor-objetos-draggables').offset().left +470,
 							top: $('#figuraDND'+i+'CF'+j).offset().top - $('#contenedor-objetos-draggables').offset().top
-						},'slow').data('lugar','figuraDND'+i+'CF'+j);
+						},'slow').attr('lugar','figuraDND'+i+'CF'+j);
 						$('#figuraDND'+i+'CF'+j).attr('name','disable');
-						$('#figuraDND'+i+'CF'+j).data('ocupado','figura'+contador_figura);//Guardamos en el cuadro punteado, el id del cuadro azul que lo ocupo
+						$('#figuraDND'+i+'CF'+j).attr('ocupado','figura'+contador_figura);//Guardamos en el cuadro punteado, el id del cuadro azul que lo ocupo
 						contador_figura++;
 						return;
 					}
@@ -314,8 +314,8 @@ function ajustarDraggableContenedorNuevo(){
 	for(var i=0;i<contador_figura;i++){
 			for (var j = contador_contenedores-1; j >= 0; j--){
 				for (var k = contador_denominador-1; k >= 0; k--){
-					if($('#figuraDND'+k+'CF'+j).attr('id')==$('#figura'+i).data('lugar')){//Ya que se eliminan todos las figuras dropabbles y se crean nuevamente, tenemos que agregar nuevamente aquellas figras que ya tenian un lugar asegurado
-						$('#figuraDND'+k+'CF'+j).data('ocupado','figura'+i);
+					if($('#figuraDND'+k+'CF'+j).attr('id')==$('#figura'+i).attr('lugar')){//Ya que se eliminan todos las figuras dropabbles y se crean nuevamente, tenemos que agregar nuevamente aquellas figras que ya tenian un lugar asegurado
+						$('#figuraDND'+k+'CF'+j).attr('ocupado','figura'+i);
 						$('#figuraDND'+k+'CF'+j).attr('name','disable');
 						$('#figura'+i).offset({
 							left: $('#figuraDND'+k+'CF'+j).offset().left,
@@ -331,7 +331,7 @@ function ajustarDraggableContenedorNuevo(){
 function ajustarDraggableContenedorRemovido(){
 	var colocados=new Array();
 	for (var i = 0; i < contador_figura; i++) {//Primero guardamos el indice de los draggables que ya estan colocados
-		if($('#figura'+i).data('lugar')!='' && $('#figura'+i).data('lugar')!=null ){
+		if($('#figura'+i).attr('lugar')!='' && $('#figura'+i).attr('lugar')!=null ){
 			colocados[i]=i;
 		}
 	}
@@ -339,13 +339,13 @@ function ajustarDraggableContenedorRemovido(){
 	for (var i = 0; i < colocados.length; i++) {//Aqui se colocan nuevamente los draggables que su droppable aun no ha sido eliminado
 		for (var j = contador_contenedores-1; j >= 0; j--){
 			for (var k = contador_denominador-1; k >= 0; k--){
-				if($('#figuraDND'+k+'CF'+j).attr('id')==$('#figura'+colocados[i]).data('lugar')){
-					$('#figuraDND'+k+'CF'+j).data('ocupado','figura'+colocados[i]);
+				if($('#figuraDND'+k+'CF'+j).attr('id')==$('#figura'+colocados[i]).attr('lugar')){
+					$('#figuraDND'+k+'CF'+j).attr('ocupado','figura'+colocados[i]);
 					$('#figuraDND'+k+'CF'+j).attr('name','disable');
 					$('#figura'+i).offset({
 						left: $('#figuraDND'+k+'CF'+j).offset().left,
 						top: $('#figuraDND'+k+'CF'+j).offset().top
-					}).data('lugar',$('#figuraDND'+k+'CF'+j).attr('id'));
+					}).attr('lugar',$('#figuraDND'+k+'CF'+j).attr('id'));
 					colocados[i]='';
 				}
 			}
@@ -356,12 +356,12 @@ function ajustarDraggableContenedorRemovido(){
 		for (var j = contador_contenedores-1; j >= 0; j--){
 			for (var k = contador_denominador-1; k >= 0; k--){
 				if(colocados[i]!=null && colocados[i]!='' && $('#figuraDND'+k+'CF'+j).attr('name')=='enable'){
-					$('#figuraDND'+k+'CF'+j).data('ocupado','figura'+colocados[i]);
+					$('#figuraDND'+k+'CF'+j).attr('ocupado','figura'+colocados[i]);
 					$('#figuraDND'+k+'CF'+j).attr('name','disable');
 					$('#figura'+i).offset({
 						left: $('#figuraDND'+k+'CF'+j).offset().left,
 						top: $('#figuraDND'+k+'CF'+j).offset().top
-					}).data('lugar',$('#figuraDND'+k+'CF'+j).attr('id'));
+					}).attr('lugar',$('#figuraDND'+k+'CF'+j).attr('id'));
 					colocados[i]='';
 				}
 			}
@@ -371,15 +371,15 @@ function ajustarDraggableContenedorRemovido(){
 	for (var i = 0; i < colocados.length; i++){//En caso de que aun sobren draggables hasta este punto, se devuelven a su lugar de origen
 		if(colocados[i]!=null && colocados[i]!=''){
 			var elemento='#figura'+colocados[i];
-			var topElemento=$(elemento).data('top');//Se recupera la posicion en top que tenia la figura inicialmente
-			var leftElemento=$(elemento).data('left');//Se recupera la posicion en left que tenia la figura inicialmente
+			var topElemento=$(elemento).attr('top');//Se recupera la posicion en top que tenia la figura inicialmente
+			var leftElemento=$(elemento).attr('left');//Se recupera la posicion en left que tenia la figura inicialmente
 			$(elemento).animate({
 				top: topElemento,
 				left: leftElemento
 			},'slow').offset({
 				top: topElemento,
 				left: leftElemento
-			}).data('lugar','');
+			}).attr('lugar','');
 		}
 	}
 
