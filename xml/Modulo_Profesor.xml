@@ -1,0 +1,27 @@
+<modulo_profesor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Modulo_Profesor_esquema.xsd">
+	<usuario>
+		<nombre></nombre>
+
+		<introduccion>
+			<contador_contenedores></contador_contenedores>
+			<contador_numerador></contador_numerador>
+			<contador_denominador></contador_denominador>
+			<contador_figura></contador_figura>
+			<codigo_html></codigo_html>
+		</introduccion>
+
+		<crear_fraccion>
+			<nivel_a></nivel_a>
+			<nivel_b></nivel_b>
+			<nivel_a_contador_figura></nivel_a_contador_figura>
+			<nivel_b_contador_figura></nivel_b_contador_figura>
+			<nivel_a_correctos></nivel_a_correctos>
+			<nivel_b_correctos></nivel_b_correctos>
+		</crear_fraccion>
+
+		<laboratorio_igualdad>
+			<!--Faltaria este-->
+		</laboratorio_igualdad>
+	</usuario>
+
+</modulo_profesor>
