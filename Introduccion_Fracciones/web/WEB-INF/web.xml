@@ -65,8 +65,13 @@
         <servlet-class>Intro_fracciones.LoginAjax</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< HEAD
+        <servlet-name>Guardar_Introduccion_Fracciones</servlet-name>
+        <servlet-class>Intro_fracciones.Guardar_Introduccion_Fracciones</servlet-class>
+=======
         <servlet-name>Crear_una_fraccion</servlet-name>
         <servlet-class>Intro_fracciones.Crear_una_fraccion</servlet-class>
+>>>>>>> 406f29ea66960b1e631f6643503e54b57be059e4
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -133,8 +138,13 @@
         <url-pattern>/LoginAjax</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< HEAD
+        <servlet-name>Guardar_Introduccion_Fracciones</servlet-name>
+        <url-pattern>/Guardar_Introduccion_Fracciones</url-pattern>
+=======
         <servlet-name>Crear_una_fraccion</servlet-name>
         <url-pattern>/Crear_una_fraccion</url-pattern>
+>>>>>>> 406f29ea66960b1e631f6643503e54b57be059e4
     </servlet-mapping>
     <session-config>
         <session-timeout>

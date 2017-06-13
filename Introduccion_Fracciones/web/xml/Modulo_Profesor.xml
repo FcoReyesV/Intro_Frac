@@ -1,13 +1,18 @@
 <modulo_profesor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Modulo_Profesor_esquema.xsd">
 	<usuario>
-		<nombre>Profesor</nombre>
+		<nombre>prof</nombre>
 
 		<introduccion>
-			<contador_contenedores>5</contador_contenedores>
-			<contador_numerador>2</contador_numerador>
+                    <creados>
+                        <titulo>Ejemplo</titulo>
+                        <tipo>RH</tipo>
+                        <contador_contenedores>2</contador_contenedores>
+			<contador_numerador>1</contador_numerador>
 			<contador_denominador>2</contador_denominador>
 			<contador_figura>2</contador_figura>
-			<codigo_html>"Ejemplo"</codigo_html>
+                        <contenedor-principal>Contenedor Principal</contenedor-principal>
+                        <contenedor-objetos-draggables>Objetos Draggables</contenedor-objetos-draggables>   
+                    </creados>
 		</introduccion>
 
 		<crear_fraccion>
