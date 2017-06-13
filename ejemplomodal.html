@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+
+
+<button type="button" data-toggle="modal" data-target="#agregarCorrecto" title="Agregar contenedores correctos" class="btn-agregar-contenedor-correcto"></button>
+
+<div id="agregarCorrecto" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title">Contenedores correctos</h3>
+      </div>
+      <div class="modal-body">
+     		<form style="display: flex; flex-direction: column;">
+     			<label for="tam_numerador">Tamaño del numerador</label>
+				<input type="number" id="tam_numerador" min="1" max="6">
+				<label for="tam_denominador">Tamaño del denominador</label>
+				<input type="number" id="tam_denominador" min="1" max="6">
+
+			</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">Completado</button>
+      </div>
+    </div>
+
+  </div>
+</div> 
+
+  	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
+
