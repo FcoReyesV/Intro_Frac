@@ -1,10 +1,15 @@
 	
 	/*Variables globales que controlan el contenido*/
+<<<<<<< HEAD
+	//var left_inicial='10px';
+	//var top_inicial='510px';
+=======
         var nodo_usuario;
         var nodo_creados;
         var nombre_profesor=$('.usuario-bloque p').text();
         var codigo_contenedor_principal;
         var codigo_contenedor_objetos_draggables;
+>>>>>>> 95371dcdf0271e39a6147f31e78d072ac70bf463
 	var draggables_colocados=0;
 	var contador_contenedores=1;
 	var $flecha_agregar_contenedor = $('#flecha-agregar-contenedor');
@@ -21,10 +26,14 @@
 	var $numerador_agregar_btn = $('#numerador-agregar-btn');
 	var $numerador_quitar_btn = $('#numerador-quitar-btn');
 
+<<<<<<< HEAD
+	var contador_figura=2;
+=======
 	var $guardar=$('.guardar-btn');
         var $cargar=$('#cargar');
 
 	var contador_figura=1;
+>>>>>>> 95371dcdf0271e39a6147f31e78d072ac70bf463
 
 	/*Propiedades de cada figura*/
 	var figura_propiedades;
@@ -58,11 +67,33 @@
 			break;
 		}
 	}
+<<<<<<< HEAD
+
+$(document).ready(function(){
+	 propiedadesFigura();
+	
+
+	
+
+
+	//Creamos por defecto un rectangulo que será el contenedor
+	crearContenedorFigura(1);
+	creaFiguraDND(contador_denominador,contador_contenedores);
+
+	//for(var i=0;i<1;i++){
+		crearObjetosDraggables(contador_denominador,1);
+		cambiarTamObjetosDraggables(contador_denominador,1,0);
+		//contador_figura++;
+	//}
+
+
+=======
         
 $(document).ready(function(){
         console.log(nombre_profesor);
         //propiedadesFigura();
         //creaFiguraDND(contador_denominador,contador_contenedores);
+>>>>>>> 95371dcdf0271e39a6147f31e78d072ac70bf463
 	$flecha_agregar_contenedor.click(function(event) {
 		destruirFiguraDND(contador_denominador,contador_contenedores);
 		//contador_contenedores++;
@@ -92,7 +123,11 @@ $(document).ready(function(){
 		creaFiguraDND(contador_denominador,contador_contenedores);
 		
 		for(var i=0;i<contador_figura;i++)
+<<<<<<< HEAD
+			cambiarTamObjetosDraggables(contador_denominador,contador_contenedores,i+1);
+=======
 			cambiarTamObjetosDraggables(contador_denominador,contador_contenedores,i);
+>>>>>>> 95371dcdf0271e39a6147f31e78d072ac70bf463
 		
 		ajustarDraggableContenedorNuevo();
 			
@@ -105,7 +140,11 @@ $(document).ready(function(){
 		controladorDenominadorQuitarBoton();
 		creaFiguraDND(contador_denominador,contador_contenedores);
 		for(var i=0;i<contador_figura;i++)
+<<<<<<< HEAD
+			cambiarTamObjetosDraggables(contador_denominador,contador_contenedores,i+1);
+=======
 			cambiarTamObjetosDraggables(contador_denominador,contador_contenedores,i);
+>>>>>>> 95371dcdf0271e39a6147f31e78d072ac70bf463
 		ajustarDraggableContenedorRemovido();
 
 		
@@ -147,6 +186,8 @@ $(document).ready(function(){
 		limpiarContenedores();
 		reiniciarContadores(contador_contenedores,contador_numerador,contador_denominador,contador_figura);
 	});
+<<<<<<< HEAD
+=======
 
 	$guardar.click(function(event){
                 event.preventDefault();
@@ -158,6 +199,7 @@ $(document).ready(function(){
             event.preventDefault();
             cargar();
         });
+>>>>>>> 95371dcdf0271e39a6147f31e78d072ac70bf463
 	
 });
 
@@ -197,16 +239,25 @@ function cambiarTamObjetosDraggables(contador_denominador,contador_figura,i){
 		width: figura_width+'px',
   		border: '2px dashed rgb(176,176,176)',
 		bottom: bottom*contador_denominador+'px',
+<<<<<<< HEAD
+		right: Math.floor(Math.random() * 50) + 15*contador_denominador+'px'
+=======
 		right: /*Math.floor(Math.random() * 50) + 15*contador_denominador+*/'0px'
+>>>>>>> 95371dcdf0271e39a6147f31e78d072ac70bf463
 	});;
 
 }
 
 function crearContenedorFigura(num_contenedores){
+<<<<<<< HEAD
+	for(var i=0; i<num_contenedores;i++)
+		$('<div class="'+contenedor_figura+'"><div>').attr('id', 'contenedorFigura'+i).appendTo('.contenedor-principal');
+=======
 	for(var i=0; i<num_contenedores;i++){
 		$('<div class="'+contenedor_figura+'"><div>').attr('id', 'contenedorFigura'+i).appendTo('.contenedor-principal');
                 console.log(i);
         }
+>>>>>>> 95371dcdf0271e39a6147f31e78d072ac70bf463
 
 }
 function destruirContenedorFigura(num_contenedores){
@@ -390,6 +441,8 @@ function ajustarDraggableContenedorRemovido(){
 
 
 }
+<<<<<<< HEAD
+=======
     function cargar(){
             $.ajax({                
                 type: "GET",
@@ -448,6 +501,7 @@ function ajustarDraggableContenedorRemovido(){
                     }
                 });
         }
+>>>>>>> 95371dcdf0271e39a6147f31e78d072ac70bf463
 
 /*Controladores de flechas. Estos se actualizan cuando se hacen modificaciones*/
 
