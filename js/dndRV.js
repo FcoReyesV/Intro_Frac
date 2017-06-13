@@ -18,8 +18,6 @@
 	var $numerador_agregar_btn = $('#numerador-agregar-btn');
 	var $numerador_quitar_btn = $('#numerador-quitar-btn');
 
-	var $guardar=$('.guardar-btn');
-
 	var contador_figura=2;
 
 	/*Propiedades de cada figura*/
@@ -58,16 +56,6 @@
 $(document).ready(function(){
 	 propiedadesFigura();
 	
-
-	$.post('../Introduccion_Fracciones/xml/Usuarios.xml', function(d){ //metodo .post  de ajax en jquery 
-		        $(d).find('usuario').each(function(){
-
-		            var $usuario = $(this); 
-		            var $nombre_usuario = $usuario.find('nombre').text();
-		            var $pass = $usuario.find('pass').text();
-		            console.log($nombre_usuario);
-		        });
-	   		});
 
 	
 
@@ -166,16 +154,6 @@ $(document).ready(function(){
 	$opc2.click(function(event) {
 		limpiarContenedores();
 		reiniciarContadores(contador_contenedores,contador_numerador,contador_denominador,contador_figura);
-	});
-
-	$guardar.click(function(event){
-		var url="";//Ubicacion y nombre del servlet
-		$.ajax({ //Metodo para enviar datos al servidor                       
-           type: "POST",//Se enviaran los datos usando el metodo post                 
-           url: url,//a donde se enviaran                     
-           data: {contadorContenedores: contador_contenedores, contadorNumerador: contador_numerador, contadorDenominador: contador_denominador, contadorFigura: contador_figura,
-           		 codigoHtml: $('.bloque-central').html()}//Los datos a enviar, recordar que el nombre ya estara en session 
-       });
 	});
 	
 });
