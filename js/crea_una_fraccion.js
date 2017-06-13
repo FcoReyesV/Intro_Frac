@@ -7,6 +7,7 @@ var $nivel_a_contador_figura=[];
 var $nivel_b_contador_figura=[];
 var $nivel_a_correctos=[];
 var $nivel_b_correctos=[];
+var figuraObtenidaOpc;
 
 for(var i=1;i<=5;i++){
 	$nivel_a[i]=$('#nivel'+i+'a');
@@ -106,7 +107,7 @@ $(document).ready(function() {
 	reiniciarNivel();
 	agregarObjetosArrastrables();
 	agregarObjetosCorrectos();
-
+	
 	
 });
 
@@ -412,78 +413,10 @@ function agregarContenedor(nivel){
 
 
 
-function droppablesCorrectos(nivel,i,tam_numerador,tam_denominador){
+function droppablesCorrectos(nivel,i,tam_numerador,tam_denominador,figuraObtenidaOpc){
 	var nivel_valor=tam_numerador/tam_denominador;
-	var nivel_valorb=[3];
-	var imagen_figura=[3];
-	var imagen_figurab=[3];
-	switch(nivel.charAt(0)){
-		case '1':
-			
-			nivel_valorb[0]=1/3;
-			nivel_valorb[1]=2/3;
-			nivel_valorb[2]=1/2;
-		
-			imagen_figura[0]="images/alvl1a.png";
-			imagen_figura[1]="images/alvl1b.png";
-			imagen_figura[2]="images/alvl1c.png";
-			imagen_figurab[0]="images/blvl1a.png";
-			imagen_figurab[1]="images/blvl1b.png";
-			imagen_figurab[2]="images/blvl1c.png";
-		break;
-		case '2':
-		
-			nivel_valorb[0]=1/4;
-			nivel_valorb[1]=2/4;
-			nivel_valorb[2]=4/5;
-			imagen_figura[0]="images/alvl1a.png";
-			imagen_figura[1]="images/alvl1b.png";
-			imagen_figura[2]="images/alvl2c.png";
-			imagen_figurab[0]="images/blvl2a.png";
-			imagen_figurab[1]="images/blvl2b.png";
-			imagen_figurab[2]="images/blvl2c.png";
-		break;
-		case '3':
-			
-			nivel_valorb[0]=2/6;
-			nivel_valorb[1]=4/6;
-			nivel_valorb[2]=1/6;
-			imagen_figura[0]="images/alvl3a.png";
-			imagen_figura[1]="images/alvl1c.png";
-			imagen_figura[2]="images/alvl3c.png";
-			imagen_figurab[0]="images/blvl3a.png";
-			imagen_figurab[1]="images/blvl3b.png";
-			imagen_figurab[2]="images/blvl3c.png";
-			
-		break;
-		case '4':
-			
-			nivel_valorb[0]=1;
-			nivel_valorb[1]=4/4;
-			nivel_valorb[2]=6/9;
-			imagen_figura[0]="images/alvl4a.png";
-			imagen_figura[1]="images/alvl1c.png";
-			imagen_figura[2]="images/alvl4c.png";
-			imagen_figurab[0]="images/blvl4a.png";
-			imagen_figurab[1]="images/blvl4b.png";
-			imagen_figurab[2]="images/blvl4c.png";
-			
-		break;
-		case '5':
-			
-			nivel_valorb[0]=6/9;
-			nivel_valorb[1]=1/4;
-			nivel_valorb[2]=3/3;
-			imagen_figura[0]="images/alvl5a.png";
-			imagen_figura[1]="images/alvl5b.png";
-			imagen_figura[2]="images/alvl1b.png";
-			imagen_figurab[0]="images/blvl5a.png";
-			imagen_figurab[1]="images/blvl5b.png";
-			imagen_figurab[2]="images/blvl5c.png";
-			
-		break;
-	}
-
+	var nivel_valorb=[1/3,2/3,1/2,1/4,2/4,4/5,2/6,4/6,1/6,1,4/4,6/9,1/4,3/3];	
+	
 	if(nivel.charAt(1)=='a'){
 		$('<div class="droppable-correctos"></div>').attr('id', 'correcto'+i+'lvl'+nivel).appendTo('#contenedor-droppable-'+nivel)
 		.attr('name',nivel_valor); 
@@ -491,8 +424,8 @@ function droppablesCorrectos(nivel,i,tam_numerador,tam_denominador){
 		$('<div class="denominador-droppable"></div>').text(tam_denominador).appendTo('#numero-droppable-'+nivel);		
 	}else{
 		$('<div class="droppable-correctos"></div>').attr('id', 'correcto'+i+'lvl'+nivel).appendTo('#contenedor-droppable-'+nivel)
-		.attr('name',nivel_valorb[i])
-		.css('background-image', 'url('+imagen_figurab[i]+')');
+		.attr('name',nivel_valorb[figuraObtenidaOpc])
+		.css('background-image', 'url("images/'+figuraObtenidaOpc+'.png")');
 	}
 
 	$('#correcto'+i+'lvl'+nivel).css('z-index', '1').droppable({
@@ -630,7 +563,7 @@ function contenedorFuncionNivel(nivel){
 
 	//Creamos el agregar caja pora cada nivel
 	$('<button type="button"  data-toggle="modal" data-target="#agregarArrastrable'+nivel+'" title="Agregar contenido arrastrable" class="btn-agregar-contenedor-arrastrable"></button>').appendTo('#nivelfnc'+nivel);
-	$('<button type="button" data-toggle="modal" data-target="#agregarCorrecto" title="Agregar contenedores correctos" class="btn-agregar-contenedor-correcto"></button>').appendTo('#nivelfnc'+nivel);
+	$('<button type="button" data-toggle="modal" data-target="#agregarCorrecto'+nivel+'" title="Agregar contenedores correctos" class="btn-agregar-contenedor-correcto"></button>').appendTo('#nivelfnc'+nivel);
 	$('<button title="Mostrar creados" class="btn-mostrar-creados btn btn-primary">Mostrar <br/>creados</button>').appendTo('#nivelfnc'+nivel);
 	$('<button title="Guardar" class="btn-guardar btn btn-primary">Guardar</button>').appendTo('#nivelfnc'+nivel);
 	formularioAgregarArrastrable(nivel);
@@ -642,10 +575,38 @@ function contenedorFuncionNivel(nivel){
 function formularioAgregarArrastrable(nivel){
 	if(nivel.charAt(1)=='a'){
 		$('<div id="agregarArrastrable'+nivel+'" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3 class="modal-title">Figuras arrastrables</h3></div><div class="modal-body"><form class="formulario-modal" style="display: flex; flex-direction: column;"><label for="tam_denominador">Tamaño del denominador</label><input type="number" name="tam_denominador" id="tam_denominador'+nivel+'" min="1" max="6" value="1"><label for="num_draggables">Número de figuras arrastrables</label><input type="number" name="num_draggables" value="1" id="num_draggables'+nivel+'" min="1" max="4" ><label for="color_draggable">Color de la figura</label><input type="color" name="color_draggable" id="color_draggable'+nivel+'" value="#ffffff"></form></div><div class="modal-footer"><button type="submit" class="btn btn-success btn-agregar-draggables" data-dismiss="modal">Completado</button></div></div></div></div> ').appendTo('#nivelfnc'+nivel);
-		$('<div id="agregarCorrecto" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3 class="modal-title">Contenedores correctos</h3></div><div class="modal-body"><form class="formulario-modal" style="display: flex; flex-direction: column;"><label for="tam_numerador">Tamaño del numerador</label><input type="number" name="tam_numerador" id="tam_numerador'+nivel+'" value="1" min="1" max="6"><label for="tam_denominador">Tamaño del denominador</label><input type="number" value="1" name="tam_denominador" id="tam_denominador'+nivel+'" min="1" max="6"></form></div><div class="modal-footer"><button type="button" class="btn btn-success btn-agregar-correctos" data-dismiss="modal">Completado</button></div></div></div></div> ').appendTo('#nivelfnc'+nivel);
+		$('<div id="agregarCorrecto'+nivel+'" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3 class="modal-title">Contenedores correctos</h3></div><div class="modal-body"><form id="form'+nivel+'" class="formulario-modal" style="display: flex; flex-direction: column;"><label for="tam_numerador">Tamaño del numerador</label><input type="number" name="tam_numerador" id="tam_numerador'+nivel+'" value="1" min="1" max="6"><label for="tam_denominador">Tamaño del denominador</label><input type="number" value="1" name="tam_denominador" id="tam_denominador'+nivel+'" min="1" max="6"></form></div><div class="modal-footer"><button type="button" class="btn btn-success btn-agregar-correctos" data-dismiss="modal">Completado</button></div></div></div></div> ').appendTo('#nivelfnc'+nivel);
 	}
-	else
+	else{
 		$('<div id="agregarArrastrable'+nivel+'" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3 class="modal-title">Figuras arrastrables</h3></div><div class="modal-body"><form class="formulario-modal" style="display: flex; flex-direction: column;"><label for="tam_denominador">Número de la tarjeta</label><input type="number" name="tam_denominador" id="tam_denominador'+nivel+'" min="1" max="6" value="1"><label for="num_draggables">Número de figuras arrastrables</label><input type="number" name="num_draggables" value="1" id="num_draggables'+nivel+'" min="1" max="4"></form></div><div class="modal-footer"><button type="button" class="btn btn-success btn-agregar-draggables" data-dismiss="modal">Completado</button></div></div></div></div> ').appendTo('#nivelfnc'+nivel);
+		$('<div id="agregarCorrecto'+nivel+'" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3 class="modal-title">Contenedores correctos</h3></div><div class="modal-body"><form id="form'+nivel+'" class="formulario-modal" style="display: flex; flex-direction: column;"><label for="selector-images">Seleccione una figura</label><select id="selector-images'+nivel+'" name="selector-images"></select></form></div><div class="modal-footer"><button type="button" class="btn btn-success  btn-agregar-correctos" data-dismiss="modal">Completado</button></div></div></div></div> ').appendTo('#nivelfnc'+nivel);
+		
+
+
+		for(var i=0;i<15;i++){
+			var $option=$('<option value="'+i+'" data-imagesrc="images/'+i+'.png"> </option>');
+			$option.appendTo('#selector-images'+nivel);
+
+		}
+		$('#selector-images'+nivel).ddslick({
+		onSelected: function(data){
+			 figuraObtenida(data);
+		}
+	});
+
+	
+
+		$('.formulario-modal ul').css({
+			overflowY: 'auto',
+			height: '250px',
+			width:'150px'
+		});
+
+		$('.formulario-modal div.dd-select').css({
+			width:'150px'
+		});
+
+	}
 }
 
 
@@ -690,11 +651,16 @@ function agregarObjetosArrastrables(){
 }
 
 
+function figuraObtenida(data){
+ 	figuraObtenidaOpc= data.selectedData.value;
+ 	return figuraObtenidaOpc;
+}
+
 function agregarObjetosCorrectos(){
 	$(document).on('click', '.btn-agregar-correctos', function() {
 		
 		var $formulario=$(this).parent().siblings('.modal-body').children('form');
-		var nivel=$formulario.children('input[name=tam_denominador]').attr('id').slice(15,17);
+		var nivel=$formulario.attr('id').slice(4, 6);
 		var tam_numerador=parseInt($formulario.children('input[name=tam_numerador]').val());
 		var tam_denominador=parseInt($formulario.children('input[name=tam_denominador]').val());
 		var numero_divs=0;
@@ -706,11 +672,19 @@ function agregarObjetosCorrectos(){
 			
 			//Comprobamos que solo se aceptan 3 cajas
 			if($('#contenedor-droppable-'+nivel).children('div.droppable-correctos').length <3){
-					droppablesCorrectos(nivel,numero_divs,tam_numerador,tam_denominador);
+				droppablesCorrectos(nivel,numero_divs,tam_numerador,tam_denominador,figuraObtenidaOpc);
 			 }else{
 			 	alert("Ya no puedes agregar más contenedores correctos. El número máximo es tres");
 			 }
 		}else{
+			if($('#contenedor-droppable-'+nivel).children('div.droppable-correctos').length <3){
+				droppablesCorrectos(nivel,numero_divs,1,1,figuraObtenidaOpc);
+			 }else{
+			 	alert("Ya no puedes agregar más contenedores correctos. El número máximo es tres");
+			 }
+			
+			
+				
 
 		}
 	});
