@@ -1,7 +1,10 @@
 	
 	/*Variables globales que controlan el contenido*/
-	//var left_inicial='10px';
-	//var top_inicial='510px';
+        var nodo_usuario;
+        var nodo_creados;
+        var nombre_profesor=$('.usuario-bloque p').text();
+        var codigo_contenedor_principal;
+        var codigo_contenedor_objetos_draggables;
 	var draggables_colocados=0;
 	var contador_contenedores=1;
 	var $flecha_agregar_contenedor = $('#flecha-agregar-contenedor');
@@ -19,8 +22,9 @@
 	var $numerador_quitar_btn = $('#numerador-quitar-btn');
 
 	var $guardar=$('.guardar-btn');
+        var $cargar=$('#cargar');
 
-	var contador_figura=2;
+	var contador_figura=1;
 
 	/*Propiedades de cada figura*/
 	var figura_propiedades;
@@ -54,35 +58,11 @@
 			break;
 		}
 	}
-
+        
 $(document).ready(function(){
-	 propiedadesFigura();
-	
-
-	$.post('../Introduccion_Fracciones/xml/Usuarios.xml', function(d){ //metodo .post  de ajax en jquery 
-		        $(d).find('usuario').each(function(){
-
-		            var $usuario = $(this); 
-		            var $nombre_usuario = $usuario.find('nombre').text();
-		            var $pass = $usuario.find('pass').text();
-		            console.log($nombre_usuario);
-		        });
-	   		});
-
-	
-
-
-	//Creamos por defecto un rectangulo que será el contenedor
-	crearContenedorFigura(1);
-	creaFiguraDND(contador_denominador,contador_contenedores);
-
-	//for(var i=0;i<1;i++){
-		crearObjetosDraggables(contador_denominador,1);
-		cambiarTamObjetosDraggables(contador_denominador,1,0);
-		//contador_figura++;
-	//}
-
-
+        console.log(nombre_profesor);
+        //propiedadesFigura();
+        //creaFiguraDND(contador_denominador,contador_contenedores);
 	$flecha_agregar_contenedor.click(function(event) {
 		destruirFiguraDND(contador_denominador,contador_contenedores);
 		//contador_contenedores++;
@@ -112,7 +92,7 @@ $(document).ready(function(){
 		creaFiguraDND(contador_denominador,contador_contenedores);
 		
 		for(var i=0;i<contador_figura;i++)
-			cambiarTamObjetosDraggables(contador_denominador,contador_contenedores,i+1);
+			cambiarTamObjetosDraggables(contador_denominador,contador_contenedores,i);
 		
 		ajustarDraggableContenedorNuevo();
 			
@@ -125,7 +105,7 @@ $(document).ready(function(){
 		controladorDenominadorQuitarBoton();
 		creaFiguraDND(contador_denominador,contador_contenedores);
 		for(var i=0;i<contador_figura;i++)
-			cambiarTamObjetosDraggables(contador_denominador,contador_contenedores,i+1);
+			cambiarTamObjetosDraggables(contador_denominador,contador_contenedores,i);
 		ajustarDraggableContenedorRemovido();
 
 		
@@ -169,14 +149,15 @@ $(document).ready(function(){
 	});
 
 	$guardar.click(function(event){
-		var url="";//Ubicacion y nombre del servlet
-		$.ajax({ //Metodo para enviar datos al servidor                       
-           type: "POST",//Se enviaran los datos usando el metodo post                 
-           url: url,//a donde se enviaran                     
-           data: {contadorContenedores: contador_contenedores, contadorNumerador: contador_numerador, contadorDenominador: contador_denominador, contadorFigura: contador_figura,
-           		 codigoHtml: $('.bloque-central').html()}//Los datos a enviar, recordar que el nombre ya estara en session 
-       });
+                event.preventDefault();
+                guardar();
+		
 	});
+        
+        $cargar.click(function(event){
+            event.preventDefault();
+            cargar();
+        });
 	
 });
 
@@ -216,14 +197,16 @@ function cambiarTamObjetosDraggables(contador_denominador,contador_figura,i){
 		width: figura_width+'px',
   		border: '2px dashed rgb(176,176,176)',
 		bottom: bottom*contador_denominador+'px',
-		right: Math.floor(Math.random() * 50) + 15*contador_denominador+'px'
+		right: /*Math.floor(Math.random() * 50) + 15*contador_denominador+*/'0px'
 	});;
 
 }
 
 function crearContenedorFigura(num_contenedores){
-	for(var i=0; i<num_contenedores;i++)
+	for(var i=0; i<num_contenedores;i++){
 		$('<div class="'+contenedor_figura+'"><div>').attr('id', 'contenedorFigura'+i).appendTo('.contenedor-principal');
+                console.log(i);
+        }
 
 }
 function destruirContenedorFigura(num_contenedores){
@@ -407,6 +390,64 @@ function ajustarDraggableContenedorRemovido(){
 
 
 }
+    function cargar(){
+            $.ajax({                
+                type: "GET",
+                url: "../Introduccion_Fracciones/xml/Modulo_Profesor.xml",
+                dataType: "xml",
+                success:function(xml){
+                    var j=0,k=0;
+                    $(xml).find("usuario").each(function(){                        
+                        $(this).find("introduccion").each(function(){
+                            $(this).find('creados').each(function(){
+                                var $creados=$(this);
+                                var titulo=$(this).find('titulo').text();
+                                if(titulo==$('option').text()){
+                                    nodo_usuario=j;
+                                    nodo_creados=k;
+                                    contador_numerador=parseInt($creados.find('contador_numerador').text())-1;
+                                    contador_denominador=parseInt($creados.find('contador_denominador').text())-1;
+                                    contador_contenedores=parseInt($creados.find('contador_contenedores').text())-1;
+                                    contador_figura=parseInt($creados.find('contador_figura').text());
+                                    codigo_contenedor_principal=$creados.find('contenedor-principal').text();
+                                    codigo_contenedor_objetos_draggables=$creados.find('contenedor-objetos-draggables').text();                                    
+                                    $('body').attr('name',$creados.find('tipo').text());//Cambia la forma de la figura
+                                    
+                                    controladorFlechaAgregarContenedor();
+                                    controladorDenominadorAgregarBoton();
+                                    controladorNumeradorAgregarBoton();
+                                    
+                                    propiedadesFigura();
+                                    crearContenedorFigura(contador_contenedores);
+                                    creaFiguraDND(contador_denominador,contador_contenedores);
+                                    for(var i=0;i<contador_figura;i++){
+                                        crearObjetosDraggables(contador_denominador,i);
+                                        cambiarTamObjetosDraggables(contador_denominador,contador_figura,i)
+                                    }
+                                    
+                                    /*Faltaria agregar el codigo html de contenedor_principal*/
+                                    
+                                }
+                                k++;
+                            });
+                        });
+                        j++;
+                    });
+                }
+            });
+        }
+        function guardar(){
+            var url="../Introduccion_Fracciones/Guardar_Introduccion_Fracciones";//Ubicacion y nombre del servlet
+		$.ajax({ //Metodo para enviar datos al servidor                       
+                    type: "POST",//Se enviaran los datos usando el metodo post                 
+                    url: url,//a donde se enviaran                     
+                    data: {tipo:$('body').attr('name'),titulo:$('option').text(),contador_figura:contador_figura,contador_denominador:contador_denominador,contador_numerador:contador_numerador,contador_contenedores:contador_contenedores,contenedor_principal:$( '.contenedor-principal').html(),contenedor_objetos_draggables:$( '#contenedor-objetos-draggables').html(),nodo_usuario:nodo_usuario,nodo_creados:nodo_creados},
+                    success:function(resp){
+                        console.log("succes");
+                        console.log(resp);
+                    }
+                });
+        }
 
 /*Controladores de flechas. Estos se actualizan cuando se hacen modificaciones*/
 
