@@ -32,8 +32,12 @@
  		<xs:complexType name="contenido_nivel">
  			<xs:sequence>
  				<xs:element name="Nombre_guardado" type="xs:string"/>
+<<<<<<< HEAD
+ 				<xs:element name="Codigo"  type="xs:string"/>
+=======
  				<xs:element name="Codigo1"  type="xs:string"/>
  				<xs:element name="Codigo2"  type="xs:string"/>
+>>>>>>> 9ebbf4962abab179cb3f57bdbafeb8910e11f68a
  			</xs:sequence>
  		</xs:complexType>
 </xs:schema>
