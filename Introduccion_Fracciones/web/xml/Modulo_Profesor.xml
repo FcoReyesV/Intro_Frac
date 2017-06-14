@@ -3,25 +3,86 @@
 		<nombre>Profesor</nombre>
 
 		<introduccion>
-			<contador_contenedores>5</contador_contenedores>
-			<contador_numerador>2</contador_numerador>
-			<contador_denominador>2</contador_denominador>
-			<contador_figura>2</contador_figura>
-			<codigo_html>"Ejemplo"</codigo_html>
+			<creados>
+				<titulo></titulo>
+                <tipo></tipo>
+				<contador_contenedores>1</contador_contenedores>
+				<titulo>Ejemplo</titulo>
+				<tipo>RH</tipo>
+				<contador_contenedores>5</contador_contenedores>
+				<contador_numerador>2</contador_numerador>
+				<contador_denominador>2</contador_denominador>
+				<contador_figura>2</contador_figura>
+				<codigo_html>"Ejemplo"</codigo_html>
+				<contenedor_principal></contenedor_principal>
+				<contenedor_objetos_draggables></contenedor_objetos_draggables>
+			</creados>
 		</introduccion>
 
 		<crear_fraccion>
-			<nivel_a>2</nivel_a>
-			<nivel_b>2</nivel_b>
-			<nivel_a_contador_figura>2</nivel_a_contador_figura>
-			<nivel_b_contador_figura>2</nivel_b_contador_figura>
-			<nivel_a_correctos>2</nivel_a_correctos>
-			<nivel_b_correctos>2</nivel_b_correctos>
+			<nivel_1a>
+				<Contenido_nivel>
+					<Nombre_guardado></Nombre_guardado>
+					<Codigo></Codigo>
+				</Contenido_nivel>
+			</nivel_1a>
+			
+			<nivel_2a>
+				<Contenido_nivel>
+					<Nombre_guardado></Nombre_guardado>
+					<Codigo></Codigo>
+				</Contenido_nivel>
+			</nivel_2a>
+			<nivel_3a>
+				<Contenido_nivel>
+					<Nombre_guardado></Nombre_guardado>
+					<Codigo></Codigo>
+				</Contenido_nivel>
+			</nivel_3a>
+			<nivel_4a>
+				<Contenido_nivel>
+					<Nombre_guardado></Nombre_guardado>
+					<Codigo></Codigo>
+				</Contenido_nivel>
+			</nivel_4a>
+			<nivel_5a>
+				<Contenido_nivel>
+					<Nombre_guardado></Nombre_guardado>
+					<Codigo></Codigo>
+				</Contenido_nivel>
+			</nivel_5a>
+			<nivel_1b>
+				<Contenido_nivel>
+					<Nombre_guardado></Nombre_guardado>
+					<Codigo></Codigo>
+				</Contenido_nivel>
+			</nivel_1b>
+			<nivel_2b>
+				<Contenido_nivel>
+					<Nombre_guardado></Nombre_guardado>
+					<Codigo></Codigo>
+				</Contenido_nivel>
+			</nivel_2b>
+			<nivel_3b>
+				<Contenido_nivel>
+					<Nombre_guardado></Nombre_guardado>
+					<Codigo></Codigo>
+				</Contenido_nivel>
+			</nivel_3b>
+			<nivel_4b>
+				<Contenido_nivel>
+					<Nombre_guardado></Nombre_guardado>
+					<Codigo></Codigo>
+				</Contenido_nivel>
+			</nivel_4b>
+			<nivel_5b>
+				<Contenido_nivel>
+					<Nombre_guardado></Nombre_guardado>
+					<Codigo></Codigo>
+				</Contenido_nivel>
+			</nivel_5b>
 		</crear_fraccion>
 
-		<laboratorio_igualdad>
-			<!--Faltaria este-->
-		</laboratorio_igualdad>
 	</usuario>
 
 </modulo_profesor>
