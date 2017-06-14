@@ -29,7 +29,8 @@
  				<xs:element name="contador_numerador" type="xs:integer"/>
  				<xs:element name="contador_denominador" type="xs:integer"/>
  				<xs:element name="contador_figura" type="xs:integer"/>
- 				<xs:element name="codigo_html" type="xs:string"/>
+ 				<xs:element name="contenedor_principal" type="xs:string"/>
+ 				<xs:element name="contenedor_objetos_draggables" type="xs:string"/>
  			</xs:sequence>
  		</xs:complexType>
 
