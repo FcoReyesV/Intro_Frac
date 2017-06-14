@@ -4,10 +4,13 @@
 		<pass>admin</pass>
 		<tipo>Administrador</tipo>
 	</usuario>
+<<<<<<< HEAD
         <usuario>
 		<nombre>p</nombre>
 		<pass>p</pass>
 		<tipo>Profesor</tipo>
 	</usuario>
+=======
+>>>>>>> 9ebbf4962abab179cb3f57bdbafeb8910e11f68a
 </login>
 

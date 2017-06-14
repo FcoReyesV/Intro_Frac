@@ -4,7 +4,8 @@
 		<crear_fraccion>
 			<nivel_1a>
 				<Nombre_guardado></Nombre_guardado>
-				<Codigo></Codigo>
+				<Codigo1></Codigo1>
+				<Codigo2></Codigo2>
 			</nivel_1a>
 		</crear_fraccion>
 	</usuario>
