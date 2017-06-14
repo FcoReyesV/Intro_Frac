@@ -24,11 +24,11 @@ public class GuardarCrearUnaFiguraAjax extends HttpServlet {
      protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String nombre_usuario=request.getParameter("nombre_usuario"); 
-        String  Nombre_guardado=request.getParameter("codigo");
+        String  Nombre_guardado=request.getParameter("nombre_guardado");
         String  codigo=request.getParameter("codigo");
         String nivel=request.getParameter("nivel");
         try {
-            AgregarNodo(request.getRealPath("/")+"\\xml\\Modulo_Profesor.xml",Nombre_guardado,codigo,nombre_usuario,nivel);
+            AgregarNodo(request.getRealPath("/")+"\\xml\\Modulo_Profesor_niveles.xml",Nombre_guardado,codigo,nombre_usuario,nivel);
         } catch (Exception ex) {
             Logger.getLogger(GuardarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -46,7 +46,7 @@ public class GuardarCrearUnaFiguraAjax extends HttpServlet {
     Element nombre=(Element)doc.createElement("nombre");
     Element crear_fraccion=(Element)doc.createElement("crear_fraccion");
     Element num_nivel=(Element)doc.createElement(nivel);
-    Element Contenido_nivel=(Element)doc.createElement("Contenido_nivel");
+    
     Element nombre_guardado=(Element)doc.createElement("Nombre_guardado");
     Element codigo_nivel=(Element)doc.createElement("Codigo");
     
@@ -58,9 +58,8 @@ public class GuardarCrearUnaFiguraAjax extends HttpServlet {
     usuario.appendChild(nombre);
     usuario.appendChild(crear_fraccion);
     crear_fraccion.appendChild(num_nivel);
-    num_nivel.appendChild(Contenido_nivel);
-    Contenido_nivel.appendChild(nombre_guardado);
-    Contenido_nivel.appendChild(codigo_nivel);
+    num_nivel.appendChild(nombre_guardado);
+    num_nivel.appendChild(codigo_nivel);
     
     Element root=(Element)doc.getElementsByTagName("usuario").item(0);
     root.getParentNode().appendChild(usuario);
