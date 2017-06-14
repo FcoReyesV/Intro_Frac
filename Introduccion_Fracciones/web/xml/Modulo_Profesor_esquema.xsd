@@ -2,7 +2,7 @@
 	<xs:element name="modulo_profesor">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="usuario" type="Usuarios" maxOccurs="1000"/>
+				<xs:element name="usuario" type="Usuarios" minOccurs="1" maxOccurs="1000"/>
   			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -18,11 +18,11 @@
 
  		<xs:complexType name="introduccion">
  			<xs:sequence>
- 				<xs:element name="creados" type="Creados" minOccurs="1" maxOccurs="1000"/>
+ 				<xs:element name="creados" type="Creados" maxOccurs="1000"/>
  			</xs:sequence>
  		</xs:complexType>
                 
-                <xs:complexType name="creados">
+        <xs:complexType name="creados">
  			<xs:sequence>
                                 <xs:element name="titulo" type="xs:string"/>
                                 <xs:element name="tipo" type="xs:string"/>
@@ -30,8 +30,7 @@
  				<xs:element name="contador_numerador" type="xs:integer"/>
  				<xs:element name="contador_denominador" type="xs:integer"/>
  				<xs:element name="contador_figura" type="xs:integer"/>
- 				<xs:element name="contenedor-principal" type="xs:string"/>
-                                <xs:element name="contenedor-objetos-draggables" type="xs:string"/>
+ 				<xs:element name="codigo_html" type="xs:string"/>
  			</xs:sequence>
  		</xs:complexType>
 

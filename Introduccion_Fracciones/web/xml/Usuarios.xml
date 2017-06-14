@@ -1,13 +1,8 @@
 <login xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Usuarios_esquema.xsd">
 	<usuario>
-		<nombre>admin</nombre>
-		<pass>admin</pass>
+		<nombre>admin2</nombre>
+		<pass>admin2</pass>
 		<tipo>Administrador</tipo>
-	</usuario>
-        <usuario>
-		<nombre>prof</nombre>
-		<pass>profe</pass>
-		<tipo>Profesor</tipo>
 	</usuario>
 </login>
 
