@@ -20,7 +20,7 @@ for(var i=1;i<=5;i++){
 
 $(document).ready(function() {
 	$('#regresarMenu').hide();
-
+	//Cuando se haga click en cada nivel se activan los contadores
 	$nivel_a[1].click(function() {
 		//Primero comprobamos que exista en el DOM el nivel, sino lo crea
 		if(!$('#nivelfnc1a').length){
@@ -107,6 +107,7 @@ $(document).ready(function() {
 	reiniciarNivel();
 	agregarObjetosArrastrables();
 	agregarObjetosCorrectos();
+	guardarCambios();
 	
 	
 });
@@ -555,34 +556,46 @@ function figuraNivelB(nivel,i,appendPadre,tam_denominador){
 
 
 function contenedorFuncionNivel(nivel){
+	//contenedor de funciones
 	$('<div class="contenedor-funcion"></div>').attr('id', 'nivelfnc'+nivel).appendTo('.bloque-central');
+	//contenedor de figuras 
 	$('<div class="contenedor-figuras"></div>').appendTo('#nivelfnc'+nivel);
+	//Contenedor de figuras draggables
 	$('<div id="contenedor-manejable-'+nivel+'" class="contenedor-manejables"><button  id="agregarContenedor'+nivel+'" class="agregar-contenedor" title="Agregar nuevo contenedor"><span class="glyphicon glyphicon-plus"></span></button></div>').appendTo('#nivelfnc'+nivel);
+	//Contenedor de figuras correctas
 	$('<div id="contenedor-droppable-'+nivel+'" class="contenedor-droppables"></div><button title="Reiniciar nivel" class="reiniciar"><span class="glyphicon glyphicon-refresh"></span></button>').appendTo('#nivelfnc'+nivel);
+	//Numero en fraccion de las figuras correctas
 	$('<div id="numero-droppable-'+nivel+'" class="numeros-droppables"></div>').appendTo('#nivelfnc'+nivel);
 
 	//Creamos el agregar caja pora cada nivel
 	$('<button type="button"  data-toggle="modal" data-target="#agregarArrastrable'+nivel+'" title="Agregar contenido arrastrable" class="btn-agregar-contenedor-arrastrable"></button>').appendTo('#nivelfnc'+nivel);
+	//Boton para agregar los contenedores correctos con su respectivo modal asignado
 	$('<button type="button" data-toggle="modal" data-target="#agregarCorrecto'+nivel+'" title="Agregar contenedores correctos" class="btn-agregar-contenedor-correcto"></button>').appendTo('#nivelfnc'+nivel);
-	$('<button title="Mostrar creados" class="btn-mostrar-creados btn btn-primary">Mostrar <br/>creados</button>').appendTo('#nivelfnc'+nivel);
-	$('<button title="Guardar" class="btn-guardar btn btn-primary">Guardar</button>').appendTo('#nivelfnc'+nivel);
-	formularioAgregarArrastrable(nivel);
-	
-	
-
+	//Boton para mostrar lo guardado por el usuario
+	$('<button id="mostrarCreadosbtn" type="button" data-toggle="modal" data-target="#mostrarCreados'+nivel+'" title="Mostrar creados" class="btn-mostrar-creados btn btn-primary">Mostrar <br/>creados</button>').appendTo('#nivelfnc'+nivel);
+	//Boton para guardar los cambios hechos por el usuario
+	$('<button id="guardar'+nivel+'" type="button" data-toggle="modal"  title="Guardar" data-target="#guardarCambios'+nivel+'"  class="btn-guardar btn btn-primary">Guardar</button>').appendTo('#nivelfnc'+nivel);
+	formularioAgregarArrastrable(nivel); 
 }
 //Modals de boostrap (ventanas emergentes)
 function formularioAgregarArrastrable(nivel){
+	//Creamos el modal para guardar los cambios 
+	$('<div id="guardarCambios'+nivel+'" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3 class="modal-title">Guardar cambios</h3></div><div class="modal-body"><form id="formGuardar'+nivel+'" class="formulario-modal" style="display: flex; flex-direction: column;"><label for="nombre_guardado">Nombre a guardar</label><input type="text" name="nombre_guardado" id="nombre_guardado'+nivel+'"></form></div><div class="modal-footer"><button type="submit" class="btn btn-success btn-guardar-Cambios" data-dismiss="modal">Completado</button></div></div></div></div>').appendTo('#nivelfnc'+nivel);
+	//Creamos el modal para mostrar los guardados
+	$('<div id="mostrarCreados'+nivel+'" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3 class="modal-title">Cargar creados</h3></div><div class="modal-body"><form id="formularioCargar'+nivel+'" class="formulario-modal" style="display: flex; flex-direction: column;"><label for="selectCreados">Seleccionar contenido creado</label><select></select></form></div><div class="modal-footer"><button type="submit" class="btn btn-success btn-cargar-Cambios" data-dismiss="modal">Completado</button></div></div></div></div>').appendTo('#nivelfnc'+nivel);
+
 	if(nivel.charAt(1)=='a'){
+		//Creamos los modals para los niveles 'a' 
 		$('<div id="agregarArrastrable'+nivel+'" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3 class="modal-title">Figuras arrastrables</h3></div><div class="modal-body"><form class="formulario-modal" style="display: flex; flex-direction: column;"><label for="tam_denominador">Tamaño del denominador</label><input type="number" name="tam_denominador" id="tam_denominador'+nivel+'" min="1" max="6" value="1"><label for="num_draggables">Número de figuras arrastrables</label><input type="number" name="num_draggables" value="1" id="num_draggables'+nivel+'" min="1" max="4" ><label for="color_draggable">Color de la figura</label><input type="color" name="color_draggable" id="color_draggable'+nivel+'" value="#ffffff"></form></div><div class="modal-footer"><button type="submit" class="btn btn-success btn-agregar-draggables" data-dismiss="modal">Completado</button></div></div></div></div> ').appendTo('#nivelfnc'+nivel);
 		$('<div id="agregarCorrecto'+nivel+'" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3 class="modal-title">Contenedores correctos</h3></div><div class="modal-body"><form id="form'+nivel+'" class="formulario-modal" style="display: flex; flex-direction: column;"><label for="tam_numerador">Tamaño del numerador</label><input type="number" name="tam_numerador" id="tam_numerador'+nivel+'" value="1" min="1" max="6"><label for="tam_denominador">Tamaño del denominador</label><input type="number" value="1" name="tam_denominador" id="tam_denominador'+nivel+'" min="1" max="6"></form></div><div class="modal-footer"><button type="button" class="btn btn-success btn-agregar-correctos" data-dismiss="modal">Completado</button></div></div></div></div> ').appendTo('#nivelfnc'+nivel);
 	}
 	else{
+		//Modals para niveles 'b'
 		$('<div id="agregarArrastrable'+nivel+'" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3 class="modal-title">Figuras arrastrables</h3></div><div class="modal-body"><form class="formulario-modal" style="display: flex; flex-direction: column;"><label for="tam_denominador">Número de la tarjeta</label><input type="number" name="tam_denominador" id="tam_denominador'+nivel+'" min="1" max="6" value="1"><label for="num_draggables">Número de figuras arrastrables</label><input type="number" name="num_draggables" value="1" id="num_draggables'+nivel+'" min="1" max="4"></form></div><div class="modal-footer"><button type="button" class="btn btn-success btn-agregar-draggables" data-dismiss="modal">Completado</button></div></div></div></div> ').appendTo('#nivelfnc'+nivel);
 		$('<div id="agregarCorrecto'+nivel+'" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3 class="modal-title">Contenedores correctos</h3></div><div class="modal-body"><form id="form'+nivel+'" class="formulario-modal" style="display: flex; flex-direction: column;"><label for="selector-images">Seleccione una figura</label><select id="selector-images'+nivel+'" name="selector-images"></select></form></div><div class="modal-footer"><button type="button" class="btn btn-success  btn-agregar-correctos" data-dismiss="modal">Completado</button></div></div></div></div> ').appendTo('#nivelfnc'+nivel);
 		
 
-
+		//Dropdown que despliega las figuras que el usuario elige
 		for(var i=0;i<15;i++){
 			var $option=$('<option value="'+i+'" data-imagesrc="images/'+i+'.png"> </option>');
 			$option.appendTo('#selector-images'+nivel);
@@ -827,6 +840,18 @@ function nivelesCompletos(){
 				break;
 			}
 		}
+		
+	});
+}
+
+
+function guardarCambios() {
+	$(document).on('click', '.btn-guardar-Cambios', function() {
+		var $formulario=$(this).parent().siblings('.modal-body').children('form');
+		var nivel=$formulario.attr('id').slice(11, 13);
+		var $contenedoManejable=$('#contenedor-manejable-'+nivel).html();
+		var $contenedorDroppable=$('#contenedor-droppable-'+nivel).html();
+		var $nombre_guardado=$formulario.children('input').val();
 		
 	});
 }

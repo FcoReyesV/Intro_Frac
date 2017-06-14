@@ -21,21 +21,22 @@ import org.w3c.dom.Element;
 
 public class GuardarCrearUnaFiguraAjax extends HttpServlet {
     @Override
-     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String nombre_usuario=request.getParameter("nombre_usuario"); 
         String  Nombre_guardado=request.getParameter("nombre_guardado");
-        String  codigo=request.getParameter("codigo");
+        String  codigo1=request.getParameter("codigo1");
+        String  codigo2=request.getParameter("codigo2");
         String nivel=request.getParameter("nivel");
         try {
-            AgregarNodo(request.getRealPath("/")+"\\xml\\Modulo_Profesor_niveles.xml",Nombre_guardado,codigo,nombre_usuario,nivel);
+            AgregarNodo(request.getRealPath("/")+"\\xml\\Modulo_Profesor_niveles.xml",Nombre_guardado,codigo1,codigo2,nombre_usuario,nivel);
         } catch (Exception ex) {
             Logger.getLogger(GuardarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
        
        response.sendRedirect("Administrador");
     }
-     public static void AgregarNodo(String archivo_direccion,String Nombre_guardado, String codigo,String nombre_usuario,String nivel) throws Exception {
+     public static void AgregarNodo(String archivo_direccion,String Nombre_guardado, String codigo1,String codigo2,String nombre_usuario,String nivel) throws Exception {
     String xmlFile=archivo_direccion;
     File file = new File(xmlFile);
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -48,10 +49,12 @@ public class GuardarCrearUnaFiguraAjax extends HttpServlet {
     Element num_nivel=(Element)doc.createElement(nivel);
     
     Element nombre_guardado=(Element)doc.createElement("Nombre_guardado");
-    Element codigo_nivel=(Element)doc.createElement("Codigo");
+    Element codigo1_nivel=(Element)doc.createElement("Codigo1");
+    Element codigo2_nivel=(Element)doc.createElement("Codigo2");
     
     nombre.setTextContent(nombre_usuario);
-    codigo_nivel.setTextContent(codigo);
+    codigo1_nivel.setTextContent(codigo1);
+    codigo2_nivel.setTextContent(codigo2);
     nombre_guardado.setTextContent(Nombre_guardado);
 
     
@@ -59,7 +62,9 @@ public class GuardarCrearUnaFiguraAjax extends HttpServlet {
     usuario.appendChild(crear_fraccion);
     crear_fraccion.appendChild(num_nivel);
     num_nivel.appendChild(nombre_guardado);
-    num_nivel.appendChild(codigo_nivel);
+    num_nivel.appendChild(codigo1_nivel);
+    num_nivel.appendChild(codigo2_nivel);
+    
     
     Element root=(Element)doc.getElementsByTagName("usuario").item(0);
     root.getParentNode().appendChild(usuario);

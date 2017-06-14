@@ -2,7 +2,7 @@
 	<xs:element name="modulo_profesor_niveles">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="usuario" type="usuarios"  maxOccurs="1000"/>
+				<xs:element name="usuario" type="usuarios" minOccurs="1" maxOccurs="1000"/>
   			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -32,7 +32,8 @@
  		<xs:complexType name="contenido_nivel">
  			<xs:sequence>
  				<xs:element name="Nombre_guardado" type="xs:string"/>
- 				<xs:element name="Codigo"  type="xs:string"/>
+ 				<xs:element name="Codigo1"  type="xs:string"/>
+ 				<xs:element name="Codigo2"  type="xs:string"/>
  			</xs:sequence>
  		</xs:complexType>
 </xs:schema>
