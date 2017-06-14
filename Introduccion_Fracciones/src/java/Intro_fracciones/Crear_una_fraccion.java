@@ -32,10 +32,8 @@ response.setContentType("text/html;charset=UTF-8");
 "			<div id=\"logo\"></div>\n" +
 "			<nav class=\"navegacion\">\n" +
 "				<ul>\n" +
-"					<li><a href=\"#\">Introducción</a></li>\n" +
-"					<li><a href=\"#\">Crear una Fracción</a></li>\n" +
-"					<li><a href=\"#\">Laboratorio de Igualdad</a></li>\n" +
-"					<li><a href=\"#\">Ayuda</a></li>\n" +
+"					<li><a href='Profesor'>Introducción</a></li>\n" +
+"					<li><a href='Crear_una_fraccion'>Crear una Fracción</a></li>\n" +
 "					<li>\n" +
 "						<form id=\"cerrar-s\" action=\"CerrarSesion\">\n" +
 "							<input id=\"Cerrar-sesion\" type=\"submit\" value=\"Cerrar Sesión\"/>\n" +

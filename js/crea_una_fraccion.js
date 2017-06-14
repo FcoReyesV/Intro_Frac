@@ -845,6 +845,7 @@ function nivelesCompletos(){
 }
 
 
+
 function guardarCambios() {
 	$(document).on('click', '.btn-guardar-Cambios', function() {
 		var $formulario=$(this).parent().siblings('.modal-body').children('form');
@@ -852,6 +853,11 @@ function guardarCambios() {
 		var $contenedoManejable=$('#contenedor-manejable-'+nivel).html();
 		var $contenedorDroppable=$('#contenedor-droppable-'+nivel).html();
 		var $nombre_guardado=$formulario.children('input').val();
-		
+                
+                $.ajax({
+                    type: "POST",
+                    url: "../Introduccion_Fracciones/GuardarCrearUnaFiguraAjax",
+                    data: {nombre_usuario:$('#userName').text(),nombre_guardado:$nombre_guardado, codigo1:$contenedoManejable, codigo2: $contenedorDroppable,nivel: 'nivel_'+nivel}
+                });
 	});
 }
