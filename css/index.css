@@ -4,9 +4,9 @@
 }
 
 body {
+  margin: 0px;
   background: #8EC67B; 
   font-family: "Arial", sans-serif;  
-  
 }
 #logo{
   width: 47px;

@@ -2,30 +2,29 @@
 	<xs:element name="modulo_profesor">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="usuario" type="Usuarios" minOccurs="1" maxOccurs="1000"/>
+				<xs:element name="usuario" type="usuarios" minOccurs="1" maxOccurs="1000"/>
   			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 
-		<xs:complexType name="usuario">
+		<xs:complexType name="usuarios">
 	  		<xs:sequence>
 	  			<xs:element name="nombre" type="xs:string"/>
-	  			<xs:element name="introduccion" type="Introduccion"/>
-				<xs:element name="crear_fraccion"  type="Crear_fraccion"/>
-				<xs:element name="laboratorio_igualdad" type="Laboratorio_igualdad"/>
+	  			<xs:element name="introduccion" type="introduccion"/>
+				<xs:element name="crear_fraccion"  type="crear_fraccion"/>
 	  		</xs:sequence>
  		</xs:complexType>
 
  		<xs:complexType name="introduccion">
  			<xs:sequence>
- 				<xs:element name="creados" type="Creados" maxOccurs="1000"/>
+ 				<xs:element name="creados" type="creados" maxOccurs="1000"/>
  			</xs:sequence>
  		</xs:complexType>
                 
         <xs:complexType name="creados">
  			<xs:sequence>
-                                <xs:element name="titulo" type="xs:string"/>
-                                <xs:element name="tipo" type="xs:string"/>
+                <xs:element name="titulo" type="xs:string"/>
+                <xs:element name="tipo" type="xs:string"/>
  				<xs:element name="contador_contenedores" type="xs:integer"/>
  				<xs:element name="contador_numerador" type="xs:integer"/>
  				<xs:element name="contador_denominador" type="xs:integer"/>
@@ -36,16 +35,28 @@
 
  		<xs:complexType name="crear_fraccion">
  			<xs:sequence>
- 				<xs:element name="nivel_a" type="xs:integer"/>
- 				<xs:element name="nivel_b" type="xs:integer"/>
- 				<xs:element name="nivel_a_contador_figura" type="xs:integer"/>
- 				<xs:element name="nivel_b_contador_figura" type="xs:integer"/>
- 				<xs:element name="nivel_a_correctos" type="xs:integer"/>
- 				<xs:element name="nivel_b_correctos" type="xs:integer"/>
+ 				<xs:element name="nivel_1a" type="contenido_nivel"/>
+                <xs:element name="nivel_2a" type="contenido_nivel"/>
+                <xs:element name="nivel_3a" type="contenido_nivel"/>
+                 <xs:element name="nivel_4a" type="contenido_nivel"/>
+                <xs:element name="nivel_5a" type="contenido_nivel"/>
+                <xs:element name="nivel_1b" type="contenido_nivel"/>
+                <xs:element name="nivel_2b" type="contenido_nivel"/>
+                <xs:element name="nivel_3b" type="contenido_nivel"/>
+                <xs:element name="nivel_4b" type="contenido_nivel"/>
+                <xs:element name="nivel_5b" type="contenido_nivel"/>
  			</xs:sequence>
  		</xs:complexType>
-
- 		<xs:complexType name="laboratorio_igualdad"><!--Solo faltaria el de esta parte-->
+		
+		<xs:complexType name="contenido_nivel">
+			<xs:sequence>
+			<xs:element name="Contenido_nivel" type="Nivel_tipo" maxOccurs="1000"/>
+			</xs:sequence>
+		</xs:complexType>
+ 		<xs:complexType name="Nivel_tipo">
+ 			<xs:sequence>
+ 				<xs:element name="Nombre_guardado" type="xs:string"/>
+ 				<xs:element name="Codigo"  type="xs:string"/>
+ 			</xs:sequence>
  		</xs:complexType>
-
 </xs:schema>

@@ -36,12 +36,17 @@
 
  		<xs:complexType name="crear_fraccion">
  			<xs:sequence>
- 				<xs:element name="nivel_a" type="xs:integer"/>
- 				<xs:element name="nivel_b" type="xs:integer"/>
- 				<xs:element name="nivel_a_contador_figura" type="xs:integer"/>
- 				<xs:element name="nivel_b_contador_figura" type="xs:integer"/>
- 				<xs:element name="nivel_a_correctos" type="xs:integer"/>
- 				<xs:element name="nivel_b_correctos" type="xs:integer"/>
+ 				<xs:element name="nivel_1a" type="xs:integer"/>
+                                <xs:element name="nivel_2a" type="xs:integer"/>
+                                <xs:element name="nivel_3a" type="xs:integer"/>
+                                <xs:element name="nivel_4a" type="xs:integer"/>
+                                <xs:element name="nivel_5a" type="xs:integer"/>
+                                <xs:element name="nivel_1b" type="xs:integer"/>
+                                <xs:element name="nivel_2b" type="xs:integer"/>
+                                <xs:element name="nivel_3b" type="xs:integer"/>
+                                <xs:element name="nivel_4b" type="xs:integer"/>
+                                <xs:element name="nivel_5b" type="xs:integer"/>
+ 				
  			</xs:sequence>
  		</xs:complexType>
 
