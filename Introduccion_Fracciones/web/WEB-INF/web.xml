@@ -72,6 +72,18 @@
         <servlet-name>GuardarCrearUnaFiguraAjax</servlet-name>
         <servlet-class>Intro_fracciones.GuardarCrearUnaFiguraAjax</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GuardarFracciones</servlet-name>
+        <servlet-class>Intro_fracciones.GuardarFracciones</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EliminarFracciones</servlet-name>
+        <servlet-class>Intro_fracciones.EliminarFracciones</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NuevaFraccion</servlet-name>
+        <servlet-class>Intro_fracciones.NuevaFraccion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -143,6 +155,18 @@
     <servlet-mapping>
         <servlet-name>GuardarCrearUnaFiguraAjax</servlet-name>
         <url-pattern>/GuardarCrearUnaFiguraAjax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GuardarFracciones</servlet-name>
+        <url-pattern>/GuardarFracciones</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarFracciones</servlet-name>
+        <url-pattern>/EliminarFracciones</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NuevaFraccion</servlet-name>
+        <url-pattern>/NuevaFraccion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

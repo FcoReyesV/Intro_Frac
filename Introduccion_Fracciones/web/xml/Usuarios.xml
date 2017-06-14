@@ -4,5 +4,10 @@
 		<pass>admin</pass>
 		<tipo>Administrador</tipo>
 	</usuario>
+        <usuario>
+		<nombre>p</nombre>
+		<pass>p</pass>
+		<tipo>Profesor</tipo>
+	</usuario>
 </login>
 

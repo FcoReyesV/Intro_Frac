@@ -2,6 +2,7 @@
 	/*Variables globales que controlan el contenido*/
         var nodo_usuario;
         var nodo_creados;
+        var opciones=0;
         var nombre_profesor=$('.usuario-bloque p').text();
         var codigo_contenedor_principal;
         var codigo_contenedor_objetos_draggables;
@@ -23,6 +24,8 @@
 
 	var $guardar=$('.guardar-btn');
         var $cargar=$('#cargar');
+        var $nuevo=$('#nuevo');
+        var $eliminar=$('#eliminar');
 
 	var contador_figura=1;
 
@@ -61,6 +64,7 @@
         
 $(document).ready(function(){
         console.log(nombre_profesor);
+        cargarOption();
         //propiedadesFigura();
         //creaFiguraDND(contador_denominador,contador_contenedores);
 	$flecha_agregar_contenedor.click(function(event) {
@@ -158,6 +162,23 @@ $(document).ready(function(){
             event.preventDefault();
             cargar();
         });
+        
+        $eliminar.click(function(event){
+            removerOption();
+            event.preventDefault();
+            eliminarTrabajo();
+            cargarOption();
+            
+        });
+        
+        $nuevo.click(function(event){
+            var titulo=prompt("Ingresa un Titulo");
+            console.log(titulo);
+            event.preventDefault();
+            removerOption();
+            nuevoTrabajo(titulo);
+            cargarOption();
+        });
 	
 });
 
@@ -186,6 +207,12 @@ function crearObjetosDraggables(contador_denominador,contador_figura){
 	    $figura.attr('left',left);//Se guarda su posicion en top en cada uno de los elementos
 }
 
+function destruirObjetosDraggables(contador_figura){
+    for(var i=0;i<contador_figura;i++)
+        $('#figura'+i).remove();
+    
+}
+
 function cambiarTamObjetosDraggables(contador_denominador,contador_figura,i){
 	
 	propiedadesFigura();
@@ -205,7 +232,7 @@ function cambiarTamObjetosDraggables(contador_denominador,contador_figura,i){
 function crearContenedorFigura(num_contenedores){
 	for(var i=0; i<num_contenedores;i++){
 		$('<div class="'+contenedor_figura+'"><div>').attr('id', 'contenedorFigura'+i).appendTo('.contenedor-principal');
-                console.log(i);
+                
         }
 
 }
@@ -391,21 +418,31 @@ function ajustarDraggableContenedorRemovido(){
 
 }
     function cargar(){
+        destruirFiguraDND(contador_denominador,contador_contenedores);
+        destruirContenedorFigura(contador_contenedores);
+        destruirObjetosDraggables(contador_figura);
+        contador_numerador=0;
+        console.log("Cargar");
             $.ajax({                
                 type: "GET",
                 url: "../Introduccion_Fracciones/xml/Modulo_Profesor.xml",
                 dataType: "xml",
                 success:function(xml){
+                    console.log($('select option:selected').text());
                     var j=0,k=0;
-                    $(xml).find("usuario").each(function(){                        
+                    $(xml).find("usuario").each(function(){ 
+                        if(nombre_profesor==$(this).find("nombre").text()){
                         $(this).find("introduccion").each(function(){
                             $(this).find('creados').each(function(){
                                 var $creados=$(this);
                                 var titulo=$(this).find('titulo').text();
-                                if(titulo==$('option').text()){
+                                
+                                //console.log($('select option:selected').text());
+                                if(titulo==$('select option:selected').text()){
+                                    
                                     nodo_usuario=j;
                                     nodo_creados=k;
-                                    contador_numerador=parseInt($creados.find('contador_numerador').text())-1;
+                                    //contador_numerador=parseInt($creados.find('contador_numerador').text())-1;
                                     contador_denominador=parseInt($creados.find('contador_denominador').text())-1;
                                     contador_contenedores=parseInt($creados.find('contador_contenedores').text())-1;
                                     contador_figura=parseInt($creados.find('contador_figura').text());
@@ -413,9 +450,10 @@ function ajustarDraggableContenedorRemovido(){
                                     codigo_contenedor_objetos_draggables=$creados.find('contenedor-objetos-draggables').text();                                    
                                     $('body').attr('name',$creados.find('tipo').text());//Cambia la forma de la figura
                                     
+                                    //console.log(codigo_contenedor_principal);
                                     controladorFlechaAgregarContenedor();
                                     controladorDenominadorAgregarBoton();
-                                    controladorNumeradorAgregarBoton();
+                                    //controladorNumeradorAgregarBoton();
                                     
                                     propiedadesFigura();
                                     crearContenedorFigura(contador_contenedores);
@@ -424,25 +462,93 @@ function ajustarDraggableContenedorRemovido(){
                                         crearObjetosDraggables(contador_denominador,i);
                                         cambiarTamObjetosDraggables(contador_denominador,contador_figura,i)
                                     }
-                                    
+                                    //var cadena=codigo_contenedor_principal.replace("&lt;","<");
+                                    /*codigo_contenedor_principal=cadena;
+                                    cadena=codigo_contenedor_principal.replace("&gt;",">");
+                                    codigo_contenedor_principal=cadena;*/
+                                    //$('.contenedor-principal').html(cadena);
+                                    //$('#contenedor-objetos-draggables').append(codigo_contenedor_objetos_draggables);
                                     /*Faltaria agregar el codigo html de contenedor_principal*/
                                     
                                 }
                                 k++;
                             });
                         });
+                    }
                         j++;
+                        
                     });
                 }
             });
         }
         function guardar(){
-            var url="../Introduccion_Fracciones/Guardar_Introduccion_Fracciones";//Ubicacion y nombre del servlet
+            var url="GuardarFracciones";//Ubicacion y nombre del servlet
 		$.ajax({ //Metodo para enviar datos al servidor                       
                     type: "POST",//Se enviaran los datos usando el metodo post                 
-                    url: url,//a donde se enviaran                     
+                    url: "../Introduccion_Fracciones/GuardarFracciones",//a donde se enviaran                     
                     data: {tipo:$('body').attr('name'),titulo:$('option').text(),contador_figura:contador_figura,contador_denominador:contador_denominador,contador_numerador:contador_numerador,contador_contenedores:contador_contenedores,contenedor_principal:$( '.contenedor-principal').html(),contenedor_objetos_draggables:$( '#contenedor-objetos-draggables').html(),nodo_usuario:nodo_usuario,nodo_creados:nodo_creados},
                     success:function(resp){
+                        alert("Guardado con exito");
+                        console.log("succes");
+                        console.log(resp);
+                    }
+                });
+        }
+        function cargarOption(){
+            $.ajax({ //Metodo para enviar datos al servidor                       
+                type: "GET",
+                url: "../Introduccion_Fracciones/xml/Modulo_Profesor.xml",
+                dataType: "xml",
+                success:function(xml){
+                    
+                    $(xml).find("usuario").each(function(){
+                        
+                        if(nombre_profesor==$(this).find("nombre").text()){
+                        $(this).find("introduccion").each(function(){
+                            $(this).find('creados').each(function(){
+                                
+                                //var $creados=$(this);
+                                $("<option value='' id='opcion"+opciones+"'>"+$(this).find('titulo').text()+"</option>").appendTo('select');
+                                //var titulo=$(this).find('titulo').text();
+                                opciones++;
+                            });
+                        });
+                    }
+                    
+                        
+                    });
+                }
+            });
+        }
+        function removerOption(){
+            
+                $('select').children().each(function(){
+                    $(this).remove();
+                });
+
+        }
+        
+        function eliminarTrabajo(){
+                console.log("Eliminar");
+		$.ajax({ //Metodo para enviar datos al servidor                       
+                    type: "POST",//Se enviaran los datos usando el metodo post                 
+                    url: "../Introduccion_Fracciones/EliminarFracciones",//a donde se enviaran                     
+                    data: {nodo_usuario:nodo_usuario,nodo_creados:nodo_creados},
+                    success:function(resp){
+                        alert("Eliminado");
+                        console.log("succes");
+                        console.log(resp);
+                    }
+                });
+        }
+        
+        function nuevoTrabajo(titulo){
+                $.ajax({ //Metodo para enviar datos al servidor                       
+                    type: "POST",//Se enviaran los datos usando el metodo post                 
+                    url: "../Introduccion_Fracciones/NuevaFraccion",//a donde se enviaran                     
+                    data: {titulo:titulo,nodo_usuario:nodo_usuario,nodo_creados:nodo_creados},
+                    success:function(resp){
+                        alert("Creado");
                         console.log("succes");
                         console.log(resp);
                     }

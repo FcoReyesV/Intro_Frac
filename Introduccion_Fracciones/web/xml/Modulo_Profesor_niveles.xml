@@ -1,0 +1,11 @@
+<modulo_profesor_niveles xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Modulo_Profesor_niveles_esquema.xsd">
+	<usuario>
+		<nombre></nombre>
+		<crear_fraccion>
+			<nivel_1a>
+				<Nombre_guardado></Nombre_guardado>
+				<Codigo></Codigo>
+			</nivel_1a>
+		</crear_fraccion>
+	</usuario>
+</modulo_profesor_niveles>
