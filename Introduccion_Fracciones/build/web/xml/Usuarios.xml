@@ -1,8 +1,7 @@
-<login xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Usuarios_esquema.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><login xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Usuarios_esquema.xsd">
 	<usuario>
 		<nombre>admin</nombre>
 		<pass>admin</pass>
 		<tipo>Administrador</tipo>
 	</usuario>
-</login>
-
+<usuario><nombre>prueba</nombre><pass>prueba1</pass><tipo>Profesor</tipo></usuario></login>

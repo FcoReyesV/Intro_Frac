@@ -1,0 +1,44 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="modulo_profesor_niveles">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element  name="usuario" type="usuarios" minOccurs="1" maxOccurs="1000"/>
+				
+  			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+		
+		
+		<xs:complexType name="usuarios">	
+			<xs:sequence>
+				<xs:element name="crear_fraccion"  type="crear_fraccion"/>
+			</xs:sequence>
+			<xs:attribute name="nombre_usuario" type="xs:string"/>
+	  		
+ 		</xs:complexType>
+ 		
+ 		<xs:complexType name="crear_fraccion">
+ 			<xs:choice>
+ 				<xs:element name="nivel_1a" type="contenido_nivel"/>
+                <xs:element name="nivel_2a" type="contenido_nivel"/>
+                <xs:element name="nivel_3a" type="contenido_nivel"/>
+                 <xs:element name="nivel_4a" type="contenido_nivel"/>
+                <xs:element name="nivel_5a" type="contenido_nivel"/>
+                <xs:element name="nivel_1b" type="contenido_nivel"/>
+                <xs:element name="nivel_2b" type="contenido_nivel"/>
+                <xs:element name="nivel_3b" type="contenido_nivel"/>
+                <xs:element name="nivel_4b" type="contenido_nivel"/>
+                <xs:element name="nivel_5b" type="contenido_nivel"/>
+ 			</xs:choice>
+ 		</xs:complexType>
+		
+
+ 		<xs:complexType name="contenido_nivel">
+ 			<xs:sequence>
+ 				<xs:element name="Nombre_guardado" type="xs:string"/>
+ 				<xs:element name="Codigo1"  type="xs:string"/>
+ 				<xs:element name="Codigo2"  type="xs:string"/>
+                                <xs:element name="Codigo3"  type="xs:string"/>
+ 			</xs:sequence>
+ 		</xs:complexType>
+</xs:schema>

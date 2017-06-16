@@ -920,6 +920,7 @@ function cargarCambiosOption() {
             type: "GET",
             url: "../Introduccion_Fracciones/xml/Modulo_Profesor_niveles.xml",
             dataType: "xml", 
+            cache:false,
 			headers: {
 			     'Cache-Control': 'no-cache, no-store, must-revalidate', 
 			     'Pragma': 'no-cache', 
@@ -955,6 +956,7 @@ function cargarCambios(){
                 type: "GET",
                 url: "../Introduccion_Fracciones/xml/Modulo_Profesor_niveles.xml",
                 dataType: "xml", 
+                 cache:false,
                 headers: {
 			     'Cache-Control': 'no-cache, no-store, must-revalidate', 
 			     'Pragma': 'no-cache', 
