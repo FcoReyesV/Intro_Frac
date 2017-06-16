@@ -20,6 +20,7 @@ response.setContentType("text/html;charset=UTF-8");
         String user=request.getParameter("Usuario");
         String pass=request.getParameter("Pass");
         boolean ban=false;
+        //Recorremos el archivo donde se guardan los usuarios y comparamos si existe el usuario
         for(int i=0;i<usuarios.getTotalUsuarios();i++){
                if(user.equals(nombre[i]) && pass.equals(password[i])){
                    out.println("true"); 

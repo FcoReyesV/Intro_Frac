@@ -74,16 +74,14 @@ public class Profesor extends HttpServlet {
                     "</div>"+
         
 "				<div class=\"opciones-intro\">\n" +
-"					<div id=\"opc1\" class=\"opc col-md-1\">\n" +
+"					<a href='Profesor'><div id=\"opc1\" class=\"opc col-md-1\">\n" +
 "						<div style=\"width: 90px; height: 40px; margin-top: 15px; border: 1px solid black; background-color: rgb(60,134,174);\"></div>\n" +
-"					</div>\n" +
-"					<div id=\"opc2\" class=\"opc col-md-1\">\n" +
+"					</div></a>\n" +
+"					<a href='Profesor2'><div id=\"opc2\" class=\"opc col-md-1\">\n" +
 "						<div style=\"height: 60px; width: 40px; border: 1px solid black; margin-left: 25px; margin-top: 5px; background-color: rgb(255,41,43);\"></div>\n" +
 "\n" +
-"					</div>\n" +
-"					<div id=\"opc3\" class=\"opc col-md-1\"></div>\n" +
-"					<div id=\"opc4\" class=\"opc col-md-1\"></div>\n" +
-"					\n" +
+"					</div></a>\n" +
+					
 "				</div>\n" +
 "				\n" +
 "				\n" +

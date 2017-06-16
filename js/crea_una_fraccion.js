@@ -20,7 +20,7 @@ for(var i=1;i<=5;i++){
 
 $(document).ready(function() {
 	$('#regresarMenu').hide();
-	//Cuando se haga click en cada nivel se activan los contadores
+
 	$nivel_a[1].click(function() {
 		//Primero comprobamos que exista en el DOM el nivel, sino lo crea
 		if(!$('#nivelfnc1a').length){
@@ -99,7 +99,6 @@ $(document).ready(function() {
 		agregarContenedor('5b');
 	});
 	
-	
 	nivelesCompletos();
 	regresarMenu();
 	removerElementoCorrecto();
@@ -107,7 +106,10 @@ $(document).ready(function() {
 	reiniciarNivel();
 	agregarObjetosArrastrables();
 	agregarObjetosCorrectos();
-	guardarCambios();
+    guardarCambios();
+    cargarCambiosOption();
+    cargarCambios();
+    
 	
 	
 });
@@ -360,9 +362,8 @@ function mostrarAreaPrincipal(nivel,niveltipo){
 
 
 function agregarContenedor(nivel){
-	$('#agregarContenedor'+nivel).click(function() {
-		
-		
+	$(document).on('click', '#agregarContenedor'+nivel, function() {
+	
 		var aux; //Variable auxiliar para controlar los contadores
 		//Controlamos los contadores de cada figura creada en cada nivel
 		if(nivel.charAt(1)=='a'){
@@ -572,7 +573,7 @@ function contenedorFuncionNivel(nivel){
 	//Boton para agregar los contenedores correctos con su respectivo modal asignado
 	$('<button type="button" data-toggle="modal" data-target="#agregarCorrecto'+nivel+'" title="Agregar contenedores correctos" class="btn-agregar-contenedor-correcto"></button>').appendTo('#nivelfnc'+nivel);
 	//Boton para mostrar lo guardado por el usuario
-	$('<button id="mostrarCreadosbtn" type="button" data-toggle="modal" data-target="#mostrarCreados'+nivel+'" title="Mostrar creados" class="btn-mostrar-creados btn btn-primary">Mostrar <br/>creados</button>').appendTo('#nivelfnc'+nivel);
+	$('<button id="mostrarCreadosbtn'+nivel+'" type="button" data-toggle="modal" data-target="#mostrarCreados'+nivel+'" title="Mostrar creados" class="btn-mostrar-creados btn btn-primary">Mostrar <br/>creados</button>').appendTo('#nivelfnc'+nivel);
 	//Boton para guardar los cambios hechos por el usuario
 	$('<button id="guardar'+nivel+'" type="button" data-toggle="modal"  title="Guardar" data-target="#guardarCambios'+nivel+'"  class="btn-guardar btn btn-primary">Guardar</button>').appendTo('#nivelfnc'+nivel);
 	formularioAgregarArrastrable(nivel); 
@@ -580,7 +581,7 @@ function contenedorFuncionNivel(nivel){
 //Modals de boostrap (ventanas emergentes)
 function formularioAgregarArrastrable(nivel){
 	//Creamos el modal para guardar los cambios 
-	$('<div id="guardarCambios'+nivel+'" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3 class="modal-title">Guardar cambios</h3></div><div class="modal-body"><form id="formGuardar'+nivel+'" class="formulario-modal" style="display: flex; flex-direction: column;"><label for="nombre_guardado">Nombre a guardar</label><input type="text" name="nombre_guardado" id="nombre_guardado'+nivel+'"></form></div><div class="modal-footer"><button type="submit" class="btn btn-success btn-guardar-Cambios" data-dismiss="modal">Completado</button></div></div></div></div>').appendTo('#nivelfnc'+nivel);
+	$('<div id="guardarCambios'+nivel+'" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3 class="modal-title">Guardar cambios</h3></div><div class="modal-body"><form action="" id="formGuardar'+nivel+'" class="formulario-modal" style="display: flex; flex-direction: column;"><label for="nombre_guardado">Nombre a guardar</label><input type="text" name="nombre_guardado" id="nombre_guardado'+nivel+'"></form></div><div class="modal-footer"><button type="submit" class="btn btn-success btn-guardar-Cambios" data-dismiss="modal">Completado</button></div></div></div></div>').appendTo('#nivelfnc'+nivel);
 	//Creamos el modal para mostrar los guardados
 	$('<div id="mostrarCreados'+nivel+'" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3 class="modal-title">Cargar creados</h3></div><div class="modal-body"><form id="formularioCargar'+nivel+'" class="formulario-modal" style="display: flex; flex-direction: column;"><label for="selectCreados">Seleccionar contenido creado</label><select></select></form></div><div class="modal-footer"><button type="submit" class="btn btn-success btn-cargar-Cambios" data-dismiss="modal">Completado</button></div></div></div></div>').appendTo('#nivelfnc'+nivel);
 
@@ -621,7 +622,6 @@ function formularioAgregarArrastrable(nivel){
 
 	}
 }
-
 
 function agregarObjetosArrastrables(){
 	$(document).on('click', '.btn-agregar-draggables', function() {
@@ -678,7 +678,11 @@ function agregarObjetosCorrectos(){
 		var tam_denominador=parseInt($formulario.children('input[name=tam_denominador]').val());
 		var numero_divs=0;
 		//Contamos el numero de divs dentro del manejador de correctos y ese numero se le asignara como id al contenedor correcto
-		$('#contenedor-droppable-'+nivel).children().each(function() {
+	
+		if(tam_numerador>tam_denominador){
+			alert("El numerador debe ser menor que el denominador");
+		}else{
+			$('#contenedor-droppable-'+nivel).children().each(function() {
 				numero_divs++;
 		});
 		if(nivel.charAt(1)=='a'){
@@ -695,11 +699,9 @@ function agregarObjetosCorrectos(){
 			 }else{
 			 	alert("Ya no puedes agregar más contenedores correctos. El número máximo es tres");
 			 }
-			
-			
-				
-
 		}
+		}
+		
 	});
 }
 
@@ -847,17 +849,220 @@ function nivelesCompletos(){
 
 
 function guardarCambios() {
+
 	$(document).on('click', '.btn-guardar-Cambios', function() {
+		
 		var $formulario=$(this).parent().siblings('.modal-body').children('form');
 		var nivel=$formulario.attr('id').slice(11, 13);
 		var $contenedoManejable=$('#contenedor-manejable-'+nivel).html();
 		var $contenedorDroppable=$('#contenedor-droppable-'+nivel).html();
+		var $contenedorNumeros=$('#numero-droppable-'+nivel).html();
 		var $nombre_guardado=$formulario.children('input').val();
-                
-                $.ajax({
-                    type: "POST",
-                    url: "../Introduccion_Fracciones/GuardarCrearUnaFiguraAjax",
-                    data: {nombre_usuario:$('#userName').text(),nombre_guardado:$nombre_guardado, codigo1:$contenedoManejable, codigo2: $contenedorDroppable,nivel: 'nivel_'+nivel}
+		var existe=1;
+			//Validamos que al menos haya alguna figura y el campo esté lleno
+			if(!$('#contenedor-droppable-'+nivel).children('div.droppable-correctos').length || !$('#contenedor-manejable-'+nivel).children('div.contenedor-draggables').length || $nombre_guardado==""){
+				if($nombre_guardado=="")
+					alert("Escribe un nombre para guardar");
+				if(!$('#contenedor-droppable-'+nivel).children('div.droppable-correctos').length)
+					alert("Agrega al menos un contenedor correcto");
+				if( !$('#contenedor-manejable-'+nivel).children('div.contenedor-draggables').length)
+					alert("Agrega al menos un objeto arrastrable");
+			 }else{
+
+				//Validamos si existe o no el guardado
+				$.ajax({
+					type: "GET",
+	           		 url: "../Introduccion_Fracciones/xml/Modulo_Profesor_niveles.xml",
+	            	dataType: "xml",     
+	            	headers: {
+				     'Cache-Control': 'no-cache, no-store, must-revalidate', 
+				     'Pragma': 'no-cache', 
+				     'Expires': '0'
+   					},       
+	            	success:function(xml){
+	                        $(xml).find('usuario').each(function() {
+			                if($(this).attr('nombre_usuario')==$('#userName').text()){
+			                    $(this).find('nivel_'+nivel).each(function(){
+			                        if($nombre_guardado==$(this).find('Nombre_guardado').text()){
+			                           existe=2;   
+			                         }
+			                    }
+			                )}
+			                
+			            });
+	                    //Si no existe el nommbre del nivel manda otra petición de ajax y lo crea
+						if(existe==1) {
+						  $.ajax({
+				            type: "POST",
+				            url: "../Introduccion_Fracciones/GuardarCrearUnaFiguraAjax",
+				            data: {nombre_usuario:$('#userName').text(),nombre_guardado:$nombre_guardado, codigo1:$contenedoManejable, codigo2: $contenedorDroppable,codigo3:$contenedorNumeros,nivel: 'nivel_'+nivel}
+				          });
+				          alert("Guardado correctamente");
+						}else{
+							alert("El nombre ya existe");
+						}
+
+				   }
+				}); 
+			}
+		
+		    
+	});
+		
+}
+
+function cargarCambiosOption() {
+	$(document).on('click', '.btn-mostrar-creados', function() {
+            var nivel=$(this).attr('id').slice(17,19);
+		var $formulario=$('#formularioCargar'+nivel);
+        $formulario.children('select').children().remove();
+	$.ajax({
+            type: "GET",
+            url: "../Introduccion_Fracciones/xml/Modulo_Profesor_niveles.xml",
+            dataType: "xml", 
+			headers: {
+			     'Cache-Control': 'no-cache, no-store, must-revalidate', 
+			     'Pragma': 'no-cache', 
+			     'Expires': '0'
+   			},
+            success:function(xml){
+                $(xml).find('usuario').each(function() {
+
+                    if($(this).attr('nombre_usuario')==$('#userName').text()){
+                        $(this).find('nivel_'+nivel).each(function() {
+	                        var $option_cargar=$(this).find('Nombre_guardado').text();
+	                        $('<option>'+$option_cargar+'</option>').appendTo($formulario.children('select'));
+
+                        });
+                    }
                 });
+              
+
+            }
+         });
 	});
 }
+
+function cargarCambios(){
+    $(document).on('click', '.btn-cargar-Cambios', function() {
+                 var $formulario=$(this).parent().siblings('.modal-body').children('form');
+                var nivel=$formulario.attr('id').slice(16, 18);
+                 var nombre_guardado=$formulario.children('select').val();
+                $('#contenedor-manejable-'+nivel).children().remove();
+                $('#contenedor-droppable-'+nivel).children().remove();
+             	$('#numero-droppable-'+nivel).children().remove();
+            $.ajax({
+                type: "GET",
+                url: "../Introduccion_Fracciones/xml/Modulo_Profesor_niveles.xml",
+                dataType: "xml", 
+                headers: {
+			     'Cache-Control': 'no-cache, no-store, must-revalidate', 
+			     'Pragma': 'no-cache', 
+			     'Expires': '0'
+   				},           
+                success:function(xml){
+                    $(xml).find('usuario').each(function() {
+
+                        if($(this).attr('nombre_usuario')==$('#userName').text()){
+                            $(this).find('nivel_'+nivel).each(function() {
+                               if(nombre_guardado==$(this).find('Nombre_guardado').text()){
+                                  var $codigo1= $(this).find('Codigo1').text();
+                                  var $codigo2= $(this).find('Codigo2').text();
+                                  var $codigo3= $(this).find('Codigo3').text();
+
+                                  
+                                   $('#contenedor-manejable-'+nivel).append($codigo1);
+                                   $('#contenedor-droppable-'+nivel).append($codigo2);
+                                   $('#numero-droppable-'+nivel).append($codigo3);
+                                    
+
+                               }
+                                 
+                            });
+                        }
+                    });
+
+    				$('.figuras-draggables').draggable( {
+						containment: '.bloque-central',
+						cursor: 'move',
+						revert: true
+					});
+         			$('#contenedor-droppable-'+nivel).children().each(function() {
+         				$(this).droppable({
+						accept:'.figuraDraggable',
+						drop: function(event,ui){
+							var $item=ui.draggable;
+							var valor_correcto=parseFloat($(this).attr('name'));
+							var valor_item=parseFloat($item.attr('name'));
+							$item.css('z-index', '1');
+							//Se compara con el valor que toman al agregar los valores si está vacío true y sino false
+
+							if(valor_correcto == valor_item && $(this).is(':empty')){
+
+
+								if(nivel.charAt(1)=='a'){	
+									$item.droppable('disable');
+									//Aumentamos los niveles correctos;
+									$nivel_a_correctos[parseInt(nivel.charAt(0))]++;
+									
+									//Si son 3 quiere decir que ya se ha ganado el nivel
+									if($nivel_a_correctos[parseInt(nivel.charAt(0))]==3){
+										
+										var $ganador=$('<div></div>').addClass('nivel-completo');
+										var $texto=$('<div class="texto-nivel-completo">¡Nivel completado!</div>');
+										$(this).parent().siblings('.contenedor-figuras').append($ganador.hide(),$texto.hide());
+										$ganador.fadeIn(800);
+										$texto.fadeIn(800);
+										$('body').css('cursor', 'default');
+									}
+								}
+								else{
+									$item.children().each(function() {
+										$(this).droppable('disable');
+									});
+									//también en los niveles b se aumentan los correctos
+									$nivel_b_correctos[parseInt(nivel.charAt(0))]++;
+									if($nivel_b_correctos[parseInt(nivel.charAt(0))]==3){
+										var $ganador=$('<div></div>').addClass('nivel-completo');
+										var $texto=$('<div class="texto-nivel-completo">¡Nivel completado!</div>');
+										$(this).parent().siblings('.contenedor-figuras').append($ganador.hide(),$texto.hide());
+										$ganador.fadeIn(800);
+										$texto.fadeIn(800);
+										$('body').css('cursor', 'default');
+									}
+									
+								} 
+
+								var $remover_bloque=$('<button class="remover-bloque"><span title="Remover bloque" class="glyphicon glyphicon-remove"></span></button>');
+
+								$item.append($remover_bloque);
+
+								$item.children().children().each(function() {
+									$(this).children('.remover-draggable').remove();
+								});
+
+								$item.css({"left":""-12, "top":""-12, "bottom":"", "right":"" });
+								$item.draggable( 'option', 'revert', false ); 	
+								$(this).append($item);
+								$item.position({
+									my: "left",
+									at: "left",
+									of: $(this)
+								});
+
+							} //fin del if que compara si es correcto el valor de la figura arrastrada	
+
+							},//fin de la funcion anonima del droppable
+							over:function(event,ui){
+								ui.draggable.css('z-index', '1');
+							}
+
+						});//fin del .droppable 
+         			});
+                    
+                } //fin del success
+             });
+	});
+}
+
+

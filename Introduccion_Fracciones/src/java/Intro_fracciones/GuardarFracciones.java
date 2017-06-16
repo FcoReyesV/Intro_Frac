@@ -2,8 +2,6 @@ package Intro_fracciones;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,8 +33,8 @@ public class GuardarFracciones extends HttpServlet {
        datos[6]=request.getParameter("contenedor_principal");
        datos[7]=request.getParameter("contenedor_objetos_draggables");
        
-       int nodo_usuario=0;//Integer.parseInt(request.getParameter("nodo_usuario"));
-       int nodo_creados=0;//Integer.parseInt(request.getParameter("nodo_creados"));
+       int nodo_usuario=0;
+       int nodo_creados=0;
        
         try {
             ModificarNodo(request.getRealPath("/")+"\\xml\\Modulo_Profesor.xml",datos,nodo_usuario,nodo_creados);
@@ -44,7 +42,7 @@ public class GuardarFracciones extends HttpServlet {
             out.println(datos[6]);
             
         } catch (Exception ex) {
-            //Logger.getLogger(Guardar_Introduccion_Fracciones.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.print(ex);
         }
     }
 public static void ModificarNodo(String archivo_direccion,String datos[],int nodo_usuario,int nodo_creados ) throws Exception {

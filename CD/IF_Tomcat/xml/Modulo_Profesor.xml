@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><modulo_profesor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Modulo_Profesor_esquema.xsd">
+<usuario>
+	<nombre>p</nombre>
+	<introduccion>
+                <creados>
+                        <titulo>Ejemplo</titulo>
+                        <tipo>RH</tipo>
+			<contador_contenedores>5</contador_contenedores>
+			<contador_numerador>2</contador_numerador>
+			<contador_denominador>2</contador_denominador>
+			<contador_figura>2</contador_figura>			
+			<contenedor_principal></contenedor_principal>
+			<contenedor_objetos_draggables></contenedor_objetos_draggables>
+		</creados>               
+	</introduccion>
+</usuario>
+</modulo_profesor>

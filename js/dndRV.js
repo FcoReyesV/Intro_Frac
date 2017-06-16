@@ -393,7 +393,7 @@ function ajustarDraggableContenedorRemovido(){
     function cargar(){
             $.ajax({                
                 type: "GET",
-                url: "../Introduccion_Fracciones/xml/Modulo_Profesor.xml",
+                url: "../Introduccion_Fracciones/xml/Modulo_Profesor_niveles.xml.xml",
                 dataType: "xml",
                 success:function(xml){
                     var j=0,k=0;

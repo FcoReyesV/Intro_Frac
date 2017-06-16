@@ -1,0 +1,148 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+#body-admin{
+  background: rgb(241,241,241); 
+  font-family: "Arial", sans-serif;  
+}
+
+table,th{
+  text-align: center !important;
+   padding: 2px !important;
+}
+
+th{
+  font-size: 16px;
+  padding: 8px 4px!important;
+}
+
+.admin{
+  position: relative;
+    background: #FFFFFF;
+    max-width: 360px;
+    margin: 30px auto 100px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.nombre{
+  margin-top: 30px;
+}
+
+.table-editable {
+  position: relative;
+  background-color: white; 
+  margin-top: 40px;
+}
+
+.glyphicon {
+    font-size: 20px;
+  }
+
+.table-remove {
+  color: rgb(185,0,0);
+  cursor: pointer;
+}
+.table-remove:hover{
+  color:rgb(128,0,0);
+  -webkit-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  transform: scale(1.2);
+  -webkit-transition: 0.2s;
+}
+
+.table-up, .table-down {
+  color: rgb(64,64,255);
+  cursor: pointer;
+
+}
+
+
+
+.table-add{
+  color: rgb(92,184,92);
+}
+
+.table-add:hover{
+  color:rgb(64,147,64);
+  -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    -webkit-transition: 0.2s;
+}
+
+.btn-cerrars{
+  margin-left: 76%;
+  margin-top: 30px;
+}
+
+.update, .btn-add{
+  background:none; 
+  border:none;
+  outline:0;
+}
+.update:hover{
+  -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    -webkit-transition: 0.2s;
+}
+
+#logo-gris{
+  width: 30px;
+  height: 50px;
+  background: url(../images/logo-gris.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  top: 14px;
+  left:8px;
+}
+
+#logo-gris:hover{
+   -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    -webkit-transition: 0.2s;   
+    transition: 0.2s;
+
+}
+
+.agregar-usuario{
+    display: none;
+}
+
+.select-tipo{
+  margin: 0 0 15px;
+  background-color: #f2f2f2 !important ;
+  height: 45px;
+}
+
+.cerrar-addUser{
+  top:4px;
+  right: 4px;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+}
+.close-agregar-usuario {
+  font-size: 30px;
+  color: rgb(185,0,0);
+  cursor: pointer;
+}
+
+.modificar-usuario{
+  display: none;
+}
+
+
+.ocular-nodo{
+    display:none;
+}
+
+.name-disabled{
+  background-color: rgb(230,230,230) !important;
+  border-color: rgb(230,230,230) !important;
+}

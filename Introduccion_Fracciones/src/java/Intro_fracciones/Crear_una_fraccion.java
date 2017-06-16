@@ -15,6 +15,13 @@ public class Crear_una_fraccion extends HttpServlet {
 response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         HttpSession session=request.getSession();
+         response.setHeader("Cache-Control", "no-cache");
+        //Fuerza a la caché para obtener una nueva copia de la página desde el servidor de origen
+        response.setHeader("Cache-Control", "no-store");
+        //Dirige a la caché a no almacenar la página bajo ninguna circunstancia
+        response.setDateHeader("Expires", 0);
+        //Provoca que la caché de proxy vea la página como "obsoleta"
+        response.setHeader("Pragma", "no-cache");
         String userName=(String)session.getAttribute("userName");
         out.println("<!DOCTYPE html>\n" +
 "<html lang=\"en\">\n" +
@@ -174,6 +181,7 @@ response.setContentType("text/html;charset=UTF-8");
 "	<script type=\"text/javascript\" src=\"js/jquery-3.2.1.min.js\"></script>\n" +
 "	<script type=\"text/javascript\" src=\"js/jquery-ui.min.js\"></script>\n" +
 "	<script src=\"js/jquery.ddslick.min.js\"></script>\n" +
+        "<script type=\"text/javascript\" src=\"js/jquery.validate.min.js\"></script>"+
 "	<script type=\"text/javascript\" src=\"js/crea_una_fraccion.js\"></script>\n" +
 "	<script type=\"text/javascript\" src=\"js/bootstrap.min.js\"></script>\n" +
 "	\n" +

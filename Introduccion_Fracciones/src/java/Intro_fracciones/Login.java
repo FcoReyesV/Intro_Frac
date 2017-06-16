@@ -40,15 +40,14 @@ response.setContentType("text/html;charset=UTF-8");
                        break;
                        case "Alumno":
                            session.setAttribute("tipoUsuario",tipo[i]);
-                           response.sendRedirect("Alumno");
+                           response.sendRedirect("Profesor");
                        break;
                    }
                }
             }  
             
-        }
-        else{// username/password not validated
-            response.sendRedirect("fail");
-        }
+        }else
+            response.sendRedirect("Inicio");
+        
     }
  }
